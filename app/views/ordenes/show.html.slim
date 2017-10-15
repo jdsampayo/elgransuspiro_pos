@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Articulo:
+  = @orden.articulo_id
+p
+  strong Comanda:
+  = @orden.comanda_id
+p
+  strong Cantidad:
+  = @orden.cantidad
+
+= link_to 'Edit', edit_orden_path(@orden)
+'  |
+= link_to 'Back', ordenes_path

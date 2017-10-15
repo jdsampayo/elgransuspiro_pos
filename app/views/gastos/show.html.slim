@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Monto:
+  = @gasto.monto
+p
+  strong Descripcion:
+  = @gasto.descripcion
+
+= link_to 'Edit', edit_gasto_path(@gasto)
+'  |
+= link_to 'Back', gastos_path

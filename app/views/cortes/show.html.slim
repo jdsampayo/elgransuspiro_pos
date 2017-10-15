@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Dia:
+  = @corte.dia
+p
+  strong Inicial:
+  = @corte.inicial
+p
+  strong Ventas:
+  = @corte.ventas
+p
+  strong Gastos:
+  = @corte.gastos
+p
+  strong Total:
+  = @corte.total
+p
+  strong Siguiente dia:
+  = @corte.siguiente_dia
+p
+  strong Sobre:
+  = @corte.sobre
+
+= link_to 'Edit', edit_corte_path(@corte)
+'  |
+= link_to 'Back', cortes_path

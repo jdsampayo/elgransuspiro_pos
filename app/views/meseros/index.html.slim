@@ -1,0 +1,21 @@
+h1 Meseros
+
+table
+  thead
+    tr
+      th Nombre
+      th
+      th
+      th
+
+  tbody
+    - @meseros.each do |mesero|
+      tr
+        td = mesero.nombre
+        td = link_to 'Mostrar', mesero
+        td = link_to 'Editar', edit_mesero_path(mesero)
+        td = link_to 'Eliminar', mesero, data: { confirm: '¿Estás seguro?' }, method: :delete
+
+br
+
+= link_to 'Nuevo Mesero', new_mesero_path

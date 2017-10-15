@@ -1,0 +1,38 @@
+= simple_form_for(@comanda) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .row
+      .col-md-3= f.input :mesa
+      .col-md-3= f.input :comensales
+      .col-md-3= f.association :mesero
+      .col-md-3= f.input :descuento
+
+  hr
+
+  h3 Orden
+  #ordenes
+    .row
+      .col-md-6
+        .row
+          .col-md-2
+            strong Cantidad
+          .col-md-8
+            strong Artículo
+      .col-md-6
+        .row
+          .col-md-6
+            strong Extra
+    hr
+
+    = f.simple_fields_for :ordenes do |orden|
+      = render 'orden_fields', f: orden
+    .links
+      = link_to_add_association 'Agregar artículos', f, :ordenes
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', comandas_path
+
+

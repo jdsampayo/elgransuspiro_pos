@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Nombre:
+  = @extra.nombre
+p
+  strong Precio:
+  = @extra.precio
+
+= link_to 'Edit', edit_extra_path(@extra)
+'  |
+= link_to 'Back', extras_path

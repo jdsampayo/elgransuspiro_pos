@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dia: 2017-07-25
+  inicial: 9.99
+  ventas: 9.99
+  gastos: 9.99
+  total: 9.99
+  siguiente_dia: 9.99
+  sobre: 9.99
+
+two:
+  dia: 2017-07-25
+  inicial: 9.99
+  ventas: 9.99
+  gastos: 9.99
+  total: 9.99
+  siguiente_dia: 9.99
+  sobre: 9.99

@@ -1,0 +1,9 @@
+p#notice = notice
+
+p
+  strong Nombre:
+  = @mesero.nombre
+
+= link_to 'Editar', edit_mesero_path(@mesero)
+'  |
+= link_to 'Regresar', meseros_path

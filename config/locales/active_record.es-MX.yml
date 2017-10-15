@@ -1,0 +1,48 @@
+es-MX:
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "%{model} no pudo guardarse debido a 1 error"
+          other: "%{model} no pudo guardarse debido a %{count} errores"
+        body: "Revise que los siguientes campos sean válidos:"
+
+      messages:
+        taken: "ya ha sido tomado"
+        record_invalid: "La validación falló: %{errors}"
+
+      full_messages:
+        format: "%{attribute} %{message}"
+
+      models:
+        usuario:
+          attributes:
+            email:
+              taken: "ya ha sido tomado"
+            username:
+              taken: "ya ha sido tomado"
+        orden:
+          attributes:
+            cantidad:
+              required: "es requerida"
+            articulo:
+              required: "es requerido"
+        comanda:
+          attributes:
+            mesero:
+              required: "es requerido"
+
+    models:
+      sesion: "Sesión"
+      articulo: "Artículo"
+    attributes:
+      usuario:
+        username: "Usuario"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+        email: "Correo electrónico"
+      sesion:
+        username: "Usuario"
+        password: "Contraseña"
+      gasto:
+        descripcion: "Descripción"

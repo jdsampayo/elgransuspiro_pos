@@ -1,0 +1,42 @@
+h1 Comandas
+
+.text-right
+  -if @corte.abierto?
+    =link_to "Realizar corte", edit_corte_path(@corte), class: "btn btn-primary"
+  -else
+    button.btn.btn-secondary Corte cerrado
+br
+
+table.table-sm
+  thead
+    tr
+      th ID
+      th Día
+      th Hora
+      th Venta
+      th Descuento
+      th Total
+      th Mesero
+      th
+
+
+  tbody
+    - @comandas.each do |comanda|
+      tr
+        td class=(comanda.abierta? ? "" : "table-active")
+          = link_to comanda, comanda
+        td = comanda.created_at.strftime("%Y-%m-%d")
+        td = comanda.created_at.strftime("%H:%M")
+        td = comanda.total + comanda.descuento
+        td = comanda.descuento
+        td = comanda.total
+        td = comanda.mesero
+        -if comanda.abierta?
+          td.actions
+            .row
+              .col-md-4= link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-info"
+              .col-md-4= link_to 'Cerrar', close_comanda_path(comanda), data: { confirm: '¿Estás seguro?' }, method: :post, class: "btn btn-success"
+              .col-md-4= link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger"
+        -else
+          td
+            span.badge.badge-success Cerrada

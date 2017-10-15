@@ -1,0 +1,23 @@
+h1 Artículos
+
+= pie_chart Orden.group(:articulo).count
+
+table.table-sm
+  thead
+    tr
+      th Nombre
+      th Precio
+      th
+
+  tbody
+    - @articulos.each do |articulo|
+      tr
+        td = link_to articulo.nombre, articulo
+        td = articulo.precio
+        td.actions
+          .row
+            .col-md-4= link_to 'Editar', edit_articulo_path(articulo), class: "btn btn-info btn-sm"
+            .col-md-4= link_to 'Eliminar', articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+br
+
+= link_to 'Nuevo Artículo', new_articulo_path

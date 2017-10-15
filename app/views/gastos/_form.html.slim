@@ -1,0 +1,13 @@
+= simple_form_for(@gasto) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .row
+      .col-md-2= f.input :monto
+      .col-md-6= f.input :descripcion
+
+  .form-actions
+    = f.button :submit, "Guardar", class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', gastos_path
+

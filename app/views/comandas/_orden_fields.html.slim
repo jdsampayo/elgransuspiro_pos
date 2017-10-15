@@ -1,0 +1,14 @@
+.nested-fields
+  .row
+    .col-md-6
+      .row
+        .col-md-2= f.input :cantidad, label: false, input_html: {min: "1", step: "1"}
+        .col-md-8= f.association :articulo, label: false
+        .col-md-2= link_to_remove_association "Eliminar", f
+    .col-md-6
+      .extras_form
+        = f.simple_fields_for :extra_ordenes do |extra|
+          = render 'extra_orden_fields', f: extra
+        .links
+          .small= link_to_add_association 'Agregar extra', f, :extra_ordenes
+  hr

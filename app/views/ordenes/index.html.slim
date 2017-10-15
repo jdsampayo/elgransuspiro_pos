@@ -1,0 +1,25 @@
+h1 Listing ordenes
+
+table
+  thead
+    tr
+      th Articulo
+      th Comanda
+      th Cantidad
+      th
+      th
+      th
+
+  tbody
+    - @ordenes.each do |orden|
+      tr
+        td = orden.articulo_id
+        td = orden.comanda_id
+        td = orden.cantidad
+        td = link_to 'Show', orden
+        td = link_to 'Edit', edit_orden_path(orden)
+        td = link_to 'Destroy', orden, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Orden', new_orden_path

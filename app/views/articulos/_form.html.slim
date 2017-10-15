@@ -1,0 +1,13 @@
+= simple_form_for(@articulo) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .row
+      .col-md-3= f.input :precio
+      .col-md-6= f.input :nombre
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', articulos_path
+

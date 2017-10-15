@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title El Gran Suspiro - Punto de Venta
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+      button.navbar-toggler.navbar-toggler-right data-target="#navbar-admin" data-toggle="collapse" type="button" aria-controls="navbarNav" aria-expanded="false"
+        span.navbar-toggler-icon
+      a.navbar-brand href="/" Punto de Venta
+      #navbar-admin.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          =active_link_to "Cortes", cortes_path, class: "nav-item nav-link"
+          =active_link_to "Comandas", comandas_path, class: "nav-item nav-link"
+          =active_link_to "Artículos", articulos_path, class: "nav-item nav-link"
+          =active_link_to "Gastos", gastos_path, class: "nav-item nav-link"
+        form.form-inline.mt-2.mt-md-0
+          = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
+          = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"
+
+    - if notice.present?
+      .alert.alert-info=notice
+    .container-fluid= yield
