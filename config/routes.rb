@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :ordenes
   resources :comandas do
     member do
+      post :print
       post :close
     end
   end

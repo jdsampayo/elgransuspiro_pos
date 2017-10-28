@@ -54,6 +54,7 @@ table
     td
       strong= number_to_currency @comanda.total
 
+= link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-info"
 = link_to 'Regresar', comandas_path
 br
 br

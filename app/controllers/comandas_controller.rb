@@ -1,5 +1,5 @@
 class ComandasController < ApplicationController
-  before_action :set_comanda, only: [:show, :edit, :update, :destroy, :close]
+  before_action :set_comanda, only: [:show, :edit, :update, :destroy, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
   before_action :check_corte, only: [:new, :create]
 
@@ -65,6 +65,22 @@ class ComandasController < ApplicationController
         format.json { render json: @comanda.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def print
+    printer = Escpos::Printer.new
+    logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
+    printer.write(logo.to_escpos)
+    printer.write(@comanda.to_text)
+
+    ticket_file = Tempfile.new('test', encoding: 'ascii-8bit')
+    ticket_file.write(printer.to_escpos)
+    ticket_file.close
+    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
+
+    ticket_file.unlink
+
+    render :show
   end
 
   # DELETE /comandas/1

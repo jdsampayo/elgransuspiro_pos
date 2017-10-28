@@ -18,4 +18,11 @@ class Orden < ApplicationRecord
   def guardar_precios_historicos
     self.precio_unitario = articulo.precio + precio_extras
   end
+
+  def to_text
+    cantidad.to_s.rjust(2, ' ') + " " +
+    articulo.to_s.upcase[0,16].ljust(17, '.') +
+    precio_unitario.to_s.rjust(5, '.').ljust(7, ' ') +
+    precio.to_s.rjust(5, ' ').ljust(5, ' ')
+  end
 end

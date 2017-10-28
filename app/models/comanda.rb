@@ -26,4 +26,34 @@ class Comanda < ApplicationRecord
   def abierta?
     closed_at.blank?
   end
+
+  def to_text
+    texto = []
+    texto << "   #{I18n.l created_at, format: :short}"
+    texto << ""
+
+    texto << "Ticket: #{id.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
+    texto << "Mesa: #{mesa.ljust(11, ' ')} Mesero: #{mesero.to_s[0,5].rjust(6, ' ')}"
+
+    texto << ""
+
+    texto << " # Nombre            P/U  Precio"
+    ordenes.each do |orden|
+      texto << orden.to_text
+      texto << "Extras: #{orden.extra_ordenes.join(', ')}" if orden.extra_ordenes.present?
+    end
+
+    texto << ""
+
+    texto << "Subtotal:                  #{venta.to_s.rjust(5, ' ')}"
+    texto << "Descuento:                 #{descuento.to_s.rjust(5, ' ')}"
+
+    texto << "Total:                     #{total.to_s.rjust(5, ' ')}"
+
+    texto << ""
+    texto << ""
+    texto << ""
+
+    texto.join("\n")
+  end
 end

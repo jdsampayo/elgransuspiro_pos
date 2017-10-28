@@ -74,3 +74,8 @@ gem 'chartkick'
 gem 'timecop'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
+
+# Printing
+gem 'chunky_png'
+gem 'escpos'
+gem 'escpos-image'

@@ -67,6 +67,7 @@ GEM
     chartkick (2.2.4)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
+    chunky_png (1.3.8)
     cocoon (1.2.10)
     coderay (1.1.1)
     coffee-rails (4.2.2)
@@ -78,6 +79,10 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     erubi (1.6.1)
+    escpos (0.0.6)
+    escpos-image (0.0.3)
+      chunky_png
+      escpos
     execjs (2.7.0)
     ffi (1.9.18)
     font-awesome-rails (4.7.0.2)
@@ -249,8 +254,11 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   chartkick
+  chunky_png
   cocoon
   coffee-rails (~> 4.2)
+  escpos
+  escpos-image
   font-awesome-rails
   groupdate
   jbuilder (~> 2.5)
