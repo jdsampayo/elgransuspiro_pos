@@ -119,6 +119,6 @@ class ComandasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comanda_params
-      params.require(:comanda).permit(:mesa, :total, :descuento, :mesero_id, ordenes_attributes: [:id, :articulo_id, :cantidad, :_destroy, extra_ordenes_attributes: [:id, :extra_id, :_destroy]])
+      params.require(:comanda).permit(:mesa, :total, :descuento, :mesero_id, :comensales, ordenes_attributes: [:id, :articulo_id, :cantidad, :_destroy, extra_ordenes_attributes: [:id, :extra_id, :_destroy]])
     end
 end
