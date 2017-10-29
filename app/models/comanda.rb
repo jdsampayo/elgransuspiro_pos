@@ -54,6 +54,22 @@ class Comanda < ApplicationRecord
     texto << ""
     texto << ""
 
-    texto.join("\n")
+    I18n.transliterate(texto.join("\r\n"))
+  end
+
+  def print_ticket
+    printer = Escpos::Printer.new
+    logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
+    printer.write(logo.to_escpos)
+    printer.write(Comanda.last.to_text)
+    printer.cut!
+    ticket_file = Tempfile.new('logo', encoding: 'ascii-8bit')
+    ticket_file.write(printer.to_escpos)
+    ticket_file.close
+    `cupsdisable equal`
+    `sleep 1`
+    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
+    `cupsenable equal`
+    puts ticket_file.path
   end
 end

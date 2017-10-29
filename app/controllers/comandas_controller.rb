@@ -68,19 +68,9 @@ class ComandasController < ApplicationController
   end
 
   def print
-    printer = Escpos::Printer.new
-    logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
-    printer.write(logo.to_escpos)
-    printer.write(@comanda.to_text)
+    @comanda.print_ticket
 
-    ticket_file = Tempfile.new('test', encoding: 'ascii-8bit')
-    ticket_file.write(printer.to_escpos)
-    ticket_file.close
-    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
-
-    ticket_file.unlink
-
-    render :show
+    redirect_to comandas_url, notice: '¡Impresa!'
   end
 
   # DELETE /comandas/1
