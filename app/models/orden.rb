@@ -25,4 +25,8 @@ class Orden < ApplicationRecord
     precio_unitario.to_s.rjust(5, '.').ljust(7, ' ') +
     precio.to_s.rjust(5, ' ').ljust(5, ' ')
   end
+
+  def to_s
+    articulo.to_s + ((cantidad > 1) ? " (#{cantidad})" : "")
+  end
 end

@@ -1,7 +1,7 @@
 class Comanda < ApplicationRecord
   belongs_to :mesero
-  has_many :articulos, through: :ordenes
   has_many :ordenes, inverse_of: :comanda
+  has_many :articulos, through: :ordenes
 
   before_save :set_totales
 

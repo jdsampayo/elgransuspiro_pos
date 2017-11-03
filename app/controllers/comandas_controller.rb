@@ -15,7 +15,7 @@ class ComandasController < ApplicationController
     dia = params[:q][:created_at_gteq].to_date
 
     @q = Comanda.ransack(params[:q])
-    @comandas = @q.result(distinct: true).order(created_at: :desc)
+    @comandas = @q.result(distinct: true).order([closed_at: :asc, created_at: :desc])
     @corte = Corte.find_by(dia: dia)
 
     redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.nil?
@@ -58,7 +58,7 @@ class ComandasController < ApplicationController
   def update
     respond_to do |format|
       if @comanda.update(comanda_params)
-        format.html { redirect_to @comanda, notice: 'Actualizada exitosamente.' }
+        format.html { redirect_to comandas_url, notice: 'Actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @comanda }
       else
         format.html { render :edit }

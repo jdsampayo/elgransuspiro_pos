@@ -60,6 +60,11 @@ Extra.create(nombre: 'Crema Irlandesa', precio: 10)
 Extra.create(nombre: 'Rompope', precio: 10)
 Extra.create(nombre: 'Kalhúa', precio: 10)
 
+Timecop.travel(1.days.ago)
+corte = Corte.new(dia: Date.today, inicial: 0, siguiente_dia: 0)
+corte.cerrar
+
+=begin
 def seed_day
   rand(1...8).times do
 
@@ -92,3 +97,4 @@ end
   Timecop.travel(1.days.ago)
   seed_day
 end
+=end

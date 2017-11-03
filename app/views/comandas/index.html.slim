@@ -1,6 +1,6 @@
-h1 Comandas
+h1.pull-left Comandas
 
-.text-right
+.pull-right
   -if @corte.abierto?
     =link_to "Realizar corte", edit_corte_path(@corte), class: "btn btn-primary"
   -else
@@ -11,10 +11,8 @@ table.table-sm
   thead
     tr
       th ID
-      th Día
       th Hora
-      th Venta
-      th Descuento
+      th width=400 Artículos
       th Total
       th Mesero
       th
@@ -25,18 +23,24 @@ table.table-sm
       tr
         td class=(comanda.abierta? ? "" : "table-active")
           = link_to comanda, comanda
-        td = comanda.created_at.strftime("%Y-%m-%d")
         td = comanda.created_at.strftime("%H:%M")
-        td = comanda.total + comanda.descuento
-        td = comanda.descuento
+        td
+          small= comanda.ordenes.map(&:to_s).to_sentence
         td = comanda.total
         td = comanda.mesero
         -if comanda.abierta?
           td.actions
             .row
-              .col-md-4= link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-info"
-              .col-md-4= link_to 'Cerrar', close_comanda_path(comanda), data: { confirm: '¿Estás seguro?' }, method: :post, class: "btn btn-success"
-              .col-md-4= link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger"
+              .col-md-4= link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-info btn-sm"
+              .col-md-4= link_to 'Cerrar', close_comanda_path(comanda), data: { confirm: '¿Estás seguro?' }, method: :post, class: "btn btn-success btn-sm"
+              .col-md-4= link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
         -else
           td
             span.badge.badge-success Cerrada
+    tr
+      td
+      td
+      td
+      td.text-right
+        strong SUMA
+      td=@comandas.sum(:total)
