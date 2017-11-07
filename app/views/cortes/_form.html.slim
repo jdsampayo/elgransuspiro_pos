@@ -3,13 +3,16 @@
 
   .form-inputs
     .row
-      .col-md-2= f.input :inicial, readonly: true
-      .col-md-2= f.input :ventas, readonly: true
-      .col-md-2= f.input :gastos, readonly: true
-      .col-md-2= f.input :total, readonly: true
-      .col-md-2= f.input :siguiente_dia
-      .col-md-2= f.input :sobre, readonly: true
-
+      .col-md-3= f.input :inicial, readonly: true
+      .col-md-3= f.input :ventas, readonly: true
+      .col-md-3= f.input :gastos, readonly: true
+      .col-md-3= f.input :total, readonly: true
+    .row
+      .col-md-3= f.input :pagos_con_tarjeta, readonly: true
+      .col-md-3= f.input :pagos_con_efectivo, readonly: true
+      .col-md-3= f.input :siguiente_dia
+      .col-md-3= f.input :sobre, readonly: true
+ 
   .form-actions
     = f.button :submit, "Corte", class: "btn btn-primary"
     span.or o

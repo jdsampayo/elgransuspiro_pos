@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728012010) do
+ActiveRecord::Schema.define(version: 20171105001618) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170728012010) do
     t.string "mesa", default: "PARA LLEVAR"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "pago_con_tarjeta", default: false
     t.index ["closed_at"], name: "index_comandas_on_closed_at"
     t.index ["deleted_at"], name: "index_comandas_on_deleted_at"
     t.index ["mesero_id"], name: "index_comandas_on_mesero_id"
@@ -46,6 +47,8 @@ ActiveRecord::Schema.define(version: 20170728012010) do
     t.datetime "closed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "pagos_con_tarjeta", default: "0.0"
+    t.decimal "pagos_con_efectivo", default: "0.0"
   end
 
   create_table "extra_ordenes", force: :cascade do |t|

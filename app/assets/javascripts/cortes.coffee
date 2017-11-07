@@ -4,5 +4,5 @@
 
 $ ->
   $(document).on('keyup', "#corte_siguiente_dia", ->
-    $("#corte_sobre").val($("#corte_total").val() - $("#corte_siguiente_dia").val())
+    $("#corte_sobre").val($("#corte_pagos_con_efectivo").val() - $("#corte_siguiente_dia").val())
   )

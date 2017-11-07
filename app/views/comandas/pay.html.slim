@@ -1,0 +1,21 @@
+h1.pull-left Cerrar Comanda #{@comanda.id}
+
+.clearfix
+
+=render @comanda
+
+.container
+  = simple_form_for(@comanda, url: close_comanda_path(@comanda)) do |f|
+    = f.error_notification
+
+    .form-inputs
+      .row
+        = f.input :pago_con_tarjeta
+
+    .form-actions
+      = f.button :submit, "¡Cerrar!", class: "btn btn-danger"
+      span.or o
+      = link_to 'Cancelar', comandas_path
+
+br
+br

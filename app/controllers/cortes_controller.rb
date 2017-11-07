@@ -5,6 +5,56 @@ class CortesController < ApplicationController
   # GET /cortes.json
   def index
     @cortes = Corte.order(dia: :desc).page params[:page]
+
+    semana_actual_query = Corte.group_by_day_of_week(
+      :created_at,
+      format: "%a",
+      time_zone: false,
+      range: Time.now.beginning_of_week..Time.now.end_of_week
+    )
+    @semana_actual = [
+      {
+        name: "Ventas",
+        data: semana_actual_query.sum(:ventas)
+      },
+      {
+        name: "Gastos",
+        data: semana_actual_query.sum(:gastos)
+      }
+    ]
+
+    semana_anterior_query = Corte.group_by_day_of_week(
+      :created_at,
+      format: "%a",
+      time_zone: false,
+      range: 1.week.ago.beginning_of_week..1.week.ago.end_of_week
+    )
+    @semana_anterior = [
+      {
+        name: "Ventas",
+        data: semana_anterior_query.sum(:ventas)
+      },
+      {
+        name: "Gastos",
+        data: semana_anterior_query.sum(:gastos)
+      }
+    ]
+
+    por_semana_query = Corte.group_by_week(:created_at, time_zone: false)
+    @por_semana = [
+      {
+        name: "Ventas",
+        data: por_semana_query.sum(:ventas)
+      },
+      {
+        name: "Gastos",
+        data: por_semana_query.sum(:gastos)
+      },
+      {
+        name: "Sobre",
+        data: por_semana_query.sum(:sobre)
+      }
+    ]
   end
 
   # GET /cortes/1

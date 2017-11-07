@@ -3,59 +3,7 @@ h1.pull-left Comanda #{@comanda.id}
 .pull-right= link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-success"
 .clearfix
 
-.row
-  .col-md-3
-    strong Mesa:
-    br
-    = @comanda.mesa
-  .col-md-3
-    strong Comensales:
-    br
-    = @comanda.comensales
-  .col-md-3
-    strong Mesero:
-    br
-    = @comanda.mesero
-  .col-md-3
-    span.badge.badge-default=l @comanda.created_at, format: :short
-
-br
-br
-
-h3 Orden
-table
-  tr
-    th Cantidad
-    th Artículo
-    th Precio Unitario
-    th Venta
-  -@comanda.ordenes.each do |orden|
-    tr
-      td= orden.cantidad
-      td
-        = orden.articulo
-        - if orden.extra_ordenes.present?
-          br
-          .small
-            = orden.extra_ordenes.join("<br>").html_safe
-      td= number_to_currency orden.precio_unitario
-      td= number_to_currency orden.precio
-  tr
-    td colspan=2
-    td
-      strong Venta
-    td= number_to_currency @comanda.venta
-  tr
-    td colspan=2
-    td
-      strong Descuento
-    td= number_to_currency @comanda.descuento
-  tr
-    td colspan=2
-    td
-      strong Total
-    td
-      strong= number_to_currency @comanda.total
+=render @comanda
 
 = link_to 'Regresar', comandas_path, class: "btn btn-info"
 br

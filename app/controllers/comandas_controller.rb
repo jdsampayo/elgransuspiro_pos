@@ -1,5 +1,5 @@
 class ComandasController < ApplicationController
-  before_action :set_comanda, only: [:show, :edit, :update, :destroy, :close, :print]
+  before_action :set_comanda, only: [:show, :edit, :update, :destroy, :pay, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
   before_action :check_corte, only: [:new, :create]
 
@@ -15,7 +15,7 @@ class ComandasController < ApplicationController
     dia = params[:q][:created_at_gteq].to_date
 
     @q = Comanda.ransack(params[:q])
-    @comandas = @q.result(distinct: true).order([closed_at: :asc, created_at: :desc])
+    @comandas = @q.result(distinct: true).order([created_at: :desc, closed_at: :asc])
     @corte = Corte.find_by(dia: dia)
 
     redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.nil?
@@ -83,12 +83,20 @@ class ComandasController < ApplicationController
     end
   end
 
+  def pay
+  end
+
   def close
-    @comanda.closed_at = Time.now
-    @comanda.save
     respond_to do |format|
-      format.html { redirect_to comandas_url, notice: '¡Cerrada!' }
-      format.json { head :no_content }
+      if @comanda.update(close_comanda_params)
+        @comanda.closed_at = Time.now
+        @comanda.save
+        format.html { redirect_to comandas_url, notice: '¡Cerrada!' }
+        format.json { head :no_content }
+      else
+        format.html { render :edit }
+        format.json { render json: @comanda.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -110,5 +118,9 @@ class ComandasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comanda_params
       params.require(:comanda).permit(:mesa, :total, :descuento, :mesero_id, :comensales, ordenes_attributes: [:id, :articulo_id, :cantidad, :_destroy, extra_ordenes_attributes: [:id, :extra_id, :_destroy]])
+    end
+
+    def close_comanda_params
+      params.require(:comanda).permit(:pago_con_tarjeta)
     end
 end

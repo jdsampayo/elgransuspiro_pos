@@ -12,6 +12,7 @@ table.table-sm
     tr
       th ID
       th Hora
+      th Cierre
       th width=400 Artículos
       th Total
       th Mesero
@@ -24,6 +25,7 @@ table.table-sm
         td class=(comanda.abierta? ? "" : "table-active")
           = link_to comanda, comanda
         td = comanda.created_at.strftime("%H:%M")
+        td = comanda.closed_at.strftime("%H:%M") if comanda.closed_at
         td
           small= comanda.ordenes.map(&:to_s).to_sentence
         td = comanda.total
@@ -32,7 +34,7 @@ table.table-sm
           td.actions
             .row
               .col-md-4= link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-info btn-sm"
-              .col-md-4= link_to 'Cerrar', close_comanda_path(comanda), data: { confirm: '¿Estás seguro?' }, method: :post, class: "btn btn-success btn-sm"
+              .col-md-4= link_to 'Cerrar', pay_comanda_path(comanda), class: "btn btn-success btn-sm"
               .col-md-4= link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
         -else
           td
@@ -42,5 +44,5 @@ table.table-sm
       td
       td
       td.text-right
-        strong SUMA
+        strong Gran Total:
       td=@comandas.sum(:total)

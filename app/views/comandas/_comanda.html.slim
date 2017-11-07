@@ -1,0 +1,48 @@
+.row
+  .col-md-3
+    strong> Mesa:
+    = @comanda.mesa
+  .col-md-3
+    strong> Comensales:
+    = @comanda.comensales
+  .col-md-3
+    strong> Mesero:
+    = @comanda.mesero
+  .col-md-3
+    strong> Fecha:
+    = @comanda.created_at.strftime('%H:%M')
+hr
+
+table.table-sm
+  tr
+    th Cantidad
+    th Artículo
+    th Precio Unitario
+    th Venta
+  -@comanda.ordenes.each do |orden|
+    tr
+      td= orden.cantidad
+      td
+        = orden.articulo
+        - if orden.extra_ordenes.present?
+          br
+          .small
+            = orden.extra_ordenes.join("<br>").html_safe
+      td= number_to_currency orden.precio_unitario
+      td= number_to_currency orden.precio
+  tr
+    td colspan=2
+    td.text-right
+      strong Subtotal:
+    td= number_to_currency @comanda.venta
+  tr
+    td colspan=2
+    td.text-right
+      strong Descuento:
+    td= number_to_currency @comanda.descuento
+  tr
+    td colspan=2
+    td.text-right
+      strong Total:
+    td
+      strong= number_to_currency @comanda.total

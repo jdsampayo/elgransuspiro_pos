@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   resources :ordenes
   resources :comandas do
     member do
+      get :pay
       post :print
-      post :close
+      patch :close
     end
   end
   resources :meseros

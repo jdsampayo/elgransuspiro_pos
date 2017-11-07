@@ -27,7 +27,9 @@ class Corte < ApplicationRecord
     self.ventas = Comanda.del_dia(dia).sum(:total)
     self.gastos = Gasto.del_dia(dia).sum(:monto)
     self.total = inicial + ventas - gastos
-    self.sobre = total - siguiente_dia
+    self.pagos_con_tarjeta = Comanda.del_dia(dia).where(pago_con_tarjeta: true).sum(:total)
+    self.pagos_con_efectivo = self.total - self.pagos_con_tarjeta
+    self.sobre = pagos_con_efectivo - siguiente_dia
   end
 
   def self.actual
