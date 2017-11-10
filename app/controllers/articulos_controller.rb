@@ -5,6 +5,8 @@ class ArticulosController < ApplicationController
   # GET /articulos.json
   def index
     @articulos = Articulo.all
+    @mas_vendidos = Orden.joins(:articulo).group(:articulo).
+      order('count(articulos.id) desc').limit(10).count
   end
 
   # GET /articulos/1

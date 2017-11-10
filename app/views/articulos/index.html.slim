@@ -1,6 +1,12 @@
-h1 Artículos
+h1.pull-left Artículos
 
-= pie_chart Orden.group(:articulo).count
+.pull-right= link_to 'Nuevo Artículo', new_articulo_path, class: "btn btn-info"
+
+.clearfix
+
+strong Más vendidos
+
+= pie_chart @mas_vendidos
 
 table.table-sm
   thead
@@ -20,4 +26,3 @@ table.table-sm
             .col-md-4= link_to 'Eliminar', articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
 br
 
-= link_to 'Nuevo Artículo', new_articulo_path

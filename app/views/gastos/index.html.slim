@@ -1,11 +1,15 @@
 h1 Gastos
 
+=line_chart Gasto.group_by_day(:created_at, time_zone: false).sum(:monto)
+
+.clearfix
+
 table.table-sm
   thead
     tr
       th Día
       th Monto
-      th Descripción
+      th width=400 Descripción
       th
 
   tbody
@@ -13,10 +17,11 @@ table.table-sm
       tr
         td = gasto.created_at.to_date
         td = gasto.monto
-        td = gasto.descripcion
+        td
+          small= gasto.descripcion
         td.actions
           .row
             .col-md-4= link_to 'Editar', edit_gasto_path(gasto), class: "btn btn-info btn-sm"
             .col-md-4= link_to 'Eliminar', gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
 
-=line_chart Gasto.group_by_day(:created_at, time_zone: false).sum(:monto)
+= paginate @gastos, theme: 'twitter-bootstrap-4'

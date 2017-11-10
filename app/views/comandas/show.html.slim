@@ -1,6 +1,6 @@
 h1.pull-left Comanda #{@comanda.id}
 
-.pull-right= link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-success"
+.pull-right= link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-success", data: { disable_with: "Imprimiendo..." }
 .clearfix
 
 =render @comanda

@@ -4,7 +4,7 @@ class GastosController < ApplicationController
   # GET /gastos
   # GET /gastos.json
   def index
-    @gastos = Gasto.order(created_at: :desc)
+    @gastos = Gasto.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   # GET /gastos/1
