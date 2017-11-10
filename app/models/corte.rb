@@ -46,4 +46,22 @@ class Corte < ApplicationRecord
       Corte.create(dia: dia, inicial: 100, ventas: ventas, gastos: 0, total: total, sobre: total-100, siguiente_dia: 100 )
     end
   end
+
+  def self.de_la_semana(inicio, campo)
+    semana = [
+      inicio.beginning_of_week.to_s,
+      (inicio.beginning_of_week + 1.day).to_s,
+      (inicio.beginning_of_week + 2.day).to_s,
+      (inicio.beginning_of_week + 3.day).to_s,
+      (inicio.beginning_of_week + 4.day).to_s,
+      (inicio.beginning_of_week + 5.day).to_s,
+      (inicio.beginning_of_week + 6.day).to_s
+    ]
+
+    Corte.where(dia: semana).pluck(:dia, campo).map do |corte|
+      dia = I18n.localize(corte[0], format: "%a")
+
+      {dia => corte[1].to_f}
+    end.reduce({}, :merge)
+  end
 end

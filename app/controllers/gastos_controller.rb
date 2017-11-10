@@ -5,6 +5,7 @@ class GastosController < ApplicationController
   # GET /gastos.json
   def index
     @gastos = Gasto.order(created_at: :desc).page(params[:page]).per(5)
+    @gastos_por_dia = Gasto.group_by_day(:created_at, time_zone: false).sum(:monto)
   end
 
   # GET /gastos/1
