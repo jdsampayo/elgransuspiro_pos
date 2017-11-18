@@ -1,12 +1,19 @@
+h1=@articulo
+
 p#notice = notice
 
-p
-  strong Nombre:
-  = @articulo.nombre
-p
-  strong Precio:
-  = @articulo.precio
+h2 Historia
 
-= link_to 'Editar', edit_articulo_path(@articulo)
-'  |
-= link_to 'Regresar', articulos_path
+=line_chart @articulos_por_dia
+
+br
+br
+
+h2 Distribución
+
+=scatter_chart Orden.where(articulo_id: 4).pluck(:cantidad, :comanda_id), xtitle: "Cantidad", ytitle: "Comanda"
+
+= link_to 'Regresar', articulos_path, class: "btn btn-info"
+
+br
+br

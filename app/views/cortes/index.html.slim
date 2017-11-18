@@ -22,6 +22,7 @@ section
         th Día
         th Inicial
         th Ventas
+        th Con Tarjeta
         th Gastos
         th Total
         th Siguiente día
@@ -34,6 +35,7 @@ section
           td = corte.inicial
           td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
             = corte.ventas
+          td= corte.pagos_con_tarjeta
           td class=(corte.gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
             = corte.gastos
           td = corte.total

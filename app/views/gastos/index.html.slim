@@ -20,8 +20,9 @@ table.table-sm
         td
           small= gasto.descripcion
         td.actions
-          .row
-            .col-md-4= link_to 'Editar', edit_gasto_path(gasto), class: "btn btn-info btn-sm"
-            .col-md-4= link_to 'Eliminar', gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+          = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
+            i.fa.fa-pencil
+          = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+            i.fa.fa-trash
 
 = paginate @gastos, theme: 'twitter-bootstrap-4'

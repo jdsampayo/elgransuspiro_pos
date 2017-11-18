@@ -7,6 +7,8 @@ class Orden < ApplicationRecord
 
   before_save :guardar_precios_historicos
 
+  scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
+
   def precio
     cantidad * precio_unitario
   end

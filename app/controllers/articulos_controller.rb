@@ -4,7 +4,7 @@ class ArticulosController < ApplicationController
   # GET /articulos
   # GET /articulos.json
   def index
-    @articulos = Articulo.all
+    @articulos = Articulo.order(nombre: :asc)
     @mas_vendidos = Orden.joins(:articulo).group(:articulo).
       order('count(articulos.id) desc').limit(10).count
   end
@@ -12,6 +12,8 @@ class ArticulosController < ApplicationController
   # GET /articulos/1
   # GET /articulos/1.json
   def show
+    @articulos_por_dia = Orden.where(articulo_id: @articulo.id).
+      group_by_day(:created_at, time_zone: false).sum(:cantidad)
   end
 
   # GET /articulos/new

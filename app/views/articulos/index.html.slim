@@ -14,15 +14,21 @@ table.table-sm
       th Nombre
       th Precio
       th
+      th Nombre
+      th Precio
+      th
 
   tbody
-    - @articulos.each do |articulo|
+    - @articulos.in_groups_of(2) do |slice|
       tr
-        td = link_to articulo.nombre, articulo
-        td = articulo.precio
-        td.actions
-          .row
-            .col-md-4= link_to 'Editar', edit_articulo_path(articulo), class: "btn btn-info btn-sm"
-            .col-md-4= link_to 'Eliminar', articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
-br
+        - slice.each do |articulo|
+          - next unless articulo.present?
+          td = link_to articulo, articulo
+          td = articulo.precio
+          td.actions
+            = link_to edit_articulo_path(articulo), class: "btn btn-info btn-sm" do
+              i.fa.fa-pencil
+            = link_to articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
+              i.fa.fa-trash
 
+br

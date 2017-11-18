@@ -58,6 +58,8 @@ class ComandasController < ApplicationController
   def update
     respond_to do |format|
       if @comanda.update(comanda_params)
+        @comanda.set_totales
+        @comanda.save
         format.html { redirect_to comandas_url, notice: 'Actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @comanda }
       else

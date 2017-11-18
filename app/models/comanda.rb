@@ -61,8 +61,8 @@ class Comanda < ApplicationRecord
 
   def print_ticket
     printer = Escpos::Printer.new
-    logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
-    printer.write(logo.to_escpos)
+    #logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
+    #printer.write(logo.to_escpos)
     printer.write(to_text)
     printer.cut!
     ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')

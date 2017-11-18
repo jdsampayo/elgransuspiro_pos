@@ -27,7 +27,7 @@ table.table-sm
         td = comanda.created_at.strftime("%H:%M")
         td = comanda.closed_at.strftime("%H:%M") if comanda.closed_at
         td
-          small= comanda.ordenes.map(&:to_s).to_sentence
+          small= comanda.ordenes.ordered.map(&:to_s).to_sentence
         td = comanda.total
         td = comanda.mesero
         -if comanda.abierta?

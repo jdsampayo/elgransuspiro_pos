@@ -19,7 +19,7 @@ table.table-sm
     th Artículo
     th Precio Unitario
     th Venta
-  -@comanda.ordenes.each do |orden|
+  -@comanda.ordenes.ordered.each do |orden|
     tr
       td= orden.cantidad
       td
