@@ -113,8 +113,9 @@ class ComandasController < ApplicationController
     end
 
     def check_corte
-      redirect_to comandas_path, notice: '¡Imposible! El corte de este día ya está cerrado.' unless Corte.actual.abierto?
-
+      if Corte.actual.nil? || !Corte.actual.abierto?
+        redirect_to comandas_path, notice: '¡Imposible! El corte de este día ya está cerrado.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

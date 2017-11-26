@@ -11,7 +11,7 @@ br
 
 h2 Distribución
 
-=scatter_chart Orden.where(articulo_id: 4).pluck(:cantidad, :comanda_id), xtitle: "Cantidad", ytitle: "Comanda"
+=scatter_chart Orden.where(articulo_id: @articulo.id).pluck(:cantidad, :comanda_id), xtitle: "Cantidad", ytitle: "Comanda"
 
 = link_to 'Regresar', articulos_path, class: "btn btn-info"
 
