@@ -10,20 +10,22 @@ br
 table.table-sm
   thead
     tr
-      th ID
+      th Folio
+      th Mesa
       th Hora
       th Cierre
       th width=400 Artículos
       th Total
       th Mesero
-      th
-
+      th width=400 
 
   tbody
     - @comandas.each do |comanda|
       tr
         td class=(comanda.abierta? ? "" : "table-active")
           = link_to comanda, comanda
+        td
+          .small= comanda.mesa.capitalize
         td = comanda.created_at.strftime("%H:%M")
         td = comanda.closed_at.strftime("%H:%M") if comanda.closed_at
         td
@@ -32,14 +34,15 @@ table.table-sm
         td = comanda.mesero
         -if comanda.abierta?
           td.actions
-            .row
-              .col-md-4= link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-info btn-sm"
-              .col-md-4= link_to 'Cerrar', pay_comanda_path(comanda), class: "btn btn-success btn-sm"
-              .col-md-4= link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+            = link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-primary btn-sm"
+            = link_to 'Imprimir', print_comanda_path(comanda), method: :post, class: "btn btn-info btn-sm", data: { disable_with: "Imprimiendo..." }
+            = link_to 'Cerrar', pay_comanda_path(comanda), class: "btn btn-success btn-sm"
+            = link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
         -else
           td
             span.badge.badge-success Cerrada
     tr
+      td
       td
       td
       td

@@ -1,10 +1,13 @@
 h1.pull-left Comanda #{@comanda.id}
 
-.pull-right= link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-success", data: { disable_with: "Imprimiendo..." }
+.pull-right
+  .actions
+    = link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-info", data: { disable_with: "Imprimiendo..." }
+    = link_to 'Cerrar', pay_comanda_path(@comanda), class: "btn btn-success"
 .clearfix
 
 =render @comanda
 
-= link_to 'Regresar', comandas_path, class: "btn btn-info"
+= link_to 'Regresar', comandas_path, class: "btn btn-primary"
 br
 br

@@ -1,56 +1,52 @@
 2 Leche entera
 1 Leche deslactosada
 Peñafiel
-
 Pastel Chocolate
 Pastel Otro
--Crema batida
-
--Queso manchego
+Crema batida
+Queso manchego
 Queso philadelphia
--Queso cabra
--4 quesos
--Jamon de pavo
--Jamon serrano
-
--Aceitunas
+Queso cabra
+4 quesos
+Jamon de pavo
+Jamon serrano
+Aceitunas
 Chipotles
 Jalapeños
-
 Mantequilla
--Mayonesa
-
--Helado chocolate
--Helado vainilla
+Mayonesa
+Helado chocolate
+Helado vainilla
 Helado fresa
-
--Azucar
--Harina
--Chocolate
--Galletas
-
--Servilletas
--Papel de baño
-
--Jabon para trastes
--Jabon para piso
-
--Maple
--Mermelada fresa
--Mermelada chabacano
--Mermelada zarzamora
--Miel
--Cajeta
--Rompope
-
--Arandano
--Nuez
--Granillo de Chocolate
--Almendra
-
+Azucar
+Harina
+Chocolate
+Galletas
+Servilletas
+Papel de baño
+Jabon para trastes
+Jabon para piso
+Maple
+Mermelada fresa
+Mermelada chabacano
+Mermelada zarzamora
+Miel
+Cajeta
+Rompope
+Hersheys
+Arandano
+Nuez
+Granillo de Chocolate
+Almendra
 Licor 43
 Crema irlandesa
--Kahlua
+Kahlua (eliminar)
 Menta concentrado
--Vainilla
+Vainilla
+Cardamomo
+Jarabe Natural
+Cafe
+Tisanas
+Matcha
+Chai
 
