@@ -85,8 +85,7 @@ class ComandasController < ApplicationController
   def close
     respond_to do |format|
       if @comanda.update(close_comanda_params)
-        @comanda.closed_at = Time.now
-        @comanda.save
+        @comanda.cerrar
         format.html { redirect_to comandas_url, notice: '¡Cerrada!' }
         format.json { head :no_content }
       else

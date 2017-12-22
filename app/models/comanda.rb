@@ -16,6 +16,22 @@ class Comanda < ApplicationRecord
     where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
   end
 
+  def cerrar
+    self.closed_at = Time.now
+    save
+
+    actualizar_conteos
+  end
+
+  def actualizar_conteos
+    ordenes.each do |orden|
+      conteo = Conteo.where(articulo_id: orden.articulo.id, corte_id: corte.id).first_or_initialize
+      conteo.total += orden.cantidad
+      conteo.save
+    end
+  end
+
+
   def set_totales
     ordenes.map(&:guardar_precios_historicos)
     self.venta = ordenes.map(&:precio).sum

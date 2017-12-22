@@ -4,8 +4,8 @@ class ArticulosController < ApplicationController
   # GET /articulos
   # GET /articulos.json
   def index
-    @mas_vendidos = Orden.joins(:articulo).group(:articulo).
-      order('count(articulos.id) desc').limit(10).count
+    conteos = Conteo.group(:articulo_id).order('sum_total DESC').limit(10).sum(:total)
+    @conteos = Hash[conteos.map { |k, v| [Articulo.find(k).nombre.titleize, v] }]
     @categorias = Categoria.order(nombre: :asc)
   end
 
