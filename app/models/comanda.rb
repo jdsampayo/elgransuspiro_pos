@@ -1,4 +1,5 @@
 class Comanda < ApplicationRecord
+  belongs_to :corte
   belongs_to :mesero
   has_many :ordenes, inverse_of: :comanda
   has_many :articulos, through: :ordenes

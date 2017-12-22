@@ -5,7 +5,9 @@ h1.pull-left Comandas
     =link_to "Realizar corte", edit_corte_path(@corte), class: "btn btn-primary"
   -else
     button.btn.btn-secondary Corte cerrado
-br
+
+.clearfix
+h5=l @corte.dia, format: :long
 
 table.table-sm
   thead

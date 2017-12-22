@@ -31,7 +31,7 @@ section
     tbody
       - @cortes.each do |corte|
         tr
-          td = link_to corte.dia, comandas_path(q: {created_at_gteq: corte.dia, created_at_lteq: corte.dia.end_of_day})
+          td = link_to corte.dia, comandas_path(corte_id: corte.id)
           td = corte.inicial
           td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
             = corte.ventas

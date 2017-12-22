@@ -1,0 +1,10 @@
+= simple_form_for(@conteo) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :articulo_id
+    = f.input :corte_id
+    = f.input :total
+
+  .form-actions
+    = f.button :submit

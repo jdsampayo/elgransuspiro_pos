@@ -1,4 +1,8 @@
 class Corte < ApplicationRecord
+  has_many :conteos
+  has_many :comandas
+  has_many :ordenes, through: :comandas
+
   VENTAS_LIMITE = 1000
   GASTOS_LIMITE = 100
 
@@ -20,6 +24,7 @@ class Corte < ApplicationRecord
     save
 
     Comanda.del_dia(dia).update_all(closed_at: Time.now)
+
     Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
   end
 

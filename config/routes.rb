@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :conteos
   resources :categorias
   resources :gastos
   resources :cortes

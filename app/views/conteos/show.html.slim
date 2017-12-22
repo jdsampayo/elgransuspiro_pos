@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Articulo:
+  = @conteo.articulo_id
+p
+  strong Corte:
+  = @conteo.corte_id
+p
+  strong Total:
+  = @conteo.total
+
+= link_to 'Edit', edit_conteo_path(@conteo)
+'  |
+= link_to 'Back', conteos_path

@@ -1,0 +1,25 @@
+h1 Listing conteos
+
+table
+  thead
+    tr
+      th Articulo
+      th Corte
+      th Total
+      th
+      th
+      th
+
+  tbody
+    - @conteos.each do |conteo|
+      tr
+        td = conteo.articulo_id
+        td = conteo.corte_id
+        td = conteo.total
+        td = link_to 'Show', conteo
+        td = link_to 'Edit', edit_conteo_path(conteo)
+        td = link_to 'Destroy', conteo, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Conteo', new_conteo_path

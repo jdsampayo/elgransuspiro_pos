@@ -5,20 +5,13 @@ class ComandasController < ApplicationController
 
   # GET /comandas
   # GET /comandas.json
-  def index
-    if params[:q].blank?
-      params[:q] = {}
-      params[:q][:created_at_gteq] = Time.now.beginning_of_day
-      params[:q][:created_at_lteq] = Time.now.end_of_day
-    end
+  def index   
+    params[:corte_id] = Corte.actual.id if params[:corte_id].blank?
 
-    dia = params[:q][:created_at_gteq].to_date
+    @corte = Corte.find(params[:corte_id])
+    @comandas = @corte.comandas.order([closed_at: :asc])
 
-    @q = Comanda.ransack(params[:q])
-    @comandas = @q.result(distinct: true).order([closed_at: :asc])
-    @corte = Corte.find_by(dia: dia)
-
-    redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.nil?
+    #redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.dia != Time.current.to_date
   end
 
   # GET /comandas/1
@@ -41,6 +34,7 @@ class ComandasController < ApplicationController
   # POST /comandas.json
   def create
     @comanda = Comanda.new(comanda_params)
+    @comanda.corte = Corte.actual
 
     respond_to do |format|
       if @comanda.save
