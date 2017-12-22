@@ -1,8 +1,16 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
-Mesero.create(nombre: 'Pablo')
-Mesero.create(nombre: 'Mirel')
+Mesero.create(nombre: 'Naomi')
+Mesero.create(nombre: 'Diana')
+Mesero.create(nombre: 'Zuiry')
+Mesero.create(nombre: 'Jorge')
+
+Categoria.create(nombre: 'Bebidas frías')
+Categoria.create(nombre: 'Bebidas calientes')
+Categoria.create(nombre: 'Alimentos')
+Categoria.create(nombre: 'Postres')
+Categoria.create(nombre: 'Métodos')
 
 Articulo.create(nombre: 'Espresso', precio: 20)
 Articulo.create(nombre: 'Espresso DOBLE', precio: 25)

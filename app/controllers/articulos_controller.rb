@@ -4,9 +4,9 @@ class ArticulosController < ApplicationController
   # GET /articulos
   # GET /articulos.json
   def index
-    @articulos = Articulo.order(nombre: :asc)
     @mas_vendidos = Orden.joins(:articulo).group(:articulo).
       order('count(articulos.id) desc').limit(10).count
+    @categorias = Categoria.order(nombre: :asc)
   end
 
   # GET /articulos/1
@@ -73,6 +73,6 @@ class ArticulosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def articulo_params
-      params.require(:articulo).permit(:nombre, :precio)
+      params.require(:articulo).permit(:nombre, :precio, :categoria_id)
     end
 end

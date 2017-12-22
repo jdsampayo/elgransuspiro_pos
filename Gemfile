@@ -79,3 +79,4 @@ gem 'bootstrap4-kaminari-views'
 gem 'chunky_png'
 gem 'escpos'
 gem 'escpos-image'
+

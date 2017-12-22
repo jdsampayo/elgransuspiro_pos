@@ -8,27 +8,26 @@ strong Más vendidos
 
 = pie_chart @mas_vendidos
 
+
 table.table-sm
-  thead
+
+  - @categorias.each do |categoria|
+    tr
+      th=categoria
+      th
+      th
     tr
       th Nombre
       th Precio
-      th
-      th Nombre
-      th Precio
-      th
 
-  tbody
-    - @articulos.in_groups_of(2) do |slice|
+    - categoria.articulos.each do |articulo|    
       tr
-        - slice.each do |articulo|
-          - next unless articulo.present?
-          td = link_to articulo, articulo
-          td = articulo.precio
-          td.actions
-            = link_to edit_articulo_path(articulo), class: "btn btn-info btn-sm" do
-              i.fa.fa-pencil
-            = link_to articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
-              i.fa.fa-trash
+        td = link_to articulo, articulo
+        td = articulo.precio
+        td.actions
+          = link_to edit_articulo_path(articulo), class: "btn btn-info btn-sm" do
+            i.fa.fa-pencil
+          = link_to articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
+            i.fa.fa-trash
 
 br

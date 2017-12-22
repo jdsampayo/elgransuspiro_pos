@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require tether
 //= require jquery3
+//= require selectize
 //= require popper
 //= require bootstrap
 //= require cocoon

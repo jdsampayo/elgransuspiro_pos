@@ -3,7 +3,7 @@
     .col-md-6
       .row
         .col-md-2= f.input :cantidad, label: false, input_html: {min: "1", step: "1"}
-        .col-md-8= f.association :articulo, label: false, collection: Articulo.order('nombre ASC')
+        .col-md-8= f.input :articulo_id, label: false, collection: Categoria.all, as: :grouped_select, group_method: :articulos
         .col-md-2= link_to_remove_association "Eliminar", f
     .col-md-6
       .extras_form
@@ -12,3 +12,6 @@
         .links
           .small= link_to_add_association 'Agregar extra', f, :extra_ordenes
   hr
+
+javascript:
+  $("select").not('.selectized').selectize()
