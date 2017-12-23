@@ -117,6 +117,6 @@ class ComandasController < ApplicationController
     end
 
     def close_comanda_params
-      params.require(:comanda).permit(:pago_con_tarjeta)
+      params.require(:comanda).permit(:pago_con_tarjeta, :propina)
     end
 end

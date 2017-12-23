@@ -6,6 +6,10 @@ class Corte < ApplicationRecord
   VENTAS_LIMITE = 1000
   GASTOS_LIMITE = 100
 
+  def propinas
+    comandas.sum(:propina)
+  end
+
   def to_s
     dia.to_s
   end

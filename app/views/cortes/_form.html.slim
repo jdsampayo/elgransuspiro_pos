@@ -12,6 +12,8 @@
       .col-md-3= f.input :pagos_con_efectivo, readonly: true
       .col-md-3= f.input :siguiente_dia
       .col-md-3= f.input :sobre, readonly: true
+    .row
+      .col-md-3= f.input :propinas, readonly: true
  
   .form-actions
     = f.button :submit, "Corte", class: "btn btn-primary"

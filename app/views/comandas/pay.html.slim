@@ -10,7 +10,13 @@ h1.pull-left Cerrar Comanda #{@comanda.id}
 
     .form-inputs
       .row
-        = f.input :pago_con_tarjeta
+        .col-md-6
+        .col-md-6
+          = f.input :pago_con_tarjeta
+      .row
+        .col-md-6
+        .col-md-6
+          = f.input :propina
 
     .form-actions
       = f.button :submit, "¡Cerrar!", class: "btn btn-danger"
