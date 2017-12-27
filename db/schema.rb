@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222234824) do
+ActiveRecord::Schema.define(version: 20171227032855) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20171222234824) do
     t.datetime "updated_at", null: false
     t.integer "categoria_id"
     t.index ["categoria_id"], name: "index_articulos_on_categoria_id"
+  end
+
+  create_table "articulos_desechables", id: false, force: :cascade do |t|
+    t.integer "articulo_id", null: false
+    t.integer "desechable_id", null: false
+    t.index ["articulo_id", "desechable_id"], name: "index_articulos_desechables_on_articulo_id_and_desechable_id"
+    t.index ["desechable_id", "articulo_id"], name: "index_articulos_desechables_on_desechable_id_and_articulo_id"
   end
 
   create_table "categorias", force: :cascade do |t|
@@ -67,6 +74,16 @@ ActiveRecord::Schema.define(version: 20171222234824) do
     t.datetime "updated_at", null: false
     t.decimal "pagos_con_tarjeta", default: "0.0"
     t.decimal "pagos_con_efectivo", default: "0.0"
+  end
+
+  create_table "desechables", force: :cascade do |t|
+    t.string "nombre"
+    t.integer "en_bodega"
+    t.integer "cantidad"
+    t.decimal "costo_unitario"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "limite"
   end
 
   create_table "extra_ordenes", force: :cascade do |t|

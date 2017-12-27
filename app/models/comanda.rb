@@ -76,13 +76,18 @@ class Comanda < ApplicationRecord
     I18n.transliterate(texto.join("\r\n"))
   end
 
+
   def print_ticket
     logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
 
     printer = Escpos::Printer.new
+
+
+    #printer.write(Escpos.sequence(Escpos::IMAGE))
     #printer.write(logo.to_escpos)
+    printer.write(Escpos.sequence(Escpos::TXT_NORMAL))
     printer.write(to_text)
-    printer.write(Escpos.sequence(Escpos::CTL_CR))
+    #printer.write(Escpos.sequence(Escpos::CD_KICK_2))
 
     ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')
     ticket_file.write(printer.to_escpos)
@@ -91,4 +96,5 @@ class Comanda < ApplicationRecord
     sleep 1
     ticket_file.unlink
   end
+
 end

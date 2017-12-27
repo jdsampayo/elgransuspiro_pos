@@ -1,0 +1,30 @@
+h1.pull-left Desechables
+.pull-right
+  =link_to "Nuevo desechable", new_desechable_path, class: "btn btn-primary"
+
+
+table.table-sm
+  thead
+    tr
+      th Nombre
+      th En bodega
+      th Cantidad actual
+      th Costo Unitario
+      th
+      th
+      th
+
+  tbody
+    - @desechables.each do |desechable|
+      tr
+        td = desechable.nombre
+        td = desechable.en_bodega
+        td = desechable.cantidad
+        td = desechable.costo_unitario
+        td.actions
+          = link_to edit_desechable_path(desechable), class: "btn btn-info btn-sm" do
+            i.fa.fa-pencil
+          = link_to desechable, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+            i.fa.fa-trash
+
+br

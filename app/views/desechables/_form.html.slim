@@ -1,0 +1,11 @@
+= simple_form_for(@desechable) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :nombre
+    = f.input :en_bodega
+    = f.input :cantidad
+    = f.input :costo_unitario
+
+  .form-actions
+    = f.button :submit

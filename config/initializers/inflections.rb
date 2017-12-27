@@ -13,6 +13,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.singular(/es$/, '')
 
   inflect.irregular('corte', 'cortes')
+  inflect.irregular('desechable', 'desechables')
 
   # Se agregan inflectores para todos los casos de detalle_ y detalles_
   # Ejs.:

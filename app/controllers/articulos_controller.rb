@@ -73,6 +73,6 @@ class ArticulosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def articulo_params
-      params.require(:articulo).permit(:nombre, :precio, :categoria_id)
+      params.require(:articulo).permit(:nombre, :precio, :categoria_id, desechable_ids: [])
     end
 end

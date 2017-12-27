@@ -27,6 +27,7 @@ section
         th Total
         th Siguiente día
         th Sobre
+        th Propinas
 
     tbody
       - @cortes.each do |corte|
@@ -41,6 +42,7 @@ section
           td = corte.total
           td = corte.siguiente_dia
           td = corte.sobre
+          td = corte.propinas
 
   = paginate @cortes, theme: 'twitter-bootstrap-4'
 

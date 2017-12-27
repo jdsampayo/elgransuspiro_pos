@@ -6,6 +6,7 @@ class Orden < ApplicationRecord
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
   before_save :guardar_precios_historicos
+  after_commit :descontar_desechables
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
@@ -19,6 +20,17 @@ class Orden < ApplicationRecord
 
   def guardar_precios_historicos
     self.precio_unitario = articulo.precio + precio_extras
+  end
+
+  def descontar_desechables
+    puts "**********************"
+    puts articulo
+    articulo.desechables.each do |desechable|
+      puts "descontando #{desechable.cantidad}: #{cantidad}"
+      desechable.update_attribute(:cantidad, desechable.cantidad - cantidad)
+      desechable.reload
+      puts "nuevo #{desechable.cantidad}"
+    end
   end
 
   def to_text

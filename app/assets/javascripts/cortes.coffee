@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$ ->
+$(document).on "turbolinks:load", ->
   $(document).on('keyup', "#corte_siguiente_dia", ->
     $("#corte_sobre").val($("#corte_pagos_con_efectivo").val() - $("#corte_siguiente_dia").val())
   )

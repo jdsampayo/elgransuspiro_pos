@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Nombre:
+  = @desechable.nombre
+p
+  strong Cantidad:
+  = @desechable.cantidad
+p
+  strong Costo Unitario:
+  = @desechable.costo_unitario
+
+= link_to 'Editar', edit_desechable_path(@desechable)
+'  |
+= link_to 'Regresar', desechables_path
