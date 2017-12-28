@@ -28,7 +28,6 @@ class Corte < ApplicationRecord
     save
 
     Comanda.del_dia(dia).update_all(closed_at: Time.now)
-
     Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
   end
 

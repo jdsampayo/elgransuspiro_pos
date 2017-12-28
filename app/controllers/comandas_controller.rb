@@ -5,13 +5,19 @@ class ComandasController < ApplicationController
 
   # GET /comandas
   # GET /comandas.json
-  def index   
-    params[:corte_id] = Corte.actual.id if params[:corte_id].blank?
+  def index
+    if params[:corte_id].blank?
+      corte_actual = Corte.actual
+
+      unless corte_actual
+        redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior."
+      end
+
+      params[:corte_id] = corte_actual.id
+    end
 
     @corte = Corte.find(params[:corte_id])
     @comandas = @corte.comandas.order([closed_at: :asc])
-
-    #redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.dia != Time.current.to_date
   end
 
   # GET /comandas/1
@@ -106,7 +112,7 @@ class ComandasController < ApplicationController
     end
 
     def check_corte
-      if Corte.actual.nil? || !Corte.actual.abierto?
+      if Corte.actual.nil? || Corte.actual.cerrado?
         redirect_to comandas_path, notice: '¡Imposible! El corte de este día ya está cerrado.'
       end
     end
