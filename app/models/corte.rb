@@ -31,45 +31,53 @@ class Corte < ApplicationRecord
     Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
   end
 
+  def registro_contable
+    entry = Plutus::Entry.new(
+      description: "Corte del día #{dia}",
+      date: closed_at,
+      debits: [
+        {account_name: "Caja", amount: pagos_con_efectivo - gastos},
+        {account_name: "Banco", amount: pagos_con_tarjeta},
+        {account_name: "Gastos de Operación", amount: gastos}
+      ],
+      credits: [
+        {account_name: "Ventas", amount: ventas},
+      ]
+    )
+
+    if entry.save
+      puts "Registro contable creado: #{dia}"
+    else
+      puts "Registro contable erróneo: #{dia}"
+    end
+  end
+
   def set_subtotals
-    self.ventas = Comanda.del_dia(dia).sum(:total)
+    comandas_del_dia = Comanda.del_dia(dia)
+
+    self.ventas = comandas_del_dia.sum(:total)
+    self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
+    self.pagos_con_efectivo = comandas_del_dia.con_efectivo.sum(:total)
+
     self.gastos = Gasto.del_dia(dia).sum(:monto)
     self.total = inicial + ventas - gastos
-    self.pagos_con_tarjeta = Comanda.del_dia(dia).where(pago_con_tarjeta: true).sum(:total)
-    self.pagos_con_efectivo = self.total - self.pagos_con_tarjeta
-    self.sobre = pagos_con_efectivo - siguiente_dia
+    self.sobre = total - pagos_con_tarjeta - siguiente_dia
   end
 
   def self.actual
     Corte.find_by(dia: Time.now.to_date)
   end
 
-  def self.seed
-    dias = Comanda.pluck(:created_at).map(&:to_date).uniq
-
-    dias.each do |dia|
-      ventas = Comanda.del_dia(dia).sum(:venta)
-      gastos = 0
-      total = ventas-gastos
-      Corte.create(dia: dia, inicial: 100, ventas: ventas, gastos: 0, total: total, sobre: total-100, siguiente_dia: 100 )
-    end
-  end
-
   def self.de_la_semana(inicio, campo)
-    semana = [
-      inicio.beginning_of_week.to_s,
-      (inicio.beginning_of_week + 1.day).to_s,
-      (inicio.beginning_of_week + 2.day).to_s,
-      (inicio.beginning_of_week + 3.day).to_s,
-      (inicio.beginning_of_week + 4.day).to_s,
-      (inicio.beginning_of_week + 5.day).to_s,
-      (inicio.beginning_of_week + 6.day).to_s
-    ]
+    fecha_inicio = inicio.beginning_of_week
+
+    semana = []
+    (0..6).each do |numero_dias|
+      semana << (fecha_inicio + numero_dias.day).to_s
+    end
 
     Corte.where(dia: semana).pluck(:dia, campo).map do |corte|
-      dia = I18n.localize(corte[0], format: "%a")
-
-      {dia => corte[1].to_f}
+      {I18n.localize(corte[0], format: "%a") => corte[1].to_f}
     end.reduce({}, :merge)
   end
 end

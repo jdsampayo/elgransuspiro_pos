@@ -1,0 +1,2 @@
+module ContablesHelper
+end

@@ -1,0 +1,18 @@
+h1.pull-left Cuentas Contables
+.pull-right
+  =link_to "Nueva cuenta", new_cuenta_path, class: "btn btn-primary"
+
+
+table.table-sm
+  thead
+    tr
+      th Nombre
+      th Tipo
+      th Contra
+      th
+  tbody
+    - @cuentas.each do |cuenta|
+      tr
+        td = cuenta.name
+        td = Cuenta.plutus_a_tipo(cuenta)
+        td = cuenta.contra ? "Sí" : "No"

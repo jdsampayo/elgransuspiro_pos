@@ -14,6 +14,13 @@ ActiveSupport::Inflector.inflections do |inflect|
 
   inflect.irregular('corte', 'cortes')
   inflect.irregular('desechable', 'desechables')
+  inflect.irregular('contable', 'contables')
+
+  # Plutus
+  inflect.irregular('account', 'accounts')
+  inflect.irregular('entry', 'entries')
+  inflect.irregular('amount', 'amounts')
+  inflect.irregular('report', 'reports')
 
   # Se agregan inflectores para todos los casos de detalle_ y detalles_
   # Ejs.:

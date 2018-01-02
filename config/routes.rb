@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   end
   resources :meseros
   resources :articulos
+  resources :cuentas
 
   root "cortes#index"
+
+  mount Plutus::Engine => "/contabilidad", as: "contabilidad"
 end

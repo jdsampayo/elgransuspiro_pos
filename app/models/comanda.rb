@@ -15,6 +15,12 @@ class Comanda < ApplicationRecord
   scope :del_dia, ->(dia) do
     where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
   end
+  scope :con_tarjeta, -> do
+    where(pago_con_tarjeta: true)
+  end
+  scope :con_efectivo, -> do
+    where(pago_con_tarjeta: false)
+  end
 
   scope :cerradas, -> do
     where.not(closed_at: nil)

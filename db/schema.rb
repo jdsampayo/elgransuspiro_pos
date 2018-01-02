@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227032855) do
+ActiveRecord::Schema.define(version: 20171228031221) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -123,6 +123,36 @@ ActiveRecord::Schema.define(version: 20171227032855) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["comanda_id"], name: "index_ordenes_on_comanda_id"
+  end
+
+  create_table "plutus_accounts", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.boolean "contra"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["name", "type"], name: "index_plutus_accounts_on_name_and_type"
+  end
+
+  create_table "plutus_amounts", force: :cascade do |t|
+    t.string "type"
+    t.integer "account_id"
+    t.integer "entry_id"
+    t.decimal "amount", precision: 20, scale: 10
+    t.index ["account_id", "entry_id"], name: "index_plutus_amounts_on_account_id_and_entry_id"
+    t.index ["entry_id", "account_id"], name: "index_plutus_amounts_on_entry_id_and_account_id"
+    t.index ["type"], name: "index_plutus_amounts_on_type"
+  end
+
+  create_table "plutus_entries", force: :cascade do |t|
+    t.string "description"
+    t.date "date"
+    t.integer "commercial_document_id"
+    t.string "commercial_document_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["commercial_document_id", "commercial_document_type"], name: "index_entries_on_commercial_doc"
+    t.index ["date"], name: "index_plutus_entries_on_date"
   end
 
 end

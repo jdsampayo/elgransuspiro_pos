@@ -9,12 +9,14 @@ class ComandasController < ApplicationController
     if params[:corte_id].blank?
       corte_actual = Corte.actual
 
-      unless corte_actual
+      if corte_actual.nil?
         redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior."
+        return
       end
 
       params[:corte_id] = corte_actual.id
     end
+    binding.pry
 
     @corte = Corte.find(params[:corte_id])
     @comandas = @corte.comandas.order([closed_at: :asc])

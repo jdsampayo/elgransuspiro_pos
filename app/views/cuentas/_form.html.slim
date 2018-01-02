@@ -1,0 +1,10 @@
+= simple_form_for(@cuenta) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :nombre
+    = f.input :tipo, collection: Cuenta::TIPOS.invert
+    = f.input :contra, as: :boolean
+
+  .form-actions
+    = f.button :submit
