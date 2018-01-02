@@ -18,8 +18,10 @@ table.table-sm
       th Cierre
       th width=400 Artículos
       th Total
+      th Propina
       th Mesero
-      th width=400 
+      th Tipo
+      th width=270 Acciones
 
   tbody
     - @comandas.each do |comanda|
@@ -27,27 +29,66 @@ table.table-sm
         td class=(comanda.abierta? ? "" : "table-active")
           = link_to comanda, comanda
         td
-          .small= comanda.mesa.capitalize
-        td = comanda.created_at.strftime("%H:%M")
-        td = comanda.closed_at.strftime("%H:%M") if comanda.closed_at
+          small= comanda.mesa.capitalize
+        td
+          small= comanda.created_at.strftime("%H:%M")
+        td
+          small= comanda.closed_at.strftime("%H:%M") if comanda.closed_at
         td
           small= comanda.ordenes.ordered.map(&:to_s).to_sentence
-        td = comanda.total
-        td = comanda.mesero
+        td
+          strong= comanda.total
+        td
+          small= comanda.propina
+        td
+          small= comanda.mesero
+        td
+          -if comanda.closed_at
+            -if comanda.pago_con_tarjeta
+              i.fa.fa-credit-card
+            -else
+              i.fa.fa-money
         -if comanda.abierta?
           td.actions
-            = link_to 'Editar', edit_comanda_path(comanda), class: "btn btn-primary btn-sm"
-            = link_to 'Imprimir', print_comanda_path(comanda), method: :post, class: "btn btn-info btn-sm", data: { disable_with: "Imprimiendo..." }
-            = link_to 'Cerrar', pay_comanda_path(comanda), class: "btn btn-success btn-sm"
-            = link_to 'Cancelar', comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+            = link_to edit_comanda_path(comanda), class: "btn btn-primary" do
+              i.fa.fa-pencil
+            = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fa fa-clock-o'>".html_safe } do
+              i.fa.fa-print
+            = link_to pay_comanda_path(comanda), class: "btn btn-success" do
+              i.fa.fa-money
+            = link_to comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
+              i.fa.fa-trash
         -else
           td
-            span.badge.badge-success Cerrada
-    tr
-      td
-      td
-      td
-      td
+            i.fa.fa-lock
+    tr.table-info
+      td colspan=4
       td.text-right
         strong Gran Total:
       td=@comandas.sum(:total)
+      td colspan=4
+    tr.table-warning
+      td colspan=4
+      td.text-right
+        strong Comandas Cerradas:
+      td=@comandas_cerradas
+      td colspan=4
+    tr.table-danger
+      td colspan=4
+      td.text-right
+        strong Gastos:
+      td=@gastos
+      td colspan=4
+    tr.table-success
+      td colspan=4
+      td.text-right
+        strong Caja:
+      td=@comandas_cerradas - @gastos
+      td colspan=4
+    tr.table-active
+      td colspan=4
+      td.text-right
+        strong Propinas:
+      td
+      td=@propinas
+      td colspan=3

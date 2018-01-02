@@ -25,7 +25,6 @@ section
         th Con Tarjeta
         th Gastos
         th Total
-        th Siguiente día
         th Sobre
         th Propinas
 
@@ -40,7 +39,6 @@ section
           td class=(corte.gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
             = corte.gastos
           td = corte.total
-          td = corte.siguiente_dia
           td = corte.sobre
           td = corte.propinas
 

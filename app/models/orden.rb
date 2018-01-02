@@ -6,7 +6,7 @@ class Orden < ApplicationRecord
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
   before_save :guardar_precios_historicos
-  after_commit :descontar_desechables
+  #after_commit :descontar_desechables
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
@@ -41,6 +41,6 @@ class Orden < ApplicationRecord
   end
 
   def to_s
-    articulo.to_s + ((cantidad > 1) ? " (#{cantidad})" : "")
+    ((cantidad > 1) ? "(#{cantidad}) " : "") + articulo.to_s
   end
 end

@@ -16,6 +16,11 @@ class Comanda < ApplicationRecord
     where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
   end
 
+  scope :cerradas, -> do
+    where.not(closed_at: nil)
+  end
+
+
   def cerrar
     self.closed_at = Time.now
     save

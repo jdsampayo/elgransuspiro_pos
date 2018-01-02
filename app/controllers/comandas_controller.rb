@@ -18,6 +18,16 @@ class ComandasController < ApplicationController
 
     @corte = Corte.find(params[:corte_id])
     @comandas = @corte.comandas.order([closed_at: :asc])
+<<<<<<< HEAD
+=======
+
+    @comandas_cerradas = @comandas.cerradas.sum(:total)
+    @gastos = Gasto.del_dia(@corte.dia).sum(:monto)
+
+    @propinas = @comandas.sum(:propina)
+
+    #redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior." if @corte.dia != Time.current.to_date
+>>>>>>> Style changes
   end
 
   # GET /comandas/1
