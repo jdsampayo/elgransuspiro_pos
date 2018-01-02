@@ -23,13 +23,10 @@ class Orden < ApplicationRecord
   end
 
   def descontar_desechables
-    puts "**********************"
-    puts articulo
+    return unless para_llevar?
+
     articulo.desechables.each do |desechable|
-      puts "descontando #{desechable.cantidad}: #{cantidad}"
       desechable.update_attribute(:cantidad, desechable.cantidad - cantidad)
-      desechable.reload
-      puts "nuevo #{desechable.cantidad}"
     end
   end
 

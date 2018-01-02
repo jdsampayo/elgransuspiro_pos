@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171228031221) do
+ActiveRecord::Schema.define(version: 20180102201024) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20171228031221) do
     t.decimal "precio_unitario", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "para_llevar"
     t.index ["comanda_id"], name: "index_ordenes_on_comanda_id"
   end
 

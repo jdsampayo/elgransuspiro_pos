@@ -16,12 +16,14 @@ hr
 
 table.table-sm
   tr
+    th Para llevar
     th Cantidad
     th Artículo
     th Precio Unitario
     th Venta
   -@comanda.ordenes.ordered.each do |orden|
     tr
+      td= orden.para_llevar ? "Sí" : ""
       td= orden.cantidad
       td
         = orden.articulo
@@ -32,23 +34,23 @@ table.table-sm
       td= number_to_currency orden.precio_unitario
       td= number_to_currency orden.precio
   tr
-    td colspan=2
+    td colspan=3
     td.text-right
       strong Subtotal:
     td= number_to_currency @comanda.venta
   tr
-    td colspan=2
+    td colspan=3
     td.text-right
       strong Descuento:
     td= number_to_currency @comanda.descuento
   tr
-    td colspan=2
+    td colspan=3
     td.text-right
       strong Total:
     td
       strong= number_to_currency @comanda.total
   tr
-    td colspan=2
+    td colspan=3
     td.text-right
       strong Propina:
     td

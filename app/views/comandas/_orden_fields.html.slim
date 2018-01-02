@@ -1,11 +1,12 @@
 .nested-fields
   .row
-    .col-md-6
+    .col-md-8
       .row
+        .col-md-2= f.input :para_llevar, label: false
         .col-md-2= f.input :cantidad, label: false, input_html: {min: "1", step: "1"}
-        .col-md-8= f.input :articulo_id, label: false, collection: Categoria.all, as: :grouped_select, group_method: :articulos
+        .col-md-6= f.input :articulo_id, label: false, collection: Categoria.all, as: :grouped_select, group_method: :articulos
         .col-md-2= link_to_remove_association "Eliminar", f
-    .col-md-6
+    .col-md-4
       .extras_form
         = f.simple_fields_for :extra_ordenes do |extra|
           = render 'extra_orden_fields', f: extra
