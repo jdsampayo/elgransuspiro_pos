@@ -1,0 +1,15 @@
+h1.pull-left Hoja de Balance
+
+.clearfix
+
+= form_tag({action: 'balance_sheet'}, {method: :get, class: 'form-inline'}) do
+  .form-group
+    = label_tag :date, nil, class: 'sr-only'
+    = text_field_tag :date, @to_date, class: 'datepicker form-control mx-sm-3'
+    button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+
+br
+
+= render 'account', name: "Activos", accounts: @assets
+= render 'account', name: "Pasivos", accounts: @liabilities
+= render 'account', name: "Patrimonio", accounts: @equity

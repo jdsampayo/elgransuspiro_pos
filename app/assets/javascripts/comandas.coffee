@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "turbolinks:load", ->
-  $('select').selectize()
+  $('form.simple_form select').selectize()
 
   checkbox_selector = "#ordenes .nested-fields input.boolean"
 

@@ -63,6 +63,8 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       popper_js (~> 1.11.1)
       sass (>= 3.4.19)
+    bootstrap-datepicker-rails (1.7.1.1)
+      railties (>= 3.0)
     bootstrap4-kaminari-views (1.0.0)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -267,6 +269,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   bootstrap (~> 4.0.0.beta)
+  bootstrap-datepicker-rails
   bootstrap4-kaminari-views
   byebug
   capybara (~> 2.13)

@@ -1,0 +1,46 @@
+h1.pull-left Libro Diario
+
+.clearfix
+
+= form_tag({action: 'index'}, {method: :get, class: 'form-inline'}) do
+  label for='limit' Por página
+  = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control mx-sm-3'
+  label for='order' Orden
+  = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control mx-sm-3'
+  label for='description' Descripción contiene
+  = text_field_tag :description, params[:description], class: 'form-control mx-sm-3'
+  button.btn.btn-primary.mx-sm-3 type="submit" Refrescar
+
+br
+
+table
+  thead
+    tr
+      th Descripción
+      th Cargos (debit)
+      th Abonos (credit)
+      th Fecha
+
+  - @entries.each do |entry|
+    tr.table-inverse
+      td=entry.description
+      td colspan=2
+      td =l entry.date
+      - entry.debit_amounts.each do |debit_amount|
+        tr
+          td
+            | &nbsp;&nbsp;&nbsp;&nbsp;
+            =debit_amount.account.name
+          td=debit_amount.amount.round(2)
+          td
+          td
+      - entry.credit_amounts.each do |credit_amount|
+        tr
+          td
+            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            =credit_amount.account.name
+          td
+          td=credit_amount.amount.round(2)
+          td
+
+= paginate @entries, theme: 'twitter-bootstrap-4'

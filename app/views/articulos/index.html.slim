@@ -8,7 +8,7 @@ strong Conteos
 
 = pie_chart @conteos
 
-table.table-sm
+table
 
   - @categorias.each do |categoria|
     tr
@@ -19,7 +19,7 @@ table.table-sm
       th Nombre
       th Precio
 
-    - categoria.articulos.each do |articulo|    
+    - categoria.articulos.each do |articulo|
       tr
         td = link_to articulo, articulo
         td = articulo.precio

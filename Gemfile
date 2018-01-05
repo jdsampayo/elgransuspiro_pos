@@ -75,6 +75,7 @@ gem 'timecop'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'jquery-ui-rails'
+gem 'bootstrap-datepicker-rails'
 gem 'plutus', github: "jdsampayo/plutus", branch: "fix_rails_5_assets"
 
 # Printing

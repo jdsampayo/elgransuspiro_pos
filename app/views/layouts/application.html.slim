@@ -18,7 +18,14 @@ html
           =active_link_to "Artículos", articulos_path, class: "nav-item nav-link"
           =active_link_to "Gastos", gastos_path, class: "nav-item nav-link"
           =active_link_to "Desechables", desechables_path, class: "nav-item nav-link"
-          =active_link_to "Contabilidad", contabilidad_path, class: "nav-item nav-link"
+          li.nav-item.dropdown
+            a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" Contabilidad
+            .dropdown-menu aria-labelledby="dropdown_contabilidad"
+              =link_to "Libro Mayor", contabilidad_cuentas_path, class: "dropdown-item"
+              =link_to "Libro Diario", contabilidad_entradas_path, class: "dropdown-item"
+              =link_to "Hoja de Balance", contabilidad_reportes_balance_sheet_path, class: "dropdown-item"
+              =link_to "Estado de Resultados", contabilidad_reportes_income_statement_path, class: "dropdown-item"
+
         form.form-inline.mt-2.mt-md-0
           = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
           = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"

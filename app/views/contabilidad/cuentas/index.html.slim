@@ -1,0 +1,18 @@
+h1.pull-left Libro Mayor
+
+table
+  tr
+    th Nombre
+    th Tipo
+    th Abono (credit)
+    th Cargo (debit)
+    th Balance
+  - @accounts.each do |account|
+    tr
+      td= account.name
+      td= Cuenta.plutus_a_tipo(account)
+      td= account.credits_balance.round(2)
+      td= account.debits_balance.round(2)
+      td= account.balance.round(2)
+
+h5 Equilibrio: #{Plutus::Account.trial_balance}

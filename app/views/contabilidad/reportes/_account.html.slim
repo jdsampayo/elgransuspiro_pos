@@ -1,0 +1,23 @@
+table
+  caption.text-left
+    strong=name
+  thead
+    tr
+      th
+      th width=100
+  tbody
+    - if accounts.count > 0
+      - running_total = 0
+
+      - accounts.each do |account|
+        - balance = account.balance(from_date: @from_date, to_date: @to_date)
+        tr
+          td=account.name
+          td=balance.round(2)
+          - running_total += balance
+        tr
+          td
+            strong Total
+            strong<= name
+          td width=100
+            strong= running_total.round(2)

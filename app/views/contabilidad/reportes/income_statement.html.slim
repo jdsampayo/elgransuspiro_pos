@@ -1,0 +1,17 @@
+h1.pull-left Estado de Resultados
+
+.clearfix
+
+= form_tag({action: 'income_statement'}, {method: :get, class: 'form-inline'}) do
+  .form-group
+    = label_tag :from_date, nil, class: 'sr-only'
+    = text_field_tag :from_date, @from_date, class: 'datepicker form-control', placeholder: "Fecha"
+  .form-group
+    = label_tag :date, nil, class: 'sr-only'
+    = text_field_tag :date, @to_date, class: 'datepicker form-control mx-sm-3'
+    button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+
+br
+
+= render 'account', name: "Ingresos", accounts: @revenues
+= render 'account', name: "Egresos", accounts: @expenses

@@ -26,29 +26,27 @@ class Corte < ApplicationRecord
     set_subtotals
     self.closed_at = Time.now
     save
+    registro_contable
 
     Comanda.del_dia(dia).update_all(closed_at: Time.now)
     Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
   end
 
   def registro_contable
+    debits = []
+    debits << {account_name: "Caja", amount: pagos_con_efectivo - gastos}
+    debits << {account_name: "Banco", amount: pagos_con_tarjeta} if pagos_con_tarjeta > 0
+    debits << {account_name: "Gastos de Operación", amount: gastos} if gastos > 0
+
     entry = Plutus::Entry.new(
       description: "Corte del día #{dia}",
-      date: closed_at,
-      debits: [
-        {account_name: "Caja", amount: pagos_con_efectivo - gastos},
-        {account_name: "Banco", amount: pagos_con_tarjeta},
-        {account_name: "Gastos de Operación", amount: gastos}
-      ],
-      credits: [
-        {account_name: "Ventas", amount: ventas},
-      ]
+      date: dia,
+      debits: debits,
+      credits: [{account_name: "Ventas", amount: ventas}]
     )
 
-    if entry.save
-      puts "Registro contable creado: #{dia}"
-    else
-      puts "Registro contable erróneo: #{dia}"
+    unless entry.save
+      raise "Registro contable erróneo: #{dia}"
     end
   end
 

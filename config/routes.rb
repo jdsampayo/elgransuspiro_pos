@@ -17,7 +17,14 @@ Rails.application.routes.draw do
   resources :articulos
   resources :cuentas
 
-  root "cortes#index"
+  namespace :contabilidad do
+    resources :cuentas, only: [:index]
+    resources :entradas, only: [:index]
+    namespace :reportes do
+      get :balance_sheet
+      get :income_statement
+    end
+  end
 
-  mount Plutus::Engine => "/contabilidad", as: "contabilidad"
+  root "cortes#index"
 end

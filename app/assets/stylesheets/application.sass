@@ -1,5 +1,6 @@
 @import colors
 @import bootstrap
+@import bootstrap-datepicker3
 @import font-awesome
 @import selectize-bootstrap
 
@@ -21,11 +22,16 @@ h1
   margin: 0 10px 0 0
   display: inline-block
 
+.container-fluid
+  table
+    @extend .table, .table-hover, .table-bordered, .table-striped, .table-sm
+    thead
+      @extend .thead-inverse
+    tbody tr:hover
+      background-color: rgba(0, 0, 0, 0.200)
 
-table
-  @extend .table, .table-hover, .table-striped, .table-bordered
-  thead
-    @extend .thead-inverse
+    tr.table-inverse, tr.table-inverse:hover
+      background-color: rgba(0, 0, 0, 0.600)!important
 
 span.or
   padding: 0 10px
@@ -38,3 +44,6 @@ form
   form.form-inline
     a
       margin-right: 5px
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover
+  color: #ccc
