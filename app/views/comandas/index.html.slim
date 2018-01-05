@@ -64,8 +64,8 @@ table
     tr.table-info
       td colspan=4
       td.text-right
-        strong Gran Total:
-      td=@comandas.sum(:total)
+        strong Inicial:
+      td=@corte.inicial
       td colspan=4
     tr.table-warning
       td colspan=4
@@ -83,7 +83,7 @@ table
       td colspan=4
       td.text-right
         strong Caja:
-      td=@comandas_cerradas - @gastos
+      td=@corte.inicial + @comandas_cerradas - @gastos
       td colspan=4
     tr.table-active
       td colspan=4

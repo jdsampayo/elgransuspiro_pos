@@ -26,6 +26,7 @@ class Corte < ApplicationRecord
     set_subtotals
     self.closed_at = Time.now
     save
+    reload
     registro_contable
 
     Comanda.del_dia(dia).update_all(closed_at: Time.now)

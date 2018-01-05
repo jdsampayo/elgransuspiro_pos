@@ -6,9 +6,7 @@ class Comanda < ApplicationRecord
 
   before_save :set_totales
   validates :descuento, :total, :venta, numericality: {greater_than_or_equal_to: 0}
-  accepts_nested_attributes_for :ordenes, reject_if: ->(attributes){
-    attributes.except(:para_llevar).values.all?( &:blank? )
-  }, allow_destroy: true
+  accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
   acts_as_paranoid
 

@@ -6,7 +6,6 @@ class Orden < ApplicationRecord
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
   before_save :guardar_precios_historicos
-  #after_commit :descontar_desechables
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 

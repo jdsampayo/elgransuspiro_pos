@@ -34,7 +34,7 @@ class ComandasController < ApplicationController
   # GET /comandas/new
   def new
     @comanda = Comanda.new
-    3.times { @comanda.ordenes.build }
+    1.times { @comanda.ordenes.build }
   end
 
   # GET /comandas/1/edit
