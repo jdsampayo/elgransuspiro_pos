@@ -3,13 +3,23 @@ h1.pull-left Libro Diario
 .clearfix
 
 = form_tag({action: 'index'}, {method: :get, class: 'form-inline'}) do
-  label for='limit' Por página
-  = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control mx-sm-3'
-  label for='order' Orden
-  = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control mx-sm-3'
-  label for='description' Descripción contiene
-  = text_field_tag :description, params[:description], class: 'form-control mx-sm-3'
-  button.btn.btn-primary.mx-sm-3 type="submit" Refrescar
+  .form-group.mt-3
+    label for='limit' Por página
+    = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control mx-sm-3'
+  .form-group.mt-3
+    label for='order' Orden
+    = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control mx-sm-3'
+  .form-group.mt-3
+    label for='description' Descripción contiene
+    = text_field_tag :description, params[:description], class: 'form-control mx-sm-3'
+  .form-group.mt-3
+    label for='debit_account_id' Cargo
+    = select_tag :debit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:debit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
+  .form-group.mt-3
+    label for='credit_account_id' Abono
+    = select_tag :credit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:credit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
+  .form-group.mt-3
+    button.btn.btn-primary.mx-sm-3 type="submit" Refrescar
 
 br
 
