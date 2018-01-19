@@ -15,4 +15,4 @@ table
       td= account.debits_balance.round(2)
       td= account.balance.round(2)
 
-h5 Equilibrio: #{Plutus::Account.trial_balance}
+h5 Equilibrio: #{Plutus::Account.trial_balance.round(2)}
