@@ -6,6 +6,8 @@ class Articulo < ApplicationRecord
 
   default_scope { order('nombre ASC') }
 
+  acts_as_paranoid
+
   def to_s
     nombre.titleize
   end

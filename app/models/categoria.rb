@@ -3,6 +3,8 @@ class Categoria < ApplicationRecord
 
   default_scope { order(:nombre) }
 
+  acts_as_paranoid
+
   def to_s
     nombre
   end
