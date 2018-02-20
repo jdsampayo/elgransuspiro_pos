@@ -10,5 +10,11 @@ module Contabilidad
         format.json  { render :json => @accounts }
       end
     end
+
+    def new
+      @type = params[:type].pluralize
+      @add_delete_action = true
+      @account = Plutus::Account.new
+    end
   end
 end

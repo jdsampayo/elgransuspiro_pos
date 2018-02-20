@@ -35,7 +35,7 @@ class Corte < ApplicationRecord
 
   def registro_contable
     debits = []
-    debits << {account_name: "Caja", amount: pagos_con_efectivo - gastos}
+    debits << {account_name: "Caja Fuerte", amount: pagos_con_efectivo - gastos}
     debits << {account_name: "Banco", amount: pagos_con_tarjeta} if pagos_con_tarjeta > 0
     debits << {account_name: "Gastos de Operación", amount: gastos} if gastos > 0
 

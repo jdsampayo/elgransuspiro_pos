@@ -13,5 +13,5 @@ table
     - @cuentas.each do |cuenta|
       tr
         td = cuenta.name
-        td = Cuenta.plutus_a_tipo(cuenta)
+        td = Cuenta.plutus_a_tipo(cuenta.type)
         td = cuenta.contra ? "Sí" : "No"

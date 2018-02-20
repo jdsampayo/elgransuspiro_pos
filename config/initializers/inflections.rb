@@ -21,6 +21,8 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular('entry', 'entries')
   inflect.irregular('amount', 'amounts')
   inflect.irregular('report', 'reports')
+  inflect.irregular('credit', 'credits')
+  inflect.irregular('debit', 'debits')
 
   # Se agregan inflectores para todos los casos de detalle_ y detalles_
   # Ejs.:

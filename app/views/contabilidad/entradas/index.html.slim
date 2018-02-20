@@ -1,5 +1,7 @@
 h1.pull-left Libro Diario
 
+.pull-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-info"
+
 .clearfix
 
 = form_tag({action: 'index'}, {method: :get, class: 'form-inline'}) do
@@ -27,8 +29,8 @@ table
   thead
     tr
       th Descripción
-      th Cargos (debit)
-      th Abonos (credit)
+      th Debe
+      th Haber
       th Fecha
 
   - @entries.each do |entry|

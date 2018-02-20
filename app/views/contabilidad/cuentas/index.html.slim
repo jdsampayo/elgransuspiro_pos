@@ -10,7 +10,7 @@ table
   - @accounts.each do |account|
     tr
       td= account.name
-      td= Cuenta.plutus_a_tipo(account)
+      td= Cuenta.plutus_a_tipo(account.type)
       td= account.credits_balance.round(2)
       td= account.debits_balance.round(2)
       td= account.balance.round(2)

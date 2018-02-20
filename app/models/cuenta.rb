@@ -86,8 +86,14 @@ class Cuenta
   validates :nombre, presence: true
   validates :tipo, presence: true
 
-  def self.plutus_a_tipo(plutus)
-    TIPOS[plutus.type.split(":").last.downcase.to_sym]
+  def self.options_for_select
+    Plutus::Account.select(:id, :name, :type).group_by(&:type).map do |k,v|
+      [plutus_a_tipo(k), v.pluck(:name, :id)]
+    end
+  end
+
+  def self.plutus_a_tipo(plutus_type)
+    TIPOS[plutus_type.split(":").last.downcase.to_sym]
   end
 
   def create

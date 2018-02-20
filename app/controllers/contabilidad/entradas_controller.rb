@@ -24,5 +24,31 @@ module Contabilidad
         format.json  { render :json => @entries }
       end
     end
+
+    def new
+      @entrada = Entrada.new
+      @entrada.date = Date.today.to_s
+      @entrada.description = "Movimientos del día #{Date.today.to_s}"
+    end
+
+    def create
+      @entrada = Entrada.new(entrada_params)
+      if @entrada.valid?
+        status, mensajes = @entrada.registro_contable
+
+        if status
+          redirect_to contabilidad_entradas_path, notice: 'Creada exitosamente.'
+        else
+          @entrada.errors.add(:base, mensajes)
+          render :new
+        end
+      else
+        render :new
+      end
+    end
+
+    def entrada_params
+      params.require(:entrada).permit(:date, :description, debits_attributes: [:account_id, :amount], credits_attributes: [:account_id, :amount])
+    end
   end
 end
