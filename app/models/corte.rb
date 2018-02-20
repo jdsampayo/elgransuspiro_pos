@@ -3,6 +3,8 @@ class Corte < ApplicationRecord
   has_many :comandas
   has_many :ordenes, through: :comandas
 
+  acts_as_paranoid
+
   VENTAS_LIMITE = 1000
   GASTOS_LIMITE = 100
 

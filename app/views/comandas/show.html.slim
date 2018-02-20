@@ -7,6 +7,9 @@ h1.pull-left Comanda #{@comanda.id}
       = link_to 'Editar', edit_comanda_path(@comanda), class: "btn btn-primary btn"
       = link_to 'Imprimir', print_comanda_path(@comanda), method: :post, class: "btn btn-info", data: { disable_with: "Imprimiendo..." }
       = link_to 'Cerrar', pay_comanda_path(@comanda), class: "btn btn-success"
+      = link_to @comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
+        i.fa.fa-trash
+
     - else
       button.btn.btn-secondary Comanda cerrada
 

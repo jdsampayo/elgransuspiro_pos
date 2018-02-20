@@ -23,6 +23,8 @@ class ComandasController < ApplicationController
     @comandas_cerradas = @comandas.cerradas.sum(:total)
     @gastos = Gasto.del_dia(@corte.dia).sum(:monto)
 
+    @caja = @corte.inicial + @comandas.cerradas.con_efectivo.sum(:total) - @gastos
+
     @propinas = @comandas.sum(:propina)
   end
 

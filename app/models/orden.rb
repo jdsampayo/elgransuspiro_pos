@@ -9,6 +9,8 @@ class Orden < ApplicationRecord
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
+  acts_as_paranoid
+
   def precio
     cantidad * precio_unitario
   end

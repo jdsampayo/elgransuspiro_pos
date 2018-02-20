@@ -15,13 +15,14 @@ table
       th Folio
       th Mesa
       th Hora
+      th Comensales
       th Cierre
       th width=400 Artículos
       th Total
       th Propina
       th Mesero
       th Tipo
-      th width=270 Acciones
+      th width=170 Acciones
 
   tbody
     - @comandas.each do |comanda|
@@ -32,6 +33,8 @@ table
           small= comanda.mesa.capitalize
         td
           small= comanda.created_at.strftime("%H:%M")
+        td
+          small= comanda.comensales
         td
           small= comanda.closed_at.strftime("%H:%M") if comanda.closed_at
         td
@@ -56,37 +59,36 @@ table
               i.fa.fa-print
             = link_to pay_comanda_path(comanda), class: "btn btn-success" do
               i.fa.fa-money
-            = link_to comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
-              i.fa.fa-trash
         -else
           td
             i.fa.fa-lock
     tr.table-info
-      td colspan=4
+      td colspan=5
       td.text-right
         strong Inicial:
       td=@corte.inicial
-      td colspan=4
+      td colspan=5
     tr.table-warning
-      td colspan=4
+      td colspan=5
       td.text-right
         strong Comandas Cerradas:
       td=@comandas_cerradas
-      td colspan=4
+      td colspan=5
     tr.table-danger
-      td colspan=4
+      td colspan=5
       td.text-right
         strong Gastos:
       td=@gastos
-      td colspan=4
+      td colspan=5
     tr.table-success
-      td colspan=4
+      td colspan=5
       td.text-right
-        strong Caja:
-      td=@corte.inicial + @comandas_cerradas - @gastos
-      td colspan=4
+        | (inicial + comandas en efectivo - gastos)
+        strong< Efectivo:
+      td=@caja
+      td colspan=5
     tr.table-active
-      td colspan=4
+      td colspan=5
       td.text-right
         strong Propinas:
       td

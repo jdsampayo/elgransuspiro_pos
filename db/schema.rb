@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102201024) do
+ActiveRecord::Schema.define(version: 20180119200953) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -18,7 +18,9 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "categoria_id"
+    t.datetime "deleted_at"
     t.index ["categoria_id"], name: "index_articulos_on_categoria_id"
+    t.index ["deleted_at"], name: "index_articulos_on_deleted_at"
   end
 
   create_table "articulos_desechables", id: false, force: :cascade do |t|
@@ -32,6 +34,8 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.string "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_categorias_on_deleted_at"
   end
 
   create_table "comandas", force: :cascade do |t|
@@ -57,8 +61,10 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.integer "articulo_id"
     t.integer "corte_id"
     t.integer "total", default: 0
+    t.datetime "deleted_at"
     t.index ["articulo_id"], name: "index_conteos_on_articulo_id"
     t.index ["corte_id"], name: "index_conteos_on_corte_id"
+    t.index ["deleted_at"], name: "index_conteos_on_deleted_at"
   end
 
   create_table "cortes", force: :cascade do |t|
@@ -74,6 +80,8 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.datetime "updated_at", null: false
     t.decimal "pagos_con_tarjeta", default: "0.0"
     t.decimal "pagos_con_efectivo", default: "0.0"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_cortes_on_deleted_at"
   end
 
   create_table "desechables", force: :cascade do |t|
@@ -84,6 +92,8 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "limite"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_desechables_on_deleted_at"
   end
 
   create_table "extra_ordenes", force: :cascade do |t|
@@ -91,6 +101,8 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.integer "orden_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_extra_ordenes_on_deleted_at"
     t.index ["extra_id"], name: "index_extra_ordenes_on_extra_id"
     t.index ["orden_id"], name: "index_extra_ordenes_on_orden_id"
   end
@@ -100,6 +112,8 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.decimal "precio", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_extras_on_deleted_at"
   end
 
   create_table "gastos", force: :cascade do |t|
@@ -107,12 +121,16 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.string "descripcion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_gastos_on_deleted_at"
   end
 
   create_table "meseros", force: :cascade do |t|
     t.string "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_meseros_on_deleted_at"
   end
 
   create_table "ordenes", force: :cascade do |t|
@@ -123,7 +141,9 @@ ActiveRecord::Schema.define(version: 20180102201024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "para_llevar"
+    t.datetime "deleted_at"
     t.index ["comanda_id"], name: "index_ordenes_on_comanda_id"
+    t.index ["deleted_at"], name: "index_ordenes_on_deleted_at"
   end
 
   create_table "plutus_accounts", force: :cascade do |t|
