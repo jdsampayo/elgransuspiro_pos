@@ -3,6 +3,7 @@
 @import bootstrap-datepicker3
 @import font-awesome
 @import selectize-bootstrap
+@import sesiones
 
 body
   padding-top: 70px
@@ -26,11 +27,11 @@ h1
   table
     @extend .table, .table-hover, .table-bordered, .table-striped, .table-sm
     thead
-      @extend .thead-inverse
+      @extend .thead-dark
     tbody tr:hover
       background-color: rgba(0, 0, 0, 0.200)
 
-    tr.table-inverse, tr.table-inverse:hover
+    tr.table-dark, tr.table-dark:hover
       background-color: rgba(0, 0, 0, 0.600)!important
 
 span.or
@@ -47,3 +48,6 @@ form
 
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover
   color: #ccc
+
+caption
+  caption-side: top

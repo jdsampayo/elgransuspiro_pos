@@ -3,8 +3,9 @@ table
     strong=name
   thead
     tr
-      th
-      th width=100
+      th Cuenta
+      th width=130 Monto
+      th width=130 Subtotal
   tbody
     - if accounts.count > 0
       - running_total = 0
@@ -15,9 +16,9 @@ table
           td=account.name
           td=balance.round(2)
           - running_total += balance
-        tr
-          td
-            strong Total
-            strong<= name
-          td width=100
-            strong= running_total.round(2)
+          td=running_total.round(2)
+
+      tr.table-primary
+        td Gran Total
+        td=number_to_currency(running_total.round(2))
+        td

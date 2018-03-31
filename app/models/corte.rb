@@ -37,15 +37,20 @@ class Corte < ApplicationRecord
 
   def registro_contable
     debits = []
-    debits << {account_name: "Caja Fuerte", amount: pagos_con_efectivo - gastos}
+    debits << {account_name: "Caja Chica", amount: pagos_con_efectivo}
+    debits << {account_name: "Caja Fuerte", amount: sobre}
     debits << {account_name: "Banco", amount: pagos_con_tarjeta} if pagos_con_tarjeta > 0
     debits << {account_name: "Gastos de Operación", amount: gastos} if gastos > 0
+
+    credits = []
+    credits << {account_name: "Caja Chica", amount: sobre}
+    credits << {account_name: "Ventas", amount: ventas}
 
     entry = Plutus::Entry.new(
       description: "Corte del día #{dia}",
       date: dia,
       debits: debits,
-      credits: [{account_name: "Ventas", amount: ventas}]
+      credits: credits
     )
 
     unless entry.save

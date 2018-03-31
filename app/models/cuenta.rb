@@ -121,6 +121,10 @@ class Cuenta
   end
 
   def self.load_waves_entries
+    seed_accounts
+    Plutus::Entry.delete_all
+    Plutus::Amount.delete_all
+
     csv_text = File.read('tmp/transactions.csv')
     csv = CSV.parse(csv_text, headers: true)
 
@@ -135,11 +139,11 @@ class Cuenta
     end
 
     debit_amounts = csv.map do |row|
-      row[2] ? {account: WAVES_ACCOUNTS[row[1]], amount: row[2], date: row[5], debit: true} : nil
+      row[2] ? {account: get_waves_account(row[1]), amount: row[2], date: row[5], debit: true} : nil
     end.compact
 
     credit_amounts = csv.map do |row|
-      row[3] ? {account: WAVES_ACCOUNTS[row[1]], amount: row[3], date: row[5], debit: false} : nil
+      row[3] ? {account: get_waves_account(row[1]), amount: row[3], date: row[5], debit: false} : nil
     end.compact
 
     dates = (debit_amounts + credit_amounts).group_by do |amount|
@@ -166,6 +170,13 @@ class Cuenta
       )
       entry.save
     end
+  end
+
+  def self.get_waves_account(name)
+    account = WAVES_ACCOUNTS[name]
+    raise "No se encontró: '#{name}'" if account.nil?
+
+    account
   end
 
 end

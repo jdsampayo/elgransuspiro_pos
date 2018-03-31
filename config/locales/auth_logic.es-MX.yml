@@ -1,0 +1,24 @@
+es-MX:
+  authlogic:
+    error_messages:
+      login_blank: "No debe estar en blanco"
+      login_not_found: "No existe"
+      login_invalid: "Solo debe ingresar letras, números y -_@ sin espacios"
+      consecutive_failed_logins_limit_exceeded: "Se sobrepaso el número consecutivo de intentos, la cuenta fué desactivada"
+      email_invalid: "Debe ser un email válido."
+      password_blank: "No debe estar en blanco"
+      password_invalid: "No es válido"
+      not_active: "Su cuenta no esta activa"
+      not_confirmed: "Su cuenta no ha sido confirmada"
+      not_approved: "Su cuenta no fue aprovada"
+      no_authentication_details: "Usted no proveio ningún detalle para la autenticación"
+    models:
+      sesion: 'Sesión'
+    attributes:
+      usuario:
+        username: 'Usuario'
+      sesion:
+        username: "Usuario"
+        email: "Correo electrónico"
+        password: "Contraseña"
+        remember_me: "Recordar"

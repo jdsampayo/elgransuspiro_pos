@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119200953) do
+ActiveRecord::Schema.define(version: 20180330233048) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -174,6 +174,15 @@ ActiveRecord::Schema.define(version: 20180119200953) do
     t.datetime "updated_at"
     t.index ["commercial_document_id", "commercial_document_type"], name: "index_entries_on_commercial_doc"
     t.index ["date"], name: "index_plutus_entries_on_date"
+  end
+
+  create_table "usuarios", force: :cascade do |t|
+    t.string "email"
+    t.string "crypted_password"
+    t.string "password_salt"
+    t.string "persistence_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

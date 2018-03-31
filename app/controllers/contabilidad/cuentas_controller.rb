@@ -1,6 +1,8 @@
 module Contabilidad
 
   class CuentasController < ApplicationController
+    load_and_authorize_resource
+
     def index
       @accounts = Plutus::Account.all
 

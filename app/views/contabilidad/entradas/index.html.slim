@@ -29,30 +29,32 @@ table
   thead
     tr
       th Descripción
-      th Debe
-      th Haber
-      th Fecha
+      th width=100 Debe
+      th width=100 Haber
+      th width=100 Fecha
 
   - @entries.each do |entry|
-    tr.table-inverse
+    tr.table-dark
       td=entry.description
       td colspan=2
+        .text-center
+          =number_with_precision(entry.debit_amounts.map(&:amount).sum, precision: 2)
       td =l entry.date
       - entry.debit_amounts.each do |debit_amount|
         tr
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;
-            =debit_amount.account.name
-          td=debit_amount.amount.round(2)
+            =debit_amount&.account&.name || "Desconocido"
+          td=number_with_precision(debit_amount&.amount, precision: 2)
           td
           td
       - entry.credit_amounts.each do |credit_amount|
         tr
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            =credit_amount.account.name
+            =credit_amount&.account&.name || "Desconocido"
           td
-          td=credit_amount.amount.round(2)
+          td=number_with_precision(credit_amount&.amount, precision: 2)
           td
 
 = paginate @entries, theme: 'twitter-bootstrap-4'

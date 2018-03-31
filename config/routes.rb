@@ -26,5 +26,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :sesiones
+
+  get "acceso_denegado", controller: "sesiones", action: "acceso_denegado", as: "acceso_denegado"
+  get "login", controller: "sesiones", action: "new", as: "login"
+  get "logout", controller: "sesiones", action: "destroy", as: "logout"
+
   root "cortes#index"
 end

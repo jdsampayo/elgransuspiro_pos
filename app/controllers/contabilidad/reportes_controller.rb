@@ -1,5 +1,7 @@
 module Contabilidad
   class ReportesController < ApplicationController
+    load_and_authorize_resource
+
     def balance_sheet
       first_entry = Plutus::Entry.order('date ASC').first
       @from_date = first_entry ? first_entry.date: Date.today

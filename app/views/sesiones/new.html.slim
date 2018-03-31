@@ -1,0 +1,21 @@
+.row
+  .col-sm-6.col-md-4.offset-md-4
+    - if @sesion.errors.any?
+      .alert.alert-danger
+        button.close type="button" data-dismiss="alert"
+          | &times;
+        h4= "#{pluralize(@sesion.errors.count, "error prohibió", "errores prohibieron")} iniciar sesión:"
+        ul
+          - @sesion.errors.full_messages.each do |msg|
+            li= msg
+
+    .account-wall
+      =image_tag "logo.png", class: "img-responsive logo"
+      =form_for @sesion, html: { class: "form-signin" } do |f|
+        input.form-control autofocus="" placeholder="Email" required="" type="text" value=@sesion.email name="sesion[email]"
+        input.form-control placeholder="Password" required="" type="password" name="sesion[password]"
+        button.btn.btn-lg.btn-info.btn-block.btn-raised type="submit"
+          | Login
+        /a.pull-right.need-help href="#"  ¿Necesitas ayuda?
+        span.clearfix
+    /a.text-center.new-account href="/usuarios/new"  Crea una cuenta
