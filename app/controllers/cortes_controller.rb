@@ -36,10 +36,6 @@ class CortesController < ApplicationController
       {
         name: "Gastos",
         data: por_semana_query.sum(:gastos)
-      },
-      {
-        name: "Sobre",
-        data: por_semana_query.sum(:sobre)
       }
     ]
   end
@@ -95,7 +91,7 @@ class CortesController < ApplicationController
   def destroy
     @corte.destroy
     respond_to do |format|
-      format.html { redirect_to cortes_url, notice: 'Corte was successfully destroyed.' }
+      format.html { redirect_to cortes_url, notice: 'El Corte se eliminó correctamente.' }
       format.json { head :no_content }
     end
   end

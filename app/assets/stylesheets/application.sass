@@ -23,6 +23,20 @@ h1
   margin: 0 10px 0 0
   display: inline-block
 
+form.form-small
+  .form-inputs
+    .form-group
+      margin-bottom: 0px
+    .control-label
+      @extend .col-form-label-sm
+      padding-bottom: 0
+      line-height: 1
+    .form-control
+      @extend .form-control-sm
+
+  .form-actions
+    padding: 1rem 0
+
 .container-fluid
   table
     @extend .table, .table-hover, .table-bordered, .table-striped, .table-sm

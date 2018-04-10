@@ -49,6 +49,10 @@ class Comanda < ApplicationRecord
     id
   end
 
+  def tiempo
+    closed_at ? closed_at - created_at : Time.current - created_at
+  end
+
   def abierta?
     closed_at.blank?
   end

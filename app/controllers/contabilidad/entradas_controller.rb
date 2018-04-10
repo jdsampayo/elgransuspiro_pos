@@ -1,6 +1,6 @@
 module Contabilidad
   class EntradasController < ApplicationController
-    authorize_resource class: false
+    #authorize_resource class: false
 
     def index
       order = params[:order] == 'ascendente' ? 'ASC' : 'DESC'

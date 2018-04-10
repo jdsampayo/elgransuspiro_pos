@@ -1,6 +1,6 @@
 module Contabilidad
   class CuentasController < ApplicationController
-    authorize_resource class: false
+    #authorize_resource class: false
 
     def index
       @accounts = Plutus::Account.all

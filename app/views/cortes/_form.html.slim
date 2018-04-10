@@ -1,24 +1,24 @@
-= simple_form_for(@corte) do |f|
+= simple_form_for(@corte, html: { class: 'form-small' }) do |f|
   = f.error_notification
 
   .form-inputs
     .row
       .col-md-3= f.input :inicial, readonly: true
     .row
-      .col-md-3= f.input :ventas, readonly: true
-      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Efectivo"
-      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Tarjeta"
+      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Pagos en Efectivo"
+      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Pagos con Tarjeta"
+      .col-md-3= f.input :ventas, readonly: true, label: "Total de Ventas"
+      .col-md-3= f.input :propinas, readonly: true
     .row
       .col-md-3= f.input :gastos, readonly: true
     .row
-      .col-md-3= f.input :total, readonly: true, label: "Gran Total (Inicial + Ventas - Gastos)"
-      .col-md-3= f.input :propinas, readonly: true
+      .col-md-3= f.input :total, readonly: true, label: "Caja Chica"
     .row
       .col-md-3= f.input :siguiente_dia, label: "Siguiente Día"
     .row
-      .col-md-3= f.input :sobre, readonly: true, label: "Caja"
+      .col-md-3= f.input :sobre, readonly: true, label: "Caja Fuerte"
 
   .form-actions
-    = f.button :submit, "Corte", class: "btn btn-primary"
+    = f.button :submit, "Realizar Corte", class: "btn btn-primary"
     span.or o
     = link_to 'cancelar', comandas_path

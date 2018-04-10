@@ -5,7 +5,7 @@ class Corte < ApplicationRecord
 
   acts_as_paranoid
 
-  VENTAS_LIMITE = 1000
+  VENTAS_LIMITE = 2000
   GASTOS_LIMITE = 100
 
   def propinas
@@ -67,11 +67,16 @@ class Corte < ApplicationRecord
 
     self.gastos = Gasto.del_dia(dia).sum(:monto)
     self.total = inicial + ventas - gastos
-    self.sobre = total - pagos_con_tarjeta - siguiente_dia
+    self.sobre = caja_chica - siguiente_dia
+  end
+
+  def caja_chica
+    total - pagos_con_tarjeta
   end
 
   def self.actual
-    Corte.find_by(dia: Time.now.to_date)
+    Corte.create(dia: Time.now)
+    #Corte.find_by(dia: Time.now.to_date)
   end
 
   def self.de_la_semana(inicio, campo)

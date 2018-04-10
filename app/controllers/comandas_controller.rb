@@ -9,8 +9,8 @@ class ComandasController < ApplicationController
     if params[:corte_id].blank?
       corte_actual = Corte.actual
 
-      if corte_actual.nil?
-        redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero cierra el corte del día anterior."
+      unless corte_actual
+        redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero realiza el corte del día anterior."
         return
       end
 
@@ -20,12 +20,27 @@ class ComandasController < ApplicationController
     @corte = Corte.find(params[:corte_id])
     @comandas = @corte.comandas.order([closed_at: :asc])
 
-    @comandas_cerradas = @comandas.cerradas.sum(:total)
+    @con_tarjeta = @comandas.con_tarjeta
+    @con_efectivo = @comandas.con_efectivo
+
+    @total_comandas_cerradas = @comandas.cerradas.sum(:total)
+    @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
+
     @gastos = Gasto.del_dia(@corte.dia).sum(:monto)
 
-    @caja = @corte.inicial + @comandas.cerradas.con_efectivo.sum(:total) - @gastos
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @gastos
 
     @propinas = @comandas.sum(:propina)
+    @total_de_ventas = @comandas.sum(:total)
+
+    @estancia_promedia = @comandas.map do |comanda|
+      comanda.closed_at - comanda.created_at if comanda.closed_at
+    end.compact
+    @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count unless @estancia_promedia.empty?
+
+    @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
+
+    @cheque_promedio = @total_de_ventas / @comandas.count unless @comandas.empty?
   end
 
   # GET /comandas/1
