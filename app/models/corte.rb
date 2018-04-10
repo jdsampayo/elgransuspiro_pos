@@ -75,8 +75,7 @@ class Corte < ApplicationRecord
   end
 
   def self.actual
-    Corte.create(dia: Time.now)
-    #Corte.find_by(dia: Time.now.to_date)
+    Corte.find_by(dia: Time.now.to_date)
   end
 
   def self.de_la_semana(inicio, campo)

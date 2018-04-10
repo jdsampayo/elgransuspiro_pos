@@ -1,6 +1,6 @@
 module Contabilidad
   class ReportesController < ApplicationController
-    #authorize_resource class: false
+    authorize_resource class: false
 
     def balance_sheet
       first_entry = Plutus::Entry.order('date ASC').first
