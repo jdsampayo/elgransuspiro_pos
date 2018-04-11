@@ -5,29 +5,29 @@
     thead
       tr
         th
-          i.fa.fa-hashtag
+          i.fas.fa-hashtag
         th
-          i.fa.fa-users
+          i.fas.fa-users
         th
-          i.fa.fa-sticky-note
+          i.fas.fa-sticky-note
         th
-          i.fa.fa-vcard
+          i.fas.fa-id-card-alt
         th width=50
-          i.fa.fa-hourglass-start
+          i.fas.fa-hourglass-start
         th width=50
-          i.fa.fa-hourglass-end
+          i.fas.fa-hourglass-end
         th width=50
-          i.fa.fa-clock-o
+          i.fas.fa-clock
         th width=400 colspan=2
-          i.fa.fa-coffee
+          i.fas.fa-shopping-cart
         th
-          i.fa.fa-dollar
+          i.fas.fa-dollar-sign
         th
-          i.fa.fa-thumbs-up
+          i.fas.fa-hand-holding-usd
         th
-          i.fa.fa-balance-scale
+          i.fas.fa-inbox
         th width=170
-          i.fa.fa-gear
+          i.fas.fa-cog
 
     tbody
       - @comandas.each do |comanda|
@@ -55,20 +55,20 @@
           td
             -if comanda.closed_at
               -if comanda.pago_con_tarjeta
-                i.fa.fa-credit-card
+                i.fas.fa-credit-card
               -else
-                i.fa.fa-money
+                i.fas.fa-money-bill-alt
           -if comanda.abierta?
             td.actions
               = link_to edit_comanda_path(comanda), class: "btn btn-primary" do
-                i.fa.fa-pencil
+                i.fas.fa-pencil
               = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fa fa-clock-o'>".html_safe } do
-                i.fa.fa-print
+                i.fas.fa-print
               = link_to pay_comanda_path(comanda), class: "btn btn-success" do
-                i.fa.fa-money
+                i.fas.fa-money
           -else
             td
-              i.fa.fa-lock
+              i.fas.fa-lock
       tr.table-dark
         td=@comandas.count
         td=@comandas.sum(:comensales)
@@ -83,9 +83,12 @@
         td=@total_de_ventas
         td=@propinas
         td colspan=4
-          i.fa.fa-money
-          | : #{@con_efectivo.count}
-          i.fa.fa-credit-card<
+          i.fas.fa-money-bill-alt<
+          span<
+            | :
+          span<
+            =@con_efectivo.count
+          i.fas.fa-credit-card<
           span<
             | :
           span<
