@@ -1,0 +1,28 @@
+table
+  thead
+    tr
+      -unless @corte
+        th Día
+      th Monto
+      th width=400 Descripción
+      -unless @corte
+        th Acciones
+
+  tbody
+    - @gastos.each do |gasto|
+      tr
+        -unless @corte
+          td = gasto.created_at.to_date
+        td = gasto.monto
+        td
+          small= gasto.descripcion
+        -unless @corte
+          td.actions
+            = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
+              i.fa.fa-pencil
+            = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+              i.fa.fa-trash
+    - if @corte
+      tr.table-dark
+        td = @gastos.sum(:monto)
+        td

@@ -43,6 +43,30 @@ class CortesController < ApplicationController
   # GET /cortes/1
   # GET /cortes/1.json
   def show
+    @comandas = @corte.comandas
+    @gastos = @corte.gastos_del_dia
+
+    @con_tarjeta = @comandas.con_tarjeta
+    @con_efectivo = @comandas.con_efectivo
+
+    @total_comandas_cerradas = @comandas.cerradas.sum(:total)
+    @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
+
+    @total_de_gastos = @gastos.sum(:monto)
+
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
+
+    @propinas = @comandas.sum(:propina)
+    @total_de_ventas = @comandas.sum(:total)
+
+    @estancia_promedia = @comandas.map do |comanda|
+      comanda.closed_at - comanda.created_at if comanda.closed_at
+    end.compact
+    @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count unless @estancia_promedia.empty?
+
+    @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
+
+    @cheque_promedio = @total_de_ventas / @comandas.sum(:comensales) unless @comandas.empty?
   end
 
   # GET /cortes/new

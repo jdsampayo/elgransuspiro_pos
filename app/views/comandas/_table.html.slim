@@ -1,0 +1,92 @@
+- if @comandas.empty?
+  p No hay comandas registradas.
+- else
+  table
+    thead
+      tr
+        th
+          i.fa.fa-hashtag
+        th
+          i.fa.fa-users
+        th
+          i.fa.fa-sticky-note
+        th
+          i.fa.fa-vcard
+        th width=50
+          i.fa.fa-hourglass-start
+        th width=50
+          i.fa.fa-hourglass-end
+        th width=50
+          i.fa.fa-clock-o
+        th width=400 colspan=2
+          i.fa.fa-coffee
+        th
+          i.fa.fa-dollar
+        th
+          i.fa.fa-thumbs-up
+        th
+          i.fa.fa-balance-scale
+        th width=170
+          i.fa.fa-gear
+
+    tbody
+      - @comandas.each do |comanda|
+        tr
+          td class=(comanda.abierta? ? "" : "table-active")
+            = link_to comanda, comanda
+          td
+            small= comanda.comensales
+          td
+            small= comanda.mesa.capitalize
+          td
+            small= comanda.mesero
+          td
+            small= comanda.created_at.strftime("%H:%M")
+          td
+            small= comanda.closed_at.strftime("%H:%M") if comanda.closed_at
+          td
+            small= Time.at(comanda.tiempo).utc.strftime("%H:%M")
+          td colspan=2
+            small= comanda.ordenes.ordered.map(&:to_s).to_sentence
+          td
+            strong= comanda.total
+          td
+            small= comanda.propina
+          td
+            -if comanda.closed_at
+              -if comanda.pago_con_tarjeta
+                i.fa.fa-credit-card
+              -else
+                i.fa.fa-money
+          -if comanda.abierta?
+            td.actions
+              = link_to edit_comanda_path(comanda), class: "btn btn-primary" do
+                i.fa.fa-pencil
+              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fa fa-clock-o'>".html_safe } do
+                i.fa.fa-print
+              = link_to pay_comanda_path(comanda), class: "btn btn-success" do
+                i.fa.fa-money
+          -else
+            td
+              i.fa.fa-lock
+      tr.table-dark
+        td=@comandas.count
+        td=@comandas.sum(:comensales)
+        td.text-right colspan=4 Tiempo promedio:
+        td=Time.at(@estancia_promedia).utc.strftime("%H:%M")
+        td.text-right
+          | Productos vendidos:
+          span<=@total_de_productos
+        td
+          | Cheque promedio:
+          span<=@cheque_promedio.round(2)
+        td=@total_de_ventas
+        td=@propinas
+        td colspan=4
+          i.fa.fa-money
+          | : #{@con_efectivo.count}
+          i.fa.fa-credit-card<
+          span<
+            | :
+          span<
+            =@con_tarjeta.count

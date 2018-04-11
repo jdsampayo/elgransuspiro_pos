@@ -19,6 +19,7 @@ class ComandasController < ApplicationController
 
     @corte = Corte.find(params[:corte_id])
     @comandas = @corte.comandas.order([closed_at: :asc])
+    @gastos = @corte.gastos_del_dia
 
     @con_tarjeta = @comandas.con_tarjeta
     @con_efectivo = @comandas.con_efectivo
@@ -26,9 +27,9 @@ class ComandasController < ApplicationController
     @total_comandas_cerradas = @comandas.cerradas.sum(:total)
     @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
 
-    @gastos = Gasto.del_dia(@corte.dia).sum(:monto)
+    @total_de_gastos = @gastos.sum(:monto)
 
-    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @gastos
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
 
     @propinas = @comandas.sum(:propina)
     @total_de_ventas = @comandas.sum(:total)
@@ -40,7 +41,7 @@ class ComandasController < ApplicationController
 
     @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
 
-    @cheque_promedio = @total_de_ventas / @comandas.count unless @comandas.empty?
+    @cheque_promedio = @total_de_ventas / @comandas.sum(:comensales) unless @comandas.empty?
   end
 
   # GET /comandas/1

@@ -65,13 +65,17 @@ class Corte < ApplicationRecord
     self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
     self.pagos_con_efectivo = comandas_del_dia.con_efectivo.sum(:total)
 
-    self.gastos = Gasto.del_dia(dia).sum(:monto)
+    self.gastos = gastos_del_dia.sum(:monto)
     self.total = inicial + ventas - gastos
     self.sobre = caja_chica - siguiente_dia
   end
 
   def caja_chica
     total - pagos_con_tarjeta
+  end
+
+  def gastos_del_dia
+    Gasto.del_dia(dia)
   end
 
   def self.actual

@@ -1,27 +1,44 @@
 p#notice = notice
 
-p
-  strong Dia:
-  = @corte.dia
-p
-  strong Inicial:
-  = @corte.inicial
-p
-  strong Ventas:
-  = @corte.ventas
-p
-  strong Gastos:
-  = @corte.gastos
-p
-  strong Total:
-  = @corte.total
-p
-  strong Siguiente dia:
-  = @corte.siguiente_dia
-p
-  strong Sobre:
-  = @corte.sobre
+h1
+  | Corte
+  small.text-muted<=l @corte.dia, format: :long
 
-= link_to 'Edit', edit_corte_path(@corte)
-'  |
-= link_to 'Back', cortes_path
+table
+  tr
+    td Inicial
+    td=@corte.inicial
+  tr
+    td Efectivo
+    td=@corte.pagos_con_efectivo
+    td Tarjeta
+    td=@corte.pagos_con_tarjeta
+    td Ventas
+    td=@corte.ventas
+    td Propinas
+    td=@corte.propinas
+  tr
+    td Gastos
+    td=@corte.gastos
+  tr
+    td Caja Chica
+    td=@corte.total
+  tr
+    td Siguiente Día
+    td=@corte.siguiente_dia
+  tr
+    td Caja Fuerte
+    td=@corte.sobre
+
+h2 Comandas
+
+=render "comandas/table"
+
+h2 Gastos
+
+=render "gastos/table"
+
+= link_to 'Regresar', cortes_path, class: "btn btn-primary"
+
+br
+br
