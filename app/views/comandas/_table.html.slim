@@ -73,7 +73,7 @@
         td=@comandas.count
         td=@comandas.sum(:comensales)
         td.text-right colspan=4 Tiempo promedio:
-        td=Time.at(@estancia_promedia).utc.strftime("%H:%M")
+        td=Time.at(@estancia_promedia).utc.strftime("%H:%M") if @estancia_promedia
         td.text-right
           | Productos vendidos:
           span<=@total_de_productos

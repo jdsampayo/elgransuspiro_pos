@@ -37,7 +37,12 @@ class ComandasController < ApplicationController
     @estancia_promedia = @comandas.map do |comanda|
       comanda.closed_at - comanda.created_at if comanda.closed_at
     end.compact
-    @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count unless @estancia_promedia.empty?
+
+    unless @estancia_promedia.empty?
+      @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count 
+    else
+      @estancia_promedia = nil
+    end
 
     @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
 
