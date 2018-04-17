@@ -1,5 +1,5 @@
 - if @comandas.empty?
-  p No hay comandas registradas.
+  .alert.alert-secondary No hay comandas registradas.
 - else
   table
     thead
@@ -32,7 +32,7 @@
     tbody
       - @comandas.each do |comanda|
         tr
-          td class=(comanda.abierta? ? "" : "table-active")
+          td
             = link_to comanda, comanda
           td
             small= comanda.comensales
@@ -62,34 +62,10 @@
             td.actions
               = link_to edit_comanda_path(comanda), class: "btn btn-primary" do
                 i.fas.fa-pencil-alt
-              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fa fa-clock-o'>".html_safe } do
+              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe } do
                 i.fas.fa-print
               = link_to pay_comanda_path(comanda), class: "btn btn-success" do
                 i.fas.fa-dollar-sign
           -else
             td
               i.fas.fa-lock
-      tr.table-dark
-        td=@comandas.count
-        td=@comandas.sum(:comensales)
-        td.text-right colspan=4 Tiempo promedio:
-        td=Time.at(@estancia_promedia).utc.strftime("%H:%M") if @estancia_promedia
-        td.text-right
-          | Productos vendidos:
-          span<=@total_de_productos
-        td
-          | Cheque promedio:
-          span<=@cheque_promedio.round(2)
-        td=@total_de_ventas
-        td=@propinas
-        td colspan=4
-          i.fas.fa-money-bill-alt<
-          span<
-            | :
-          span<
-            =@con_efectivo.count
-          i.fas.fa-credit-card<
-          span<
-            | :
-          span<
-            =@con_tarjeta.count

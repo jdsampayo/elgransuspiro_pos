@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :info, :success, :warning, :danger
   protect_from_forgery with: :exception
-
   helper_method :current_user
 
   private

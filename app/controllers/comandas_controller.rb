@@ -70,10 +70,11 @@ class ComandasController < ApplicationController
   def create
     @comanda = Comanda.new(comanda_params)
     @comanda.corte = Corte.actual
+    @comanda.descuento ||= 0
 
     respond_to do |format|
       if @comanda.save
-        format.html { redirect_to @comanda, notice: 'Creada exitosamente.' }
+        format.html { redirect_to @comanda, success: '¡La comanda fue creada exitosamente!' }
         format.json { render :show, status: :created, location: @comanda }
       else
         format.html { render :new }

@@ -6,6 +6,8 @@ h1.pull-left Comandas
   -else
     button.btn.btn-secondary Corte cerrado
 
+br
+
 .clearfix
 h5=l @corte.dia, format: :long
 
@@ -47,3 +49,31 @@ table
           | (=) Caja Chica:
       td=@caja
       td
+
+
+table
+  tbody
+    tr.table-dark
+      td=@comandas.count
+      td=@comandas.sum(:comensales)
+      td.text-right colspan=4 Tiempo promedio:
+      td=Time.at(@estancia_promedia).utc.strftime("%H:%M") if @estancia_promedia
+      td.text-right
+        | Productos vendidos:
+        span<=@total_de_productos
+      td
+        | Cheque promedio:
+        span<=@cheque_promedio.round(2)
+      td=@total_de_ventas
+      td=@propinas
+      td colspan=4
+        i.fas.fa-money-bill-alt<
+        span<
+          | :
+        span<
+          =@con_efectivo.count
+        i.fas.fa-credit-card<
+        span<
+          | :
+        span<
+          =@con_tarjeta.count

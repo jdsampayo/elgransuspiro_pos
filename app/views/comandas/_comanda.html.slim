@@ -15,12 +15,13 @@
 hr
 
 table
-  tr
-    th Para llevar
-    th Cantidad
-    th Artículo
-    th Precio Unitario
-    th Venta
+  thead
+    tr
+      th Para llevar
+      th Cantidad
+      th Artículo
+      th Precio Unitario
+      th Venta
   -@comanda.ordenes.ordered.each do |orden|
     tr
       td= orden.para_llevar ? "Sí" : ""
