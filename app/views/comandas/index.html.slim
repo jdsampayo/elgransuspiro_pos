@@ -13,67 +13,63 @@ h5=l @corte.dia, format: :long
 
 =render "table"
 
-table
-  tbody
-    tr.table-dark
-      td colspan=3 Precorte
-    tr.table-info
-      td.text-right width=200
-        strong Inicial:
-      td width=50
-        =@corte.inicial
-      td
-    tr.table-success
-      td.text-right
-        strong
-          | (+) Ventas:
-      td=@total_comandas_cerradas
-      td
-        .small
-          | (Sólo se contabilizan comandas cerradas)
-    tr.table-warning
-      td.text-right
-        strong
-          | (-) Pagos con Tarjeta:
-      td=@total_con_tarjeta
-      td
-    tr.table-danger
-      td.text-right
-        strong
-          | (-) Gastos:
-      td=@total_de_gastos
-      td
-    tr.table-success
-      td.text-right
-        strong<
-          | (=) Caja Chica:
-      td=@caja
-      td
+.row
+  .col-md-6
+    table
+      tbody
+        tr.table-dark
+          td colspan=3 Precorte
+        tr.table-info
+          td.text-right width=200
+            strong Inicial:
+          td width=50
+            =@corte.inicial
+          td
+        tr.table-success
+          td.text-right
+            strong
+              | (+) Ventas:
+          td=@total_comandas_cerradas
+          td
+            .small
+              | (Sólo se contabilizan comandas cerradas)
+        tr.table-warning
+          td.text-right
+            strong
+              | (-) Pagos con Tarjeta:
+          td=@total_con_tarjeta
+          td
+        tr.table-danger
+          td.text-right
+            strong
+              | (-) Gastos:
+          td=@total_de_gastos
+          td
+        tr.table-success
+          td.text-right
+            strong<
+              | (=) Caja Chica:
+          td=@caja
+          td
+        tr
+          td.text-right
+            strong Total de Propinas:
+          td=@propinas
+          td
 
 
-table
-  tbody
-    tr.table-dark
-      td=@comandas.count
-      td=@comandas.sum(:comensales)
-      td.text-right colspan=4 Tiempo promedio:
-      td=Time.at(@estancia_promedia).utc.strftime("%H:%M") if @estancia_promedia
-      td.text-right
-        | Productos vendidos:
-        span<=@total_de_productos
-      td
-        | Cheque promedio:
-        span<=@cheque_promedio.round(2)
-      td=@total_de_ventas
-      td=@propinas
-      td colspan=4
-        i.fas.fa-money-bill-alt<
-        span<
-          | :
-        span<
-          =@con_efectivo.count
-        i.fas.fa-credit-card<
-        span<
-          | :
-        span<
-          =@con_tarjeta.count
+  .col-md-6
+    table
+      tbody
+        tr
+          td.text-right Comandas totales:
+          td=@comandas.count
+        tr
+          td.text-right Tiempo de estancia promedio:
+          td=Time.at(@estancia_promedia).utc.strftime("%H:%M") if @estancia_promedia
+        tr
+          td.text-right Total de productos vendidos:
+          td=@total_de_productos
+        tr
+          td.text-right Cheque promedio del día:
+          td=@cheque_promedio.round(2)
