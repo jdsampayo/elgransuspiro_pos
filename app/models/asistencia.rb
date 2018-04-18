@@ -6,7 +6,7 @@ class Asistencia < ApplicationRecord
   before_update :calcular_horas
 
   scope :activas, -> {
-    where.not(horas: nil)
+    where(horas: nil)
   }
 
   def calcular_horas
