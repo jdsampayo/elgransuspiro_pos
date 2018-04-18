@@ -9,6 +9,6 @@ class Ability
     end
 
     can :manage, Sesion
-    can [:edit, :update], Corte, { id: Corte.actual.id, cerrado?: false }
+    can [:edit, :update], Corte
   end
 end

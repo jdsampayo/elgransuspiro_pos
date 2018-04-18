@@ -102,7 +102,7 @@ class CortesController < ApplicationController
     respond_to do |format|
       if @corte.update(corte_params)
         @corte.cerrar
-        format.html { redirect_to comandas_path, notice: 'El corte se actualizó correctamente.' }
+        format.html { redirect_to comandas_path, notice: 'El corte se cerró correctamente.' }
         format.json { render :show, status: :ok, location: @corte }
       else
         format.html { render :edit }

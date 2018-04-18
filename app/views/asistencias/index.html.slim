@@ -16,7 +16,7 @@ table
     - @asistencias.each do |asistencia|
       tr
         td = asistencia.mesero
-        td = l asistencia.corte.dia
+        td = l asistencia.corte.dia if asistencia.corte
         td = asistencia.created_at&.strftime('%H:%M')
         td = asistencia.updated_at&.strftime('%H:%M') unless asistencia.horas.blank?
         td = asistencia.horas
