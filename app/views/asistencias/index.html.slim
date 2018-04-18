@@ -14,7 +14,7 @@ table
 
   tbody
     - @asistencias.each do |asistencia|
-      tr
+      tr class="#{asistencia.retardo ? "table-warning" : ""}"
         td = asistencia.mesero
         td = l asistencia.corte.dia if asistencia.corte
         td = asistencia.created_at&.strftime('%H:%M')
