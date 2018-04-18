@@ -1,0 +1,32 @@
+h1 Asistencias
+
+table
+  thead
+    tr
+      th Persona
+      th Día
+      th Entrada
+      th Salida
+      th Horas
+      th Retardo
+      th Falta
+      th
+
+  tbody
+    - @asistencias.each do |asistencia|
+      tr
+        td = asistencia.mesero
+        td = l asistencia.corte.dia
+        td = asistencia.created_at&.strftime('%H:%M')
+        td = asistencia.updated_at&.strftime('%H:%M') unless asistencia.horas.blank?
+        td = asistencia.horas
+        td = asistencia.retardo ? 'Si' : 'No'
+        td = asistencia.falta ? 'Si' : 'No'
+        td = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
+
+br
+
+= paginate @asistencias, theme: 'twitter-bootstrap-4'
+
+
+= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'

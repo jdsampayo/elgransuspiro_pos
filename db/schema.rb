@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330233048) do
+ActiveRecord::Schema.define(version: 20180418013441) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(version: 20180330233048) do
     t.integer "desechable_id", null: false
     t.index ["articulo_id", "desechable_id"], name: "index_articulos_desechables_on_articulo_id_and_desechable_id"
     t.index ["desechable_id", "articulo_id"], name: "index_articulos_desechables_on_desechable_id_and_articulo_id"
+  end
+
+  create_table "asistencias", force: :cascade do |t|
+    t.integer "mesero_id"
+    t.integer "corte_id"
+    t.integer "horas"
+    t.integer "horas_extra"
+    t.boolean "retardo"
+    t.boolean "falta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["corte_id"], name: "index_asistencias_on_corte_id"
+    t.index ["mesero_id"], name: "index_asistencias_on_mesero_id"
   end
 
   create_table "categorias", force: :cascade do |t|

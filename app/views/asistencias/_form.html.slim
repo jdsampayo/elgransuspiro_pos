@@ -1,0 +1,16 @@
+= simple_form_for(@asistencia) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :mesero, label: 'Persona', collection: Asistencia.meseros_del_dia
+    = f.input :corte_id, as: :hidden
+    /= f.input :horas
+    /= f.input :horas_extra
+    /= f.input :retardo
+    = f.input :falta
+
+  .form-actions
+    = f.button :submit, "Guardar", class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', :back
+

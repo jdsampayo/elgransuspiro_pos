@@ -22,6 +22,9 @@ class Comanda < ApplicationRecord
   scope :cerradas, -> {
     where.not(closed_at: nil)
   }
+  scope :abiertas, -> {
+    where(closed_at: nil)
+  }
 
   def cerrar
     self.closed_at = Time.now

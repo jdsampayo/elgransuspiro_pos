@@ -1,0 +1,16 @@
+dl
+  dt Mesero:
+  dd= @asistencia.mesero
+  dt Fecha:
+  dd= @asistencia.corte.dia
+  - unless @asistencia.updated_at == @asistencia.created_at
+    dt Horas:
+    dd= @asistencia.horas
+    dt Horas extra:
+    dd= @asistencia.horas_extra
+  dt Retardo:
+  dd= @asistencia.retardo ? "Si" : "No"
+  dt Falta:
+  dd= @asistencia.falta ? "Si" : "No"
+
+= link_to 'Regresar', asistencias_path, class: "btn btn-secondary"

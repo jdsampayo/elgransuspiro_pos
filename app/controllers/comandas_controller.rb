@@ -2,22 +2,12 @@ class ComandasController < ApplicationController
   before_action :set_comanda, only: [:show, :edit, :update, :destroy, :pay, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
   before_action :check_corte, only: [:new, :create]
+  before_action :requiere_corte_actual, only: [:index]
 
   # GET /comandas
   # GET /comandas.json
   def index
-    if params[:corte_id].blank?
-      corte_actual = Corte.actual
-
-      unless corte_actual
-        redirect_to edit_corte_path(Corte.last), notice: "Por favor, primero realiza el corte del día anterior."
-        return
-      end
-
-      params[:corte_id] = corte_actual.id
-    end
-
-    @corte = Corte.find(params[:corte_id])
+    @corte = Corte.actual
     @comandas = @corte.comandas.order([closed_at: :asc])
     @gastos = @corte.gastos_del_dia
 
@@ -39,7 +29,7 @@ class ComandasController < ApplicationController
     end.compact
 
     unless @estancia_promedia.empty?
-      @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count 
+      @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count
     else
       @estancia_promedia = nil
     end

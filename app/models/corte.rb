@@ -2,6 +2,7 @@ class Corte < ApplicationRecord
   has_many :conteos
   has_many :comandas
   has_many :ordenes, through: :comandas
+  has_many :asistencias
 
   acts_as_paranoid
 

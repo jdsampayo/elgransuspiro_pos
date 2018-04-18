@@ -31,6 +31,10 @@ es-MX:
           attributes:
             mesero:
               required: "es requerido"
+        asistencia:
+          attributes:
+            mesero:
+              required: "es requerido"
 
     models:
       sesion: "Sesión"

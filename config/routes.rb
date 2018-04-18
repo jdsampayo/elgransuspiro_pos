@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :asistencias
   resources :desechables
   resources :conteos
   resources :categorias
@@ -32,5 +33,5 @@ Rails.application.routes.draw do
   get "login", controller: "sesiones", action: "new", as: "login"
   get "logout", controller: "sesiones", action: "destroy", as: "logout"
 
-  root "cortes#index"
+  root "tableros#index"
 end

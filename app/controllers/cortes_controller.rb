@@ -1,5 +1,6 @@
 class CortesController < ApplicationController
   before_action :set_corte, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /cortes
   # GET /cortes.json
@@ -86,7 +87,7 @@ class CortesController < ApplicationController
 
     respond_to do |format|
       if @corte.save
-        format.html { redirect_to cortes_path, notice: 'El corte se creó exitosamente.' }
+        format.html { redirect_to comandas_path, notice: 'El corte se creó exitosamente.' }
         format.json { render :show, status: :created, location: @corte }
       else
         format.html { render :new }
@@ -101,7 +102,7 @@ class CortesController < ApplicationController
     respond_to do |format|
       if @corte.update(corte_params)
         @corte.cerrar
-        format.html { redirect_to cortes_path, notice: 'El corte se actualizó correctamente.' }
+        format.html { redirect_to comandas_path, notice: 'El corte se actualizó correctamente.' }
         format.json { render :show, status: :ok, location: @corte }
       else
         format.html { render :edit }

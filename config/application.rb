@@ -14,7 +14,7 @@ module ElgransuspiroPos
     config.time_zone = 'Mexico City'
     config.i18n.default_locale = :'es-MX'
     config.i18n.locale = :'es-MX'
-    config.i18n.fallbacks = [:es, :en]
+    config.i18n.fallbacks = true
 
     config.generators do |g|
       g.template_engine :slim

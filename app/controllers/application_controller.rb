@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def requiere_corte_actual
+    redirect_to(
+      edit_corte_path(Corte.last),
+      notice: "Para realizar la acción solicitada, por favor primero realiza el corte del día anterior."
+    ) unless Corte.actual
+  end
+
   def current_session
     return @current_session if @current_session
     @current_session = Sesion.find

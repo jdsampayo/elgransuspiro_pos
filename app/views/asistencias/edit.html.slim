@@ -1,0 +1,19 @@
+h1 Cerrar mi día
+
+= simple_form_for(@asistencia) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :corte_id, as: :hidden
+
+    p
+      strong #{@asistencia.mesero}
+      span< tu día quedaría registrado como:
+      strong< #{@asistencia.preview_de_salida}
+      span< horas trabajadas.
+
+  .form-actions
+    = f.button :submit, "Registrar Salida", class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', asistencias_path
+
