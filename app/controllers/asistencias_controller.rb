@@ -27,6 +27,7 @@ class AsistenciasController < ApplicationController
   # POST /asistencias.json
   def create
     @asistencia = Asistencia.new(asistencia_params)
+    @asistencia.hora_entrada = Time.current
 
     respond_to do |format|
       if @asistencia.save
@@ -43,7 +44,7 @@ class AsistenciasController < ApplicationController
   # PATCH/PUT /asistencias/1.json
   def update
     respond_to do |format|
-      @asistencia.touch
+      @asistencia.hora_salida = Time.current
 
       if @asistencia.update(asistencia_params)
         format.html { redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!." }

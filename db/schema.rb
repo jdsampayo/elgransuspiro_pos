@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418013441) do
+ActiveRecord::Schema.define(version: 20180421015022) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20180418013441) do
     t.boolean "falta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "hora_entrada"
+    t.datetime "hora_salida"
     t.index ["corte_id"], name: "index_asistencias_on_corte_id"
     t.index ["mesero_id"], name: "index_asistencias_on_mesero_id"
   end
