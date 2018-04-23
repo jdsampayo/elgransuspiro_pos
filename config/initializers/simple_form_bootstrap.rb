@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   config.error_notification_class = 'alert alert-danger'
@@ -112,7 +113,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :inline_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :inline_form, tag: 'div', class: 'form-group' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength

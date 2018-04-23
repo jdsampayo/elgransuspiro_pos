@@ -5,7 +5,8 @@ class AsistenciasController < ApplicationController
   # GET /asistencias
   # GET /asistencias.json
   def index
-    @asistencias = Asistencia.order(corte_id: :desc).page(params[:page])
+    @q = Asistencia.joins(:corte).ransack(params[:q])
+    @asistencias  = @q.result(distinct: true).order(corte_id: :desc).page(params[:page])
   end
 
   # GET /asistencias/1

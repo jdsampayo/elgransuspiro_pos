@@ -8,7 +8,7 @@ class ComandasController < ApplicationController
   # GET /comandas.json
   def index
     @corte = Corte.actual
-    @comandas = @corte.comandas.order([closed_at: :asc])
+    @comandas = @corte.comandas.order(closed_at: :asc)
     @gastos = @corte.gastos_del_dia
 
     @con_tarjeta = @comandas.con_tarjeta
@@ -23,20 +23,6 @@ class ComandasController < ApplicationController
 
     @propinas = @comandas.sum(:propina)
     @total_de_ventas = @comandas.sum(:total)
-
-    @estancia_promedia = @comandas.map do |comanda|
-      comanda.closed_at - comanda.created_at if comanda.closed_at
-    end.compact
-
-    unless @estancia_promedia.empty?
-      @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count
-    else
-      @estancia_promedia = nil
-    end
-
-    @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
-
-    @cheque_promedio = @total_de_ventas / @comandas.sum(:comensales) unless @comandas.empty?
   end
 
   # GET /comandas/1

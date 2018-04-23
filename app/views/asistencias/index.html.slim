@@ -1,4 +1,15 @@
-h1 Asistencias
+h1.float-left Asistencias
+
+.float-right= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'
+
+.clearfix
+
+= search_form_for @q, wrapper: :inline_form, html: { method: :get, class: 'form-inline' } do |f|
+  .form-inputs
+    = f.input :mesero_id_in, collection: Mesero.all, wrapper: false, include_blank: "Persona"
+    = f.input :corte_dia_in, input_html: { class: 'datepicker' }, wrapper: false, placeholder: "Día"
+  .form-actions
+    = f.button :submit, 'Buscar', class: 'btn btn-primary'
 
 table
   thead
@@ -28,5 +39,5 @@ br
 
 = paginate @asistencias, theme: 'twitter-bootstrap-4'
 
-
-= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'
+br
+br
