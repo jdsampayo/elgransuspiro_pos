@@ -9,6 +9,6 @@ class Ability
     end
 
     can :manage, Sesion
-    can [:edit, :update], Corte
+    can [:edit, :update, :propinas], Corte
   end
 end

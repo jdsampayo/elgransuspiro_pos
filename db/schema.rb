@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180421015022) do
+ActiveRecord::Schema.define(version: 20180505234635) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20180421015022) do
     t.decimal "pagos_con_tarjeta", default: "0.0"
     t.decimal "pagos_con_efectivo", default: "0.0"
     t.datetime "deleted_at"
+    t.decimal "propinas"
     t.index ["deleted_at"], name: "index_cortes_on_deleted_at"
   end
 

@@ -9,8 +9,12 @@ class Corte < ApplicationRecord
   VENTAS_LIMITE = 2000
   GASTOS_LIMITE = 100
 
-  def propinas
+  def calcular_propinas
     comandas.sum(:propina)
+  end
+
+  def reparto_de_propinas
+    propinas / asistencias.count if asistencias&.count > 0
   end
 
   def to_s

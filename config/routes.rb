@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :conteos
   resources :categorias
   resources :gastos
-  resources :cortes
+  resources :cortes do
+    collection do
+      get :propinas
+    end
+  end
   resources :extras
   resources :ordenes
   resources :comandas do
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
 
   resources :sesiones
 
+  get "propinas", controller: "cortes", action: "propinas", as: "propinas"
   get "acceso_denegado", controller: "sesiones", action: "acceso_denegado", as: "acceso_denegado"
   get "login", controller: "sesiones", action: "new", as: "login"
   get "logout", controller: "sesiones", action: "destroy", as: "logout"

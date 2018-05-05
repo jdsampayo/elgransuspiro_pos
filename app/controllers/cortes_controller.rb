@@ -41,6 +41,31 @@ class CortesController < ApplicationController
     ]
   end
 
+  def propinas
+    @cortes = Corte.order(dia: :desc).page params[:page]
+
+    @semana_actual = [
+      {
+        name: "Propinas",
+        data: Corte.de_la_semana(Date.today, :propinas)
+      }
+    ]
+    @semana_anterior = [
+      {
+        name: "Propinas",
+        data: Corte.de_la_semana(1.week.ago, :propinas)
+      }
+    ]
+
+    por_semana_query = Corte.group_by_week(:dia, time_zone: false)
+    @por_semana = [
+      {
+        name: "Ventas",
+        data: por_semana_query.sum(:propinas)
+      }
+    ]
+  end
+
   # GET /cortes/1
   # GET /cortes/1.json
   def show
