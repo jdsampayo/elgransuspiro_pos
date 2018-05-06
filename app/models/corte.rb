@@ -31,6 +31,7 @@ class Corte < ApplicationRecord
 
   def cerrar
     set_subtotals
+    self.propinas = calcular_propinas
     self.closed_at = Time.now
     save
     reload
