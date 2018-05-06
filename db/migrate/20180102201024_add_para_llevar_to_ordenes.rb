@@ -1,5 +1,5 @@
 class AddParaLlevarToOrdenes < ActiveRecord::Migration[5.1]
   def change
-    add_column :ordenes, :para_llevar, :boolean
+    add_column :ordenes, :para_llevar, :boolean, default: true
   end
 end

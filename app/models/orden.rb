@@ -5,11 +5,17 @@ class Orden < ApplicationRecord
 
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
+  after_initialize :set_defaults
+
   before_save :guardar_precios_historicos
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
   acts_as_paranoid
+
+  def set_defaults
+    self.para_llevar = true
+  end
 
   def precio
     cantidad * precio_unitario

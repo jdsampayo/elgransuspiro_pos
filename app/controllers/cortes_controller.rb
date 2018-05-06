@@ -60,7 +60,7 @@ class CortesController < ApplicationController
     por_semana_query = Corte.group_by_week(:dia, time_zone: false)
     @por_semana = [
       {
-        name: "Ventas",
+        name: "Propinas",
         data: por_semana_query.sum(:propinas)
       }
     ]
