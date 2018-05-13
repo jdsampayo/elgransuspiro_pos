@@ -1,4 +1,6 @@
 class CategoriasController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_categoria, only: [:show, :edit, :update, :destroy]
 
   # GET /categorias

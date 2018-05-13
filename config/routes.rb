@@ -41,6 +41,6 @@ Rails.application.routes.draw do
   if Rails.env.development?
     root "tableros#index"
   else
-    root "cuentas#index"
+    root "contabilidad/cuentas#index"
   end
 end

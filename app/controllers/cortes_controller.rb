@@ -1,6 +1,7 @@
 class CortesController < ApplicationController
-  before_action :set_corte, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+
+  before_action :set_corte, only: [:show, :edit, :update, :destroy]
 
   # GET /cortes
   # GET /cortes.json

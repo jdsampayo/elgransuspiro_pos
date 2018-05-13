@@ -1,4 +1,6 @@
 class TablerosController < ApplicationController
+  load_and_authorize_resource class: false
+
   before_action :requiere_corte_actual, only: [:index]
 
   def index

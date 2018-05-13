@@ -1,4 +1,6 @@
 class MeserosController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_mesero, only: [:show, :edit, :update, :destroy]
 
   # GET /meseros

@@ -1,4 +1,6 @@
 class CuentasController < ApplicationController
+  load_and_authorize_resource class: false
+
   def index
     @cuentas = Plutus::Account.all
   end

@@ -1,4 +1,6 @@
 class ComandasController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_comanda, only: [:show, :edit, :update, :destroy, :pay, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
   before_action :check_corte, only: [:new, :create]

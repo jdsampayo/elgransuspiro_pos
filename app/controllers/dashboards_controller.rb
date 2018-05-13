@@ -1,4 +1,6 @@
 class DashboardsController < ApplicationController
+  load_and_authorize_resource
+
   def index
     today = Time.now.beginning_of_day
     @days = [

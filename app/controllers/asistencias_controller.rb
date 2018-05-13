@@ -1,4 +1,6 @@
 class AsistenciasController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_asistencia, only: [:show, :edit, :update, :destroy]
   before_action :requiere_corte_actual, only: [:new, :edit]
 
