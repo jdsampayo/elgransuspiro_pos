@@ -65,3 +65,6 @@ gem 'authlogic'
 gem 'bcrypt', '~> 3.1.7'
 gem 'scrypt', '1.2.1'
 gem 'cancancan', '~> 2.0'
+
+# Production
+gem 'unicorn'
