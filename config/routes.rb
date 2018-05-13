@@ -38,5 +38,9 @@ Rails.application.routes.draw do
   get "login", controller: "sesiones", action: "new", as: "login"
   get "logout", controller: "sesiones", action: "destroy", as: "logout"
 
-  root "tableros#index"
+  if Rails.env.development?
+    root "tableros#index"
+  else
+    root "cuentas#index"
+  end
 end

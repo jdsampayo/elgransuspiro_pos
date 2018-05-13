@@ -8,7 +8,9 @@ class Ability
       can :manage, :all
     end
 
-    can :manage, Sesion
-    can [:edit, :update, :propinas], Corte
+    if Rails.env.development?
+      can :manage, Sesion
+      can [:edit, :update, :propinas], Corte
+    end
   end
 end
