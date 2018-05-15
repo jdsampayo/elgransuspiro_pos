@@ -4,13 +4,13 @@ h1.float-md-left Comanda #{@comanda.id}
   .actions
     - if @comanda.abierta?
       = link_to edit_comanda_path(@comanda), class: "btn btn-primary btn" do
-        i.fas.fa-pencil-alt
+        i.fa-fw.fas.fa-pencil-alt
       = link_to print_comanda_path(@comanda), method: :post, class: "btn btn-info", data: { disable_with: "Imprimiendo..." } do
-        i.fas.fa-print
+        i.fa-fw.fas.fa-print
       = link_to pay_comanda_path(@comanda), class: "btn btn-success" do
-        i.fas.fa-dollar-sign
+        i.fa-fw.fas.fa-dollar-sign
       = link_to @comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
-        i.fas.fa-trash
+        i.fa-fw.fas.fa-trash
 
     - else
       button.btn.btn-secondary Comanda cerrada

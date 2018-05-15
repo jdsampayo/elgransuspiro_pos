@@ -3,6 +3,11 @@ class Corte < ApplicationRecord
   has_many :comandas
   has_many :ordenes, through: :comandas
   has_many :asistencias
+  has_many :meseros, through: :asistencias do
+   def activos
+     where('asistencias.horas IS NULL').where('asistencias.falta = ?', false)
+   end
+  end
 
   acts_as_paranoid
 
@@ -100,4 +105,5 @@ class Corte < ApplicationRecord
       {I18n.localize(corte[0], format: "%a") => corte[1].to_f}
     end.reduce({}, :merge)
   end
+
 end
