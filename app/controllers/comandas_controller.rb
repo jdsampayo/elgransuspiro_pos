@@ -77,6 +77,12 @@ class ComandasController < ApplicationController
     end
   end
 
+  def switch
+    @comanda.switch_payment_method!
+
+    redirect_to comandas_url, notice: '¡Se intercambió el método de pago!'
+  end
+
   def print
     @comanda.print_ticket
 

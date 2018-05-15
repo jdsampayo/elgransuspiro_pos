@@ -25,4 +25,4 @@ $(document).on "turbolinks:load", ->
       if ($(checkbox_selector + ':checked').length > 0)
         $('#comanda_para_llevar').prop("indeterminate", true)
 
-
+  $('[data-toggle="tooltip"]').tooltip()

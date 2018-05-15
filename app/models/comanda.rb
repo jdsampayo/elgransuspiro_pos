@@ -110,4 +110,8 @@ class Comanda < ApplicationRecord
     ticket_file.unlink
   end
 
+  def switch_payment_method!
+    update_attribute(:pago_con_tarjeta, !pago_con_tarjeta)
+  end
+
 end

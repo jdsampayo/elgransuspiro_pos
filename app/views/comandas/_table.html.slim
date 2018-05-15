@@ -26,7 +26,7 @@
           i.fas.fa-hand-holding-usd
         th
           i.fas.fa-inbox
-        th width=170
+        th width=200
           i.fas.fa-cog
 
     tbody
@@ -60,12 +60,17 @@
                 i.fas.fa-money-bill-alt
           -if comanda.abierta?
             td.actions
-              = link_to edit_comanda_path(comanda), class: "btn btn-primary" do
-                i.fas.fa-pencil-alt
-              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe } do
-                i.fas.fa-print
-              = link_to pay_comanda_path(comanda), class: "btn btn-success" do
-                i.fas.fa-dollar-sign
+              = link_to edit_comanda_path(comanda), class: "btn btn-primary", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Editar" do
+                i.fas.fa-pencil-alt.fa-fw
+              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Imprimir" do
+                i.fas.fa-print.fa-fw
+              = link_to pay_comanda_path(comanda), class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Pagar" do
+                i.fas.fa-dollar-sign.fa-fw
           -else
-            td
-              i.fas.fa-lock
+            td.actions
+              button.btn.btn-secondary.btn-disabled
+                i.fas.fa-lock.fa-fw data-toggle="tooltip" data-placement="bottom" title="Comanda cerrada"
+              = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Reimprimir" do
+                i.fas.fa-print.fa-fw
+              = link_to switch_comanda_path(comanda), method: :post, class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
+                i.fas.fa-sync.fa-fw

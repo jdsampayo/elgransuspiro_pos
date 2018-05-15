@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     member do
       get :pay
       post :print
+      post :switch
       patch :close
     end
   end
