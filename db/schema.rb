@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180505234635) do
+ActiveRecord::Schema.define(version: 20180515210327) do
 
   create_table "articulos", force: :cascade do |t|
     t.string "nombre"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20180505234635) do
     t.boolean "pago_con_tarjeta", default: false
     t.integer "corte_id"
     t.decimal "propina", default: "0.0"
+    t.integer "porcentaje_de_descuento", default: 0
     t.index ["closed_at"], name: "index_comandas_on_closed_at"
     t.index ["deleted_at"], name: "index_comandas_on_deleted_at"
     t.index ["mesero_id"], name: "index_comandas_on_mesero_id"

@@ -139,6 +139,7 @@ class ComandasController < ApplicationController
         :descuento,
         :mesero_id,
         :comensales,
+        :porcentaje_de_descuento,
         ordenes_attributes: [
           :id,
           :articulo_id,

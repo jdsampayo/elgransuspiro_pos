@@ -6,7 +6,7 @@
       .col-md-3= f.input :mesa
       .col-md-3= f.input :comensales
       .col-md-3= f.association :mesero, collection: Corte.actual.meseros.activos, label: "Mesero (sólo muestra los presentes)"
-      .col-md-3= f.input :descuento
+      .col-md-3= f.input :porcentaje_de_descuento
 
   hr
 

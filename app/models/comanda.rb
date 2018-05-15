@@ -6,6 +6,9 @@ class Comanda < ApplicationRecord
 
   before_save :set_totales
   validates :descuento, :total, :venta, numericality: {greater_than_or_equal_to: 0}
+
+  validates :porcentaje_de_descuento, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, message: "Debe estar entre 0 y 100"}
+
   accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
   acts_as_paranoid
@@ -45,6 +48,7 @@ class Comanda < ApplicationRecord
   def set_totales
     ordenes.map(&:guardar_precios_historicos)
     self.venta = ordenes.map(&:precio).sum
+    self.descuento = self.venta * self.porcentaje_de_descuento / 100
     self.total = venta - descuento
   end
 
@@ -79,7 +83,7 @@ class Comanda < ApplicationRecord
     texto << ""
 
     texto << "Subtotal:                  #{venta.to_s.rjust(5, ' ')}"
-    texto << "Descuento:                 #{descuento.to_s.rjust(5, ' ')}"
+    texto << "Descuento (#{@comanda.porcentaje_de_descuento.to_s.rjust(3, ' ')}%):          #{descuento.to_s.rjust(5, ' ')}"
 
     texto << "Total:                     #{total.to_s.rjust(5, ' ')}"
 
