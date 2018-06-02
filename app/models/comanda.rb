@@ -83,7 +83,7 @@ class Comanda < ApplicationRecord
     texto << ""
 
     texto << "Subtotal:                  #{venta.to_s.rjust(5, ' ')}"
-    texto << "Descuento (#{@comanda.porcentaje_de_descuento.to_s.rjust(3, ' ')}%):          #{descuento.to_s.rjust(5, ' ')}"
+    texto << "Descuento (#{porcentaje_de_descuento.to_s.rjust(3, ' ')}%):          #{descuento.to_s.rjust(5, ' ')}"
 
     texto << "Total:                     #{total.to_s.rjust(5, ' ')}"
 
