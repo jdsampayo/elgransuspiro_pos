@@ -64,12 +64,16 @@ class Comanda < ApplicationRecord
     closed_at.blank?
   end
 
+  def folio
+    id.last(6)
+  end
+
   def to_text
     texto = []
     texto << "   #{I18n.l created_at, format: :short}"
     texto << ""
 
-    texto << "Ticket: #{id.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
+    texto << "Ticket: #{folio.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
     texto << "Mesa: #{mesa.ljust(11, ' ')} Mesero: #{mesero.to_s[0,5].rjust(6, ' ')}"
 
     texto << ""

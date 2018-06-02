@@ -20,6 +20,7 @@ module ElgransuspiroPos
 
     config.generators do |g|
       g.template_engine :slim
+      g.orm :active_record, primary_key_type: :uuid
     end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
