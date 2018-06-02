@@ -14,8 +14,8 @@ default: &default
 development:
   <<: *default
   host: localhost
-  username: jdsampayo
-  password:
+  username: postgres
+  password: elgransuspiro
   database: elgransuspiro_pos_development
 
 test:
