@@ -19,7 +19,7 @@ class Corte < ApplicationRecord
   end
 
   def reparto_de_propinas
-    propinas / asistencias.count if asistencias&.count > 0
+    propinas / asistencias.count if propinas.present? && asistencias&.count > 0
   end
 
   def to_s
