@@ -57,9 +57,10 @@ gem 'bootstrap-datepicker-rails'
 gem 'plutus', github: "jdsampayo/plutus", branch: "fix_rails_5_assets"
 
 # Printing
-gem 'chunky_png'
-gem 'escpos'
-gem 'escpos-image'
+#gem 'chunky_png'
+#gem 'escpos'
+#gem 'escpos-image'
+gem 'escper'
 
 # Auth
 gem 'authlogic'

@@ -70,6 +70,7 @@ class Comanda < ApplicationRecord
 
   def to_text
     texto = []
+
     texto << "   #{I18n.l created_at, format: :short}"
     texto << "".ljust(32, '-')
 
@@ -99,24 +100,36 @@ class Comanda < ApplicationRecord
   end
 
   def print_ticket
-    logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
+    #logo = Escpos::Image.new()
 
-    printer = Escpos::Printer.new
-
-    #printer.write(Escpos.sequence(Escpos::IMAGE))
+    #printer = Escpos::Printer.new
     #printer.write(logo.to_escpos)
+
     #printer.write(Escpos.sequence(Escpos::TXT_NORMAL))
-    printer.write(to_text)
+    #printer.write(to_text)
     #printer.write(Escpos.sequence(Escpos::CD_KICK_2))
 
-    ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')
-    ticket_file.write(printer.to_escpos)
-    ticket_file.close
-    `cupsdisable equal`
-    sleep 1
-    `cupsenable equal`
-    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
-    ticket_file.unlink
+    File.open('/dev/usb/lp0','w:ascii-8bit') { |f| f.write to_text }
+
+    #File.open('/dev/usb/lp0','w') { |f| f.write(printer.to_escpos) }
+
+    #ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')
+    #ticket_file.write(printer.to_escpos)
+    #ticket_file.close
+    #sleep 1
+    #{}`#{ticket_file.path} > /dev/usb/lp0`
+    #`lpr -o raw -H localhost -P equal #{ticket_file.path}`
+    #ticket_file.unlink
+
+    #vp1 = Escper::VendorPrinter.new :id => 1, :name => 'Printer 1 USB', :path => '/dev/usb/lp0', :copies => 1
+    #image_escpos1 = Escper::Img.new(Rails.root.join('app/assets/images/logo_bn.png'), :file).to_s
+    #image_escpos2 = Escper::Img.new(Rails.root.join('app/assets/images/logo_bn.png'), :file).to_s
+
+    #raw_images = {:image1 => image_escpos1, :image2 => image_escpos2}
+    #print_engine = Escper::Printer.new 'local', vp1
+    #print_engine.open
+    #print_engine.print 1, "print text and image1 {::escper}image1{:/} and image 2 {::escper}image1{:/} to printer 1", raw_images
+    #print_engine.close
   end
 
   def switch_payment_method!
