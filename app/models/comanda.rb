@@ -65,18 +65,18 @@ class Comanda < ApplicationRecord
   end
 
   def folio
-    id.last(6)
+    id.last(9)
   end
 
   def to_text
     texto = []
     texto << "   #{I18n.l created_at, format: :short}"
-    texto << ""
+    texto << "".ljust(32, '-')
 
     texto << "Ticket: #{folio.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
     texto << "Mesa: #{mesa.ljust(11, ' ')} Mesero: #{mesero.to_s[0,5].rjust(6, ' ')}"
 
-    texto << ""
+    texto << "".ljust(32, '-')
 
     texto << " # Nombre            P/U  Precio"
     ordenes.each do |orden|
@@ -95,9 +95,8 @@ class Comanda < ApplicationRecord
     texto << ""
     texto << ""
 
-    I18n.transliterate(texto.join("\r\n"))
+    I18n.transliterate(texto.map{|renglon| renglon.ljust(32, ' ')}.join("\r\n"))
   end
-
 
   def print_ticket
     logo = Escpos::Image.new(Rails.root.join('app/assets/images/logo_bn.png'))
