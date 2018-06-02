@@ -11,7 +11,7 @@ class TablerosController < ApplicationController
 
     @comandas = Comanda.all
 
-    @estancia_promedia = @comandas.unscoped.pluck("Cast ((julianday(closed_at) - julianday(created_at)) * 24 * 60 * 60 As Integer) as estancia_promedio").compact
+    @estancia_promedia = @comandas.unscoped.pluck("extract(epoch from (closed_at - created_at)) as estancia_promedio").compact
 
     @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count
     @total_de_productos = Orden.where(comanda_id: @comandas).sum(:cantidad)
