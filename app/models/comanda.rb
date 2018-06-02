@@ -105,15 +105,17 @@ class Comanda < ApplicationRecord
 
     #printer.write(Escpos.sequence(Escpos::IMAGE))
     #printer.write(logo.to_escpos)
-    printer.write(Escpos.sequence(Escpos::TXT_NORMAL))
+    #printer.write(Escpos.sequence(Escpos::TXT_NORMAL))
     printer.write(to_text)
     #printer.write(Escpos.sequence(Escpos::CD_KICK_2))
 
     ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')
     ticket_file.write(printer.to_escpos)
     ticket_file.close
-    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
+    `cupsdisable equal`
     sleep 1
+    `cupsenable equal`
+    `lpr -o raw -H localhost -P equal #{ticket_file.path}`
     ticket_file.unlink
   end
 
