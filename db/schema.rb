@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531200152) do
+ActiveRecord::Schema.define(version: 20180603220722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pgcrypto"
   enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
 
   create_table "articulos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "nombre"
@@ -196,6 +196,17 @@ ActiveRecord::Schema.define(version: 20180531200152) do
     t.datetime "updated_at"
     t.index ["commercial_document_id", "commercial_document_type"], name: "idx_19850_index_entries_on_commercial_doc"
     t.index ["date"], name: "idx_19850_index_plutus_entries_on_date"
+  end
+
+  create_table "sincronizaciones", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "mensaje"
+    t.string "path"
+    t.string "tipo"
+    t.datetime "webhooked_at"
+    t.text "error"
+    t.boolean "exito", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "usuarios", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

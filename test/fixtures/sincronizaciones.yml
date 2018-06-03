@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mensaje: MyText
+  path: MyString
+  tipo: MyString
+  webhooked_at: 2018-06-03 17:07:22
+  error: MyText
+  exito: false
+
+two:
+  mensaje: MyText
+  path: MyString
+  tipo: MyString
+  webhooked_at: 2018-06-03 17:07:22
+  error: MyText
+  exito: false

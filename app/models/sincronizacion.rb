@@ -1,0 +1,2 @@
+class Sincronizacion < ApplicationRecord
+end

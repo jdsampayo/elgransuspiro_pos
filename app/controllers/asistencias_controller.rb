@@ -5,14 +5,12 @@ class AsistenciasController < ApplicationController
   before_action :requiere_corte_actual, only: [:new, :edit]
 
   # GET /asistencias
-  # GET /asistencias.json
   def index
     @q = Asistencia.joins(:corte).ransack(params[:q])
-    @asistencias  = @q.result(distinct: true).order(corte_id: :desc).page(params[:page])
+    @asistencias = @q.result(distinct: true).order(corte_id: :desc).page(params[:page])
   end
 
   # GET /asistencias/1
-  # GET /asistencias/1.json
   def show
   end
 
@@ -27,46 +25,35 @@ class AsistenciasController < ApplicationController
   end
 
   # POST /asistencias
-  # POST /asistencias.json
   def create
     @asistencia = Asistencia.new(asistencia_params)
     @asistencia.hora_entrada = Time.current
 
-    respond_to do |format|
-      if @asistencia.save
-        format.html { redirect_to asistencias_path, notice: "¡#{@asistencia.mesero}, tu asistencia quedó registrada!" }
-        format.json { render :show, status: :created, location: @asistencia }
-      else
-        format.html { render :new }
-        format.json { render json: @asistencia.errors, status: :unprocessable_entity }
-      end
+    if @asistencia.save
+      @asistencia.syncronize_create
+      redirect_to asistencias_path, notice: "¡#{@asistencia.mesero}, tu asistencia quedó registrada!"
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /asistencias/1
-  # PATCH/PUT /asistencias/1.json
   def update
-    respond_to do |format|
-      @asistencia.hora_salida = Time.current
+    @asistencia.hora_salida = Time.current
 
-      if @asistencia.update(asistencia_params)
-        format.html { redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!." }
-        format.json { render :show, status: :ok, location: @asistencia }
-      else
-        format.html { render :edit }
-        format.json { render json: @asistencia.errors, status: :unprocessable_entity }
-      end
+    if @asistencia.update(asistencia_params)
+      @asistencia.syncronize_update
+      redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!."
+    else
+      render :edit
     end
   end
 
   # DELETE /asistencias/1
-  # DELETE /asistencias/1.json
   def destroy
     @asistencia.destroy
-    respond_to do |format|
-      format.html { redirect_to asistencias_url, notice: 'Asistencia was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    redirect_to asistencias_url, notice: 'Asistencia was successfully destroyed.'
   end
 
   private
