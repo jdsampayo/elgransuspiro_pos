@@ -70,7 +70,7 @@ class Corte < ApplicationRecord
   end
 
   def set_subtotals
-    comandas_del_dia = Comanda.del_dia(dia)
+    comandas_del_dia = comandas
 
     self.ventas = comandas_del_dia.sum(:total)
     self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
