@@ -30,7 +30,6 @@ class AsistenciasController < ApplicationController
     @asistencia.hora_entrada = Time.current
 
     if @asistencia.save
-      @asistencia.syncronize_create
       redirect_to asistencias_path, notice: "¡#{@asistencia.mesero}, tu asistencia quedó registrada!"
     else
       render :new
@@ -42,7 +41,6 @@ class AsistenciasController < ApplicationController
     @asistencia.hora_salida = Time.current
 
     if @asistencia.update(asistencia_params)
-      @asistencia.syncronize_update
       redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!."
     else
       render :edit
