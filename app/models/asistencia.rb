@@ -7,10 +7,6 @@ class Asistencia < ApplicationRecord
   before_create :checar_retardo
   before_update :calcular_horas
 
-  after_create :syncronize_create
-  after_update :syncronize_update
-  after_destroy :syncronize_delete
-
   scope :activas, -> {
     where(horas: nil).where(falta: false)
   }

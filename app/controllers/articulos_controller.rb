@@ -32,6 +32,7 @@ class ArticulosController < ApplicationController
 
     respond_to do |format|
       if @articulo.save
+        @articulo.syncronize_create
         format.html { redirect_to @articulo, notice: 'Creado exitosamente.' }
         format.json { render :show, status: :created, location: @articulo }
       else
@@ -46,6 +47,7 @@ class ArticulosController < ApplicationController
   def update
     respond_to do |format|
       if @articulo.update(articulo_params)
+        @articulo.syncronize_update
         format.html { redirect_to @articulo, notice: 'Actualizado exitosamente.' }
         format.json { render :show, status: :ok, location: @articulo }
       else
@@ -59,6 +61,8 @@ class ArticulosController < ApplicationController
   # DELETE /articulos/1.json
   def destroy
     @articulo.destroy
+    @articulo.syncronize_destroy
+
     respond_to do |format|
       format.html { redirect_to articulos_url, notice: 'Eliminado.' }
       format.json { head :no_content }
