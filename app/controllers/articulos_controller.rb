@@ -4,13 +4,11 @@ class ArticulosController < ApplicationController
   before_action :set_articulo, only: [:show, :edit, :update, :destroy]
 
   # GET /articulos
-  # GET /articulos.json
   def index
     @categorias = Categoria.order(nombre: :asc)
   end
 
   # GET /articulos/1
-  # GET /articulos/1.json
   def show
     @articulos_por_dia = Orden.where(articulo_id: @articulo.id).
       group_by_day(:created_at, time_zone: false).sum(:cantidad)
@@ -26,47 +24,33 @@ class ArticulosController < ApplicationController
   end
 
   # POST /articulos
-  # POST /articulos.json
   def create
     @articulo = Articulo.new(articulo_params)
 
-    respond_to do |format|
-      if @articulo.save
-        @articulo.syncronize_create
-        format.html { redirect_to @articulo, notice: 'Creado exitosamente.' }
-        format.json { render :show, status: :created, location: @articulo }
-      else
-        format.html { render :new }
-        format.json { render json: @articulo.errors, status: :unprocessable_entity }
-      end
+    if @articulo.save
+      @articulo.syncronize_create
+      redirect_to @articulo, notice: 'Creado exitosamente.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /articulos/1
-  # PATCH/PUT /articulos/1.json
   def update
-    respond_to do |format|
-      if @articulo.update(articulo_params)
-        @articulo.syncronize_update
-        format.html { redirect_to @articulo, notice: 'Actualizado exitosamente.' }
-        format.json { render :show, status: :ok, location: @articulo }
-      else
-        format.html { render :edit }
-        format.json { render json: @articulo.errors, status: :unprocessable_entity }
-      end
+    if @articulo.update(articulo_params)
+      @articulo.syncronize_update
+      redirect_to @articulo, notice: 'Actualizado exitosamente.'
+    else
+      render :edit
     end
   end
 
   # DELETE /articulos/1
-  # DELETE /articulos/1.json
   def destroy
     @articulo.destroy
     @articulo.syncronize_destroy
 
-    respond_to do |format|
-      format.html { redirect_to articulos_url, notice: 'Eliminado.' }
-      format.json { head :no_content }
-    end
+    redirect_to articulos_url, notice: 'Eliminado.'
   end
 
   private
