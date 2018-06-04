@@ -1,6 +1,4 @@
 class Asistencia < ApplicationRecord
-  include Syncronize
-
   belongs_to :mesero
   belongs_to :corte
 

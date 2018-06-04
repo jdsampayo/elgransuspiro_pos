@@ -28,7 +28,7 @@ class ArticulosController < ApplicationController
     @articulo = Articulo.new(articulo_params)
 
     if @articulo.save
-      @articulo.syncronize_create
+      @articulo.syncronize_create(include: :desechables)
       redirect_to @articulo, notice: 'Creado exitosamente.'
     else
       render :new
@@ -38,7 +38,7 @@ class ArticulosController < ApplicationController
   # PATCH/PUT /articulos/1
   def update
     if @articulo.update(articulo_params)
-      @articulo.syncronize_update
+      @articulo.syncronize_update(include: :desechables)
       redirect_to @articulo, notice: 'Actualizado exitosamente.'
     else
       render :edit
