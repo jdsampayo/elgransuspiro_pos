@@ -1,28 +1,25 @@
 table
   thead
     tr
-      -unless @corte
-        th Día
+      th Día
       th Monto
       th width=400 Descripción
-      -unless @corte
-        th Acciones
+      th Acciones
 
   tbody
     - @gastos.each do |gasto|
       tr
-        -unless @corte
-          td = gasto.created_at.to_date
+        td = gasto.corte.dia
         td = gasto.monto
         td
           small= gasto.descripcion
-        -unless @corte
+        -unless gasto.corte.cerrado?
           td.actions
             = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
               i.fas.fa-pencil-alt
             = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
               i.fas.fa-trash
-    - if @corte
+    - unless @gastos.empty?
       tr.table-dark
         td = @gastos.sum(:monto)
         td

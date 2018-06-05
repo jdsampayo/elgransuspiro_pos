@@ -2,10 +2,11 @@ class GastosController < ApplicationController
   load_and_authorize_resource
 
   before_action :set_gasto, only: [:show, :edit, :update, :destroy]
+  before_action :requiere_corte_actual, only: [:new, :edit, :index]
 
   # GET /gastos
   def index
-    @gastos = Gasto.order(created_at: :desc).page(params[:page]).per(5)
+    @gastos = Corte.actual.gastos.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   # GET /gastos/1
@@ -58,6 +59,6 @@ class GastosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def gasto_params
-      params.require(:gasto).permit(:monto, :descripcion)
+      params.require(:gasto).permit(:monto, :descripcion, :corte_id)
     end
 end

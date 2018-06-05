@@ -2,9 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    .row
-      .col-md-2= f.input :monto
-      .col-md-6= f.input :descripcion
+    = f.input :corte_id, as: :hidden
+    = f.input :monto
+    = f.input :descripcion
 
   .form-actions
     = f.button :submit, "Guardar", class: "btn btn-primary"

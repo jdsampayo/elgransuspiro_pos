@@ -34,6 +34,6 @@ class Api::GastosController < Api::ApiController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def gasto_params
-      params.require(:gasto).permit(:monto, :descripcion, :created_at, :updated_at, :deleted_at)
+      params.require(:gasto).permit(:monto, :descripcion, :corte_id, :created_at, :updated_at, :deleted_at)
     end
 end

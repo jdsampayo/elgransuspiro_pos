@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180603220722) do
+ActiveRecord::Schema.define(version: 20180605022409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,8 @@ ActiveRecord::Schema.define(version: 20180603220722) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.uuid "corte_id"
+    t.index ["corte_id"], name: "index_gastos_on_corte_id"
     t.index ["deleted_at"], name: "idx_19769_index_gastos_on_deleted_at"
   end
 
@@ -224,4 +226,5 @@ ActiveRecord::Schema.define(version: 20180603220722) do
   add_foreign_key "conteos", "cortes", name: "conteos_corte_id_fkey"
   add_foreign_key "extra_ordenes", "extras", name: "extra_ordenes_extra_id_fkey"
   add_foreign_key "extra_ordenes", "ordenes", name: "extra_ordenes_orden_id_fkey"
+  add_foreign_key "gastos", "cortes"
 end

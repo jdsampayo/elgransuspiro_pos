@@ -9,6 +9,10 @@ class SyncronizeJob < ApplicationJob
       url = "#{BASE_URL}#{sincronizacion.path}"
       connection = HTTP.headers(token: "auth")
 
+      puts "***************"
+      puts url
+      puts json
+
       resultado =
         case sincronizacion.tipo
         when 'POST'

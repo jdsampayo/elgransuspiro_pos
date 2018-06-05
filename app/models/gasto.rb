@@ -1,5 +1,6 @@
 class Gasto < ApplicationRecord
   validates_presence_of :monto, :descripcion
+  belongs_to :corte
 
   acts_as_paranoid
 
