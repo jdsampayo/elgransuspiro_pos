@@ -3,7 +3,6 @@ class Corte < ApplicationRecord
   has_many :comandas
   has_many :ordenes, through: :comandas
   has_many :asistencias
-  has_many :gastos
 
   has_many :meseros, through: :asistencias do
     def activos
@@ -51,9 +50,9 @@ class Corte < ApplicationRecord
   def registro_contable
     debits = []
     debits << {account_name: "Caja Chica", amount: pagos_con_efectivo}
-    debits << {account_name: "Caja Fuerte", amount: sobre - suma_gastos}
+    debits << {account_name: "Caja Fuerte", amount: sobre - gastos}
     debits << {account_name: "Banco", amount: pagos_con_tarjeta} if pagos_con_tarjeta > 0
-    debits << {account_name: "Gastos de Operación", amount: suma_gastos} if suma_gastos > 0
+    debits << {account_name: "Gastos de Operación", amount: gastos} if gastos > 0
 
     credits = []
     credits << {account_name: "Caja Chica", amount: sobre}
@@ -78,8 +77,8 @@ class Corte < ApplicationRecord
     self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
     self.pagos_con_efectivo = comandas_del_dia.con_efectivo.sum(:total)
 
-    self.suma_gastos = gastos.sum(:monto)
-    self.total = inicial + ventas - suma_gastos
+    self.gastos = Gasto.where(corte_id: id).sum(:monto)
+    self.total = inicial + ventas - gastos
     self.sobre = caja_chica - siguiente_dia
   end
 
