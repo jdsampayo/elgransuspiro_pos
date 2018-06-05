@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :asistencias
     resources :desechables
     resources :articulos
+    resources :gastos
   end
 
   resources :asistencias
