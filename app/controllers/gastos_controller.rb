@@ -6,7 +6,7 @@ class GastosController < ApplicationController
 
   # GET /gastos
   def index
-    @gastos = Corte.actual.gastos.order(created_at: :desc).page(params[:page]).per(20)
+    @gastos = Gasto.where(corte_id: Corte.actual.id).order(created_at: :desc).page(params[:page]).per(20)
   end
 
   # GET /gastos/1
