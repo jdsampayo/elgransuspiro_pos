@@ -7,7 +7,7 @@ class AsistenciasController < ApplicationController
   # GET /asistencias
   def index
     @q = Asistencia.joins(:corte).ransack(params[:q])
-    @asistencias = @q.result(distinct: true).order(corte_id: :desc).page(params[:page])
+    @asistencias = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
   # GET /asistencias/1

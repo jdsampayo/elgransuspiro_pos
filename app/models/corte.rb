@@ -37,7 +37,6 @@ class Corte < ApplicationRecord
 
   def cerrar
     set_subtotals
-    self.propinas = calcular_propinas
     self.closed_at = Time.now
     save
     reload
@@ -80,6 +79,8 @@ class Corte < ApplicationRecord
     self.gastos = Gasto.where(corte_id: id).sum(:monto)
     self.total = inicial + ventas - gastos
     self.sobre = caja_chica - siguiente_dia
+
+    self.propinas = calcular_propinas
   end
 
   def caja_chica

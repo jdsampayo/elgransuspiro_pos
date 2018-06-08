@@ -1,11 +1,10 @@
 module ApplicationHelper
-  def flash_class(level)
-    case level
-      when 'notice' then 'alert alert-info'
-      when 'success' then 'alert alert-success'
-      when 'error' then 'alert alert-error'
-      when 'alert' then 'alert alert-error'
-      else 'alert alert-secondary'
-    end
+  def bootstrap_class_for(flash_type)
+    {
+      success: 'alert-success',
+      error: 'alert-danger',
+      alert: 'alert-warning',
+      notice: 'alert-primary'
+    }[flash_type.to_sym] || flash_type.to_s
   end
 end

@@ -14,6 +14,7 @@ h1.float-left Asistencias
 table
   thead
     tr
+      th #
       th Persona
       th Día
       th Entrada
@@ -26,6 +27,7 @@ table
   tbody
     - @asistencias.each do |asistencia|
       tr class="#{asistencia.retardo ? "table-warning" : ""}"
+        td = asistencia.id
         td = asistencia.mesero
         td = l asistencia.corte.dia if asistencia.corte
         td = asistencia.hora_entrada&.strftime('%H:%M')

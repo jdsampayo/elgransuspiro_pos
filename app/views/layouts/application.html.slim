@@ -46,8 +46,8 @@ html
           = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
           = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"
 
-    - flash.each do |key, value|
-      div class=flash_class(key)
-        = value
+    .container-fluid
+      - flash.each do |type, content|
+        = render 'partials/flash', type: type, content: content
 
-    .container-fluid= yield
+      = yield

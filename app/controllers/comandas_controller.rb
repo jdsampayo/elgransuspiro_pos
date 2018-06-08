@@ -78,6 +78,8 @@ class ComandasController < ApplicationController
     @comanda.print_ticket
 
     redirect_to comandas_url, notice: '¡Impresa!'
+  rescue Errno::ENOENT
+    redirect_to comandas_url, flash: { error: '¡No se encuentra la impresora! Revisa que este conectada a la corriente y a la computadora.' }
   end
 
   # DELETE /comandas/1
