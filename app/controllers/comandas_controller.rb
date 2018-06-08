@@ -7,11 +7,10 @@ class ComandasController < ApplicationController
   before_action :requiere_corte_actual, only: [:index]
 
   # GET /comandas
-  # GET /comandas.json
   def index
     @corte = Corte.actual
     @comandas = @corte.comandas.order(closed_at: :asc)
-    @gastos = @corte.gastos_del_dia
+    @gastos = Gasto.where(corte: @corte)
 
     @con_tarjeta = @comandas.con_tarjeta
     @con_efectivo = @comandas.con_efectivo
@@ -28,7 +27,6 @@ class ComandasController < ApplicationController
   end
 
   # GET /comandas/1
-  # GET /comandas/1.json
   def show
   end
 
@@ -44,41 +42,34 @@ class ComandasController < ApplicationController
   end
 
   # POST /comandas
-  # POST /comandas.json
   def create
     @comanda = Comanda.new(comanda_params)
     @comanda.corte = Corte.actual
     @comanda.descuento ||= 0
 
-    respond_to do |format|
-      if @comanda.save
-        format.html { redirect_to @comanda, success: '¡La comanda fue creada exitosamente!' }
-        format.json { render :show, status: :created, location: @comanda }
-      else
-        format.html { render :new }
-        format.json { render json: @comanda.errors, status: :unprocessable_entity }
-      end
+    if @comanda.save
+      @comanda.syncronize_create
+      redirect_to @comanda, success: '¡La comanda fue creada exitosamente!'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /comandas/1
-  # PATCH/PUT /comandas/1.json
   def update
-    respond_to do |format|
-      if @comanda.update(comanda_params)
-        @comanda.set_totales
-        @comanda.save
-        format.html { redirect_to @comanda, notice: 'Actualizada exitosamente.' }
-        format.json { render :show, status: :ok, location: @comanda }
-      else
-        format.html { render :edit }
-        format.json { render json: @comanda.errors, status: :unprocessable_entity }
-      end
+    if @comanda.update(comanda_params)
+      @comanda.syncronize_update
+      @comanda.set_totales
+      @comanda.save
+      redirect_to @comanda, notice: 'Actualizada exitosamente.'
+    else
+      render :edit
     end
   end
 
   def switch
     @comanda.switch_payment_method!
+    @comanda.syncronize_update
 
     redirect_to comandas_url, notice: '¡Se intercambió el método de pago!'
   end
@@ -93,25 +84,23 @@ class ComandasController < ApplicationController
   # DELETE /comandas/1.json
   def destroy
     @comanda.destroy
-    respond_to do |format|
-      format.html { redirect_to comandas_url, notice: 'Eliminada.' }
-      format.json { head :no_content }
-    end
+    @comanda.syncronize_delete
+
+    redirect_to comandas_url, notice: 'Eliminada.'
   end
 
   def pay
   end
 
   def close
-    respond_to do |format|
-      if @comanda.update(close_comanda_params)
-        @comanda.cerrar
-        format.html { redirect_to comandas_url, notice: '¡Cerrada!' }
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json { render json: @comanda.errors, status: :unprocessable_entity }
-      end
+    @comanda.closed_at = Time.now
+    if @comanda.update(close_comanda_params)
+      @comanda.syncronize_update
+      @comanda.actualizar_conteos
+
+      redirect_to comandas_url, notice: '¡Cerrada!'
+    else
+      render :edit
     end
   end
 

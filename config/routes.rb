@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :desechables
     resources :articulos
     resources :gastos
+    resources :comandas
+    resources :cortes
   end
 
   resources :asistencias

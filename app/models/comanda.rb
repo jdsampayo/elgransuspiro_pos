@@ -29,12 +29,6 @@ class Comanda < ApplicationRecord
     where(closed_at: nil)
   }
 
-  def cerrar
-    self.closed_at = Time.now
-    save
-    actualizar_conteos
-  end
-
   def actualizar_conteos
     ordenes.each do |orden|
       conteo = Conteo.where(articulo_id: orden.articulo.id, corte_id: corte.id).first_or_initialize
