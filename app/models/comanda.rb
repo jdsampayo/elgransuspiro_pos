@@ -5,9 +5,15 @@ class Comanda < ApplicationRecord
   has_many :articulos, through: :ordenes
 
   before_save :set_totales
-  validates :descuento, :total, :venta, numericality: {greater_than_or_equal_to: 0}
+  validates :descuento, :total, :venta, numericality: {
+    greater_than_or_equal_to: 0
+  }
 
-  validates :porcentaje_de_descuento, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, message: "Debe estar entre 0 y 100"}
+  validates :porcentaje_de_descuento, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100,
+    message: 'Debe estar entre 0 y 100'
+  }
 
   accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
@@ -31,7 +37,10 @@ class Comanda < ApplicationRecord
 
   def actualizar_conteos
     ordenes.each do |orden|
-      conteo = Conteo.where(articulo_id: orden.articulo.id, corte_id: corte.id).first_or_initialize
+      conteo = Conteo.where(
+        articulo_id: orden.articulo.id,
+        corte_id: corte.id
+      ).first_or_initialize
       conteo.total += orden.cantidad
       conteo.save
 
@@ -41,6 +50,7 @@ class Comanda < ApplicationRecord
 
   def set_totales
     ordenes.map(&:guardar_precios_historicos)
+
     self.venta = ordenes.map(&:precio).sum
     self.descuento = self.venta * self.porcentaje_de_descuento / 100
     self.total = venta - descuento
@@ -90,44 +100,16 @@ class Comanda < ApplicationRecord
     texto << ""
     texto << ""
 
-    I18n.transliterate(texto.map{|renglon| renglon.ljust(32, ' ')}.join("\r\n"))
+    I18n.transliterate(
+      texto.map{ |renglon| renglon.ljust(32, ' ' ) }.join("\r\n")
+     )
   end
 
   def print_ticket
-    #logo = Escpos::Image.new()
-
-    #printer = Escpos::Printer.new
-    #printer.write(logo.to_escpos)
-
-    #printer.write(Escpos.sequence(Escpos::TXT_NORMAL))
-    #printer.write(to_text)
-    #printer.write(Escpos.sequence(Escpos::CD_KICK_2))
-
-    File.open('/dev/usb/lp0','w:ascii-8bit') { |f| f.write to_text }
-
-    #File.open('/dev/usb/lp0','w') { |f| f.write(printer.to_escpos) }
-
-    #ticket_file = Tempfile.new('ticket', encoding: 'ascii-8bit')
-    #ticket_file.write(printer.to_escpos)
-    #ticket_file.close
-    #sleep 1
-    #{}`#{ticket_file.path} > /dev/usb/lp0`
-    #`lpr -o raw -H localhost -P equal #{ticket_file.path}`
-    #ticket_file.unlink
-
-    #vp1 = Escper::VendorPrinter.new :id => 1, :name => 'Printer 1 USB', :path => '/dev/usb/lp0', :copies => 1
-    #image_escpos1 = Escper::Img.new(Rails.root.join('app/assets/images/logo_bn.png'), :file).to_s
-    #image_escpos2 = Escper::Img.new(Rails.root.join('app/assets/images/logo_bn.png'), :file).to_s
-
-    #raw_images = {:image1 => image_escpos1, :image2 => image_escpos2}
-    #print_engine = Escper::Printer.new 'local', vp1
-    #print_engine.open
-    #print_engine.print 1, "print text and image1 {::escper}image1{:/} and image 2 {::escper}image1{:/} to printer 1", raw_images
-    #print_engine.close
+    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write to_text }
   end
 
   def switch_payment_method!
     update_attribute(:pago_con_tarjeta, !pago_con_tarjeta)
   end
-
 end

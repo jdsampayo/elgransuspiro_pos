@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def requiere_corte_actual
     redirect_to(
-      edit_corte_path(Corte.last),
+      edit_corte_path(Corte.order(dia: :desc).take),
       notice: "Para realizar la acción solicitada, por favor primero realiza el corte del día anterior."
     ) unless Corte.actual
   end

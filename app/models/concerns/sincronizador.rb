@@ -21,7 +21,7 @@ module Sincronizador
     SyncronizeJob.perform_later
   end
 
-  def syncronize_delete
+  def syncronize_destroy
     Sincronizacion.create(
       path: "#{self.class.to_s.downcase.pluralize}/#{self.id}",
       mensaje: self.to_sync_json,

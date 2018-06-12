@@ -83,10 +83,9 @@ class ComandasController < ApplicationController
   end
 
   # DELETE /comandas/1
-  # DELETE /comandas/1.json
   def destroy
     @comanda.destroy
-    @comanda.syncronize_delete
+    @comanda.syncronize_destroy
 
     redirect_to comandas_url, notice: 'Eliminada.'
   end
