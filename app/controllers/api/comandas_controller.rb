@@ -1,5 +1,4 @@
 class Api::ComandasController < Api::ApiController
-
   # POST /api/comandas
   def create
     @comanda = Comanda.new(comanda_params)
@@ -34,6 +33,35 @@ class Api::ComandasController < Api::ApiController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def comanda_params
-      params.require(:comanda).permit(:id, :nombre, :precio, :categoria_id, :created_at, :updated_at, :deleted_at, desechable_ids: [])
+      params.require(:comanda).permit(
+        :id,
+        :mesa,
+        :total,
+        :descuento,
+        :mesero_id,
+        :comensales,
+        :porcentaje_de_descuento,
+        :created_at,
+        :updated_at,
+        :deleted_at,
+        ordenes_attributes: [
+          :id,
+          :articulo_id,
+          :cantidad,
+          :para_llevar,
+          :created_at,
+          :updated_at,
+          :deleted_at,
+          :_destroy,
+          extra_ordenes_attributes: [
+            :id,
+            :extra_id,
+            :created_at,
+            :updated_at,
+            :deleted_at,
+            :_destroy
+          ]
+        ]
+      )
     end
 end

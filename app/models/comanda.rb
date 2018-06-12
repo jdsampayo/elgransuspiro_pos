@@ -112,4 +112,8 @@ class Comanda < ApplicationRecord
   def switch_payment_method!
     update_attribute(:pago_con_tarjeta, !pago_con_tarjeta)
   end
+
+  def to_sync_json
+    to_json( include: { ordenes: { include: :extra_ordenes } } )
+  end
 end
