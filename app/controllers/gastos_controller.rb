@@ -16,6 +16,7 @@ class GastosController < ApplicationController
   # GET /gastos/new
   def new
     @gasto = Gasto.new
+    @gasto.corte = Corte.actual
   end
 
   # GET /gastos/1/edit
