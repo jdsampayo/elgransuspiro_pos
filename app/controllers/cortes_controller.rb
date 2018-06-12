@@ -71,7 +71,7 @@ class CortesController < ApplicationController
   # GET /cortes/1.json
   def show
     @comandas = @corte.comandas
-    @gastos = @corte.gastos_del_dia
+    @gastos = Gasto.where(corte_id: @corte.id)
 
     @con_tarjeta = @comandas.con_tarjeta
     @con_efectivo = @comandas.con_efectivo
@@ -79,7 +79,7 @@ class CortesController < ApplicationController
     @total_comandas_cerradas = @comandas.cerradas.sum(:total)
     @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
 
-    @total_de_gastos = @gastos.sum(:monto)
+    @total_de_gastos = @corte.gastos
 
     @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
 

@@ -10,6 +10,8 @@ class Corte < ApplicationRecord
     end
   end
 
+  validates :dia, uniqueness: true
+
   acts_as_paranoid
 
   VENTAS_LIMITE = 2000
@@ -87,8 +89,9 @@ class Corte < ApplicationRecord
     total - pagos_con_tarjeta
   end
 
+  # Por si se quedan a trabajas despues de las 00:00am
   def self.actual
-    Corte.find_by(dia: Time.now.to_date)
+    Corte.find_by(dia: (Time.current - 3.hours).to_date)
   end
 
   def self.de_la_semana(inicio, campo)
