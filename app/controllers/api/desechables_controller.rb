@@ -32,7 +32,6 @@ class Api::DesechablesController < Api::ApiController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
     def desechable_params
       params.require(:desechable).permit(:id, :nombre, :en_bodega, :cantidad, :costo_unitario, :limite, :created_at, :updated_at, :deleted_at)
     end

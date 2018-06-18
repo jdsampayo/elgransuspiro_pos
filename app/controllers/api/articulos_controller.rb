@@ -32,7 +32,6 @@ class Api::ArticulosController < Api::ApiController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
     def articulo_params
       params.require(:articulo).permit(:id, :nombre, :precio, :categoria_id, :created_at, :updated_at, :deleted_at, desechable_ids: [])
     end

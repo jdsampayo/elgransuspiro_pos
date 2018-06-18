@@ -31,7 +31,6 @@ class Api::ComandasController < Api::ApiController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
     def comanda_params
       params.require(:comanda).permit(
         :id,

@@ -32,7 +32,6 @@ class Api::AsistenciasController < Api::ApiController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
     def asistencia_params
       params.require(:asistencia).permit(:id, :mesero_id, :corte_id, :horas, :horas_extra, :retardo, :falta, :hora_entrada, :hora_salida, :created_at, :updated_at, :deleted_at)
     end

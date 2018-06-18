@@ -42,13 +42,19 @@ class Corte < ApplicationRecord
     self.closed_at = Time.now
     save
     reload
-    registro_contable
 
-    Comanda.del_dia(dia).update_all(closed_at: Time.now)
-    Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
+    finalize_comandas
+    create_registro_contable
+
+    nuevo_corte = Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
+    nuevo_corte.syncronize_create
   end
 
-  def registro_contable
+  def finalize_comandas
+    Comanda.del_dia(dia).update_all(closed_at: Time.now)
+  end
+
+  def create_registro_contable
     debits = []
     debits << {account_name: "Caja Chica", amount: pagos_con_efectivo}
     debits << {account_name: "Caja Fuerte", amount: sobre - gastos}

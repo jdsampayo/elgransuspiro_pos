@@ -7,7 +7,7 @@ class TablerosController < ApplicationController
     @total_de_articulos = Articulo.all.count
 
     conteos = Conteo.group(:articulo_id).order('sum_total DESC').limit(10).sum(:total)
-    @conteos = Hash[conteos.map { |k, v| [Articulo.find(k).nombre.titleize, v] }]
+    @conteos = Hash[conteos.map { |k, v| [Articulo.unscoped.find(k).nombre.titleize, v] }]
 
     @comandas = Comanda.all
 
