@@ -53,4 +53,6 @@ Rails.application.routes.draw do
   else
     root "contabilidad/cuentas#index"
   end
+
+  match '*a', to: 'errors#routing', via: [:get, :post]
 end

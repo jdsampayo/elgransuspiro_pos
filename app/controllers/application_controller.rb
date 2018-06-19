@@ -2,8 +2,15 @@ class ApplicationController < ActionController::Base
   add_flash_types :info, :success, :warning, :danger
   protect_from_forgery with: :exception
   helper_method :current_user
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private
+  def not_found(exception)
+    respond_to do |format|
+      format.json { render :json => {:error => exception.message}, :status => :not_found }
+      format.any { render plain: "Error: #{exception.message}", :status => :not_found }
+    end
+  end
 
   def requiere_corte_actual
     redirect_to(
