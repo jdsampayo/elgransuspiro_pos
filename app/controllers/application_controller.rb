@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   private
   def not_found(exception)
     respond_to do |format|
-      format.json { render :json => {:error => exception.message}, :status => :not_found }
-      format.any { render plain: "Error: #{exception.message}", :status => :not_found }
+      format.json { render json: {error: exception.message}, status: :not_found }
+      format.any { render text: "Error: #{exception.message}", status: :not_found }
     end
   end
 

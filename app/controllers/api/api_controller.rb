@@ -1,7 +1,6 @@
 class Api::ApiController < ActionController::API
   rescue_from PG::UniqueViolation, with: :already_exists
   rescue_from ActionController::RoutingError, with: :nothing_found
-  rescue_from ApiExceptions::BaseException, with: :internal_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private
