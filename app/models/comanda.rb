@@ -116,4 +116,5 @@ class Comanda < ApplicationRecord
   def to_sync_json
     to_json( include: { ordenes: { include: :extra_ordenes } } )
   end
+
 end

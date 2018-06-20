@@ -1,4 +1,5 @@
 class Api::ComandasController < Api::ApiController
+
   # POST /api/comandas
   def create
     @comanda = Comanda.new(comanda_params)
@@ -31,36 +32,51 @@ class Api::ComandasController < Api::ApiController
   end
 
   private
-    def comanda_params
-      params.require(:comanda).permit(
+  def comanda_params
+    PrettyApi.with_nested_attributes(
+      pretty_comanda_params,
+      ordenes: [:extra_ordenes]
+    )
+  end
+
+  def pretty_comanda_params
+    params.require(:comanda).permit(
+      :id,
+      :mesa,
+      :total,
+      :descuento,
+      :mesero_id,
+      :comensales,
+      :porcentaje_de_descuento,
+      :created_at,
+      :updated_at,
+      :deleted_at,
+      :venta,
+      :closed_at,
+      :pago_con_tarjeta,
+      :corte_id,
+      :propina,
+      ordenes: [
         :id,
-        :mesa,
-        :total,
-        :descuento,
-        :mesero_id,
-        :comensales,
-        :porcentaje_de_descuento,
+        :comanda_id,
+        :precio_unitario,
+        :articulo_id,
+        :cantidad,
+        :para_llevar,
         :created_at,
         :updated_at,
         :deleted_at,
-        ordenes_attributes: [
+        :_destroy,
+        extra_ordenes: [
           :id,
-          :articulo_id,
-          :cantidad,
-          :para_llevar,
+          :extra_id,
+          :orden_id,
           :created_at,
           :updated_at,
           :deleted_at,
-          :_destroy,
-          extra_ordenes_attributes: [
-            :id,
-            :extra_id,
-            :created_at,
-            :updated_at,
-            :deleted_at,
-            :_destroy
-          ]
+          :_destroy
         ]
-      )
-    end
+      ]
+    )
+  end
 end

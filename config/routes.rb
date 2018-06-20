@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :asistencias
-    resources :desechables
-    resources :articulos
-    resources :gastos
-    resources :comandas
-    resources :cortes
+    resources :asistencias, defaults: { format: 'json' }
+    resources :desechables, defaults: { format: 'json' }
+    resources :articulos, defaults: { format: 'json' }
+    resources :gastos, defaults: { format: 'json' }
+    resources :comandas, defaults: { format: 'json' }
+    resources :cortes, defaults: { format: 'json' }
   end
 
   resources :asistencias
