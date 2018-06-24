@@ -1,10 +1,11 @@
 h1.float-left Comandas
 
-.float-right
-  -if @corte.abierto?
-    =link_to "Realizar corte", edit_corte_path(@corte), class: "btn btn-primary"
-  -else
-    button.btn.btn-secondary Corte cerrado
+-unless matriz?
+  .float-right
+    -if @corte.abierto?
+      =link_to "Realizar corte", edit_corte_path(@corte), class: "btn btn-primary"
+    -else
+      button.btn.btn-secondary Corte cerrado
 
 .clearfix
 

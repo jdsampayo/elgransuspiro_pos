@@ -48,7 +48,7 @@ class GastosController < ApplicationController
   # DELETE /gastos/1
   def destroy
     @gasto.destroy
-    @gasto.syncronize_delete
+    @gasto.syncronize_destroy
     redirect_to gastos_url, notice: 'Eliminado.'
   end
 

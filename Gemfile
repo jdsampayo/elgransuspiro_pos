@@ -7,7 +7,7 @@ end
 
 gem 'rails-erd', require: false, group: :development
 
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2.0'
 gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0.7'
@@ -15,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'dotenv-rails', '~> 2.4.0', require: 'dotenv/rails-now'
 gem 'http'
 gem 'sidekiq'
 
@@ -40,16 +40,15 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-gem 'simple_form'
+gem 'simple_form', '~> 4.0.1'
 gem 'slim-rails'
 gem 'jquery-rails'
 gem 'cocoon'
-gem 'paranoia'
+gem 'paranoia', '~> 2.4.1'
 gem 'font-awesome-sass', '~> 5.0.9'
 gem 'active_link_to'
 gem 'auto_strip_attributes', '~> 2.4'
 gem 'ransack'
-gem 'lograge', '~> 0.5.1'
 gem 'groupdate'
 gem 'chartkick'
 gem 'timecop'

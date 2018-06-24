@@ -1,6 +1,8 @@
 h1.float-left Artículos
 
-.float-right= link_to 'Nuevo Artículo', new_articulo_path, class: "btn btn-primary"
+.float-right
+  -unless matriz?
+    = link_to 'Nuevo Artículo', new_articulo_path, class: "btn btn-primary"
 
 table
 
@@ -18,9 +20,10 @@ table
         td = link_to articulo, articulo
         td = articulo.precio
         td.actions
-          = link_to edit_articulo_path(articulo), class: "btn btn-info btn-sm" do
-            i.fas.fa-pencil-alt
-          = link_to articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
-            i.fas.fa-trash
+          -unless matriz?
+            = link_to edit_articulo_path(articulo), class: "btn btn-info btn-sm" do
+              i.fas.fa-pencil-alt
+            = link_to articulo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
+              i.fas.fa-trash
 
 br

@@ -4,7 +4,6 @@ class CortesController < ApplicationController
   before_action :set_corte, only: [:show, :edit, :update, :destroy]
 
   # GET /cortes
-  # GET /cortes.json
   def index
     @cortes = Corte.order(dia: :desc).page params[:page]
 
@@ -43,7 +42,7 @@ class CortesController < ApplicationController
   end
 
   def propinas
-    @cortes = Corte.order(dia: :desc).page params[:page]
+    @cortes = Corte.includes(:asistencias).order(dia: :desc).page params[:page]
 
     @semana_actual = [
       {
@@ -68,7 +67,6 @@ class CortesController < ApplicationController
   end
 
   # GET /cortes/1
-  # GET /cortes/1.json
   def show
     @comandas = @corte.comandas
     @gastos = Gasto.where(corte_id: @corte.id)
@@ -111,49 +109,36 @@ class CortesController < ApplicationController
   def create
     @corte = Corte.new(corte_params)
 
-    respond_to do |format|
-      if @corte.save
-        format.html { redirect_to comandas_path, notice: 'El corte se creó exitosamente.' }
-        format.json { render :show, status: :created, location: @corte }
-      else
-        format.html { render :new }
-        format.json { render json: @corte.errors, status: :unprocessable_entity }
-      end
+    if @corte.save
+      @corte.syncronize_create
+      redirect_to comandas_path, notice: 'El corte se creó exitosamente.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /cortes/1
-  # PATCH/PUT /cortes/1.json
   def update
-    respond_to do |format|
-      if @corte.update(corte_params)
-        @corte.cerrar
-        format.html { redirect_to comandas_path, notice: 'El corte se cerró correctamente.' }
-        format.json { render :show, status: :ok, location: @corte }
-      else
-        format.html { render :edit }
-        format.json { render json: @corte.errors, status: :unprocessable_entity }
-      end
+    if @corte.update(corte_params)
+      @corte.cerrar
+      @corte.syncronize_update
+      redirect_to comandas_path, notice: 'El corte se cerró correctamente.'
+    else
+      render :edit
     end
   end
 
   # DELETE /cortes/1
-  # DELETE /cortes/1.json
   def destroy
     @corte.destroy
-    respond_to do |format|
-      format.html { redirect_to cortes_url, notice: 'El Corte se eliminó correctamente.' }
-      format.json { head :no_content }
-    end
+    redirect_to cortes_url, notice: 'El corte se eliminó correctamente.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_corte
       @corte = Corte.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def corte_params
       params.require(:corte).permit(:dia, :inicial, :ventas, :gastos, :total, :siguiente_dia, :sobre)
     end

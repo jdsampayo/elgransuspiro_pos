@@ -43,8 +43,9 @@ html
               i.fas.fa-sign-in
               |  Iniciar Sesión
 
-          = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
-          = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"
+          -unless matriz?
+            = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
+            = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"
 
     .container-fluid
       - flash.each do |type, content|

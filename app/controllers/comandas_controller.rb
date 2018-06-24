@@ -46,6 +46,7 @@ class ComandasController < ApplicationController
     @comanda = Comanda.new(comanda_params)
     @comanda.corte = Corte.actual
     @comanda.descuento ||= 0
+    @comanda.set_totales
 
     if @comanda.save
       @comanda.syncronize_create
@@ -58,9 +59,9 @@ class ComandasController < ApplicationController
   # PATCH/PUT /comandas/1
   def update
     if @comanda.update(comanda_params)
-      @comanda.syncronize_update
       @comanda.set_totales
       @comanda.save
+      @comanda.syncronize_update
       redirect_to @comanda, notice: 'Actualizada exitosamente.'
     else
       render :edit
@@ -83,10 +84,9 @@ class ComandasController < ApplicationController
   end
 
   # DELETE /comandas/1
-  # DELETE /comandas/1.json
   def destroy
     @comanda.destroy
-    @comanda.syncronize_delete
+    @comanda.syncronize_destroy
 
     redirect_to comandas_url, notice: 'Eliminada.'
   end

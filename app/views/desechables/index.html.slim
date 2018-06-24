@@ -1,6 +1,8 @@
 h1.float-left Desechables
-.float-right
-  =link_to "Nuevo desechable", new_desechable_path, class: "btn btn-primary"
+
+-unless matriz?
+  .float-right
+    =link_to "Nuevo desechable", new_desechable_path, class: "btn btn-primary"
 
 .clearfix
 
@@ -21,9 +23,10 @@ table
         td = desechable.cantidad
         td = desechable.costo_unitario
         td.actions
-          = link_to edit_desechable_path(desechable), class: "btn btn-info btn-sm" do
-            i.fas.fa-pencil-alt
-          = link_to desechable, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
-            i.fas.fa-trash
+          -unless matriz?
+            = link_to edit_desechable_path(desechable), class: "btn btn-info btn-sm" do
+              i.fas.fa-pencil-alt
+            = link_to desechable, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+              i.fas.fa-trash
 
 br

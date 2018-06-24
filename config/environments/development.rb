@@ -54,3 +54,6 @@ Rails.application.configure do
 
   config.i18n.fallbacks = false
 end
+
+#require 'sidekiq/testing'
+#Sidekiq::Testing.inline!

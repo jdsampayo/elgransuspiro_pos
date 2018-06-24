@@ -24,7 +24,7 @@ table
       th Venta
   -@comanda.ordenes.ordered.each do |orden|
     tr
-      td= orden.para_llevar ? "Sí" : ""
+      td= orden.para_llevar ? "Sí" : "No"
       td= orden.cantidad
       td
         = orden.articulo
