@@ -5,30 +5,34 @@ class Api::ComandasController < Api::ApiController
     ordenes_params = comanda_params.delete("ordenes_attributes")
     @comanda = Comanda.new(comanda_params)
 
-    if @comanda.save
-      ordenes_params.each do |orden_params|
-        extra_ordenes_params = orden_params.delete("extra_ordenes_attributes")
-        extra_ordenes_params ||= []
+    ActiveRecord::Base.transaction do
+      if @comanda.save!
+        ordenes_params.each do |orden_params|
+          extra_ordenes_params = orden_params.delete("extra_ordenes_attributes")
+          extra_ordenes_params ||= []
 
-        @orden = Orden.new(orden_params)
+          @orden = Orden.new(orden_params)
 
-        if @orden.save
-          extra_ordenes_params.each do |extra_orden_params|
-            @extra_orden = ExtraOrden.new(extra_orden_params)
+          if @orden.save!
+            extra_ordenes_params.each do |extra_orden_params|
+              @extra_orden = ExtraOrden.new(extra_orden_params)
 
-            unless @extra_orden.save
-              render json: @extra_orden.errors, status: :unprocessable_entity
-              return
+              unless @extra_orden.save!
+                render json: @extra_orden.errors, status: :unprocessable_entity
+                return
+              end
             end
+          else
+            render json: @orden.errors, status: :unprocessable_entity
+            return
           end
-        else
-          render json: @orden.errors, status: :unprocessable_entity
-          return
         end
+        @comanda.reload
+        @comanda.save!
+        render :show, status: :created, location: @comanda
+      else
+        render json: @comanda.errors, status: :unprocessable_entity
       end
-      render :show, status: :created, location: @comanda
-    else
-      render json: @comanda.errors, status: :unprocessable_entity
     end
   end
 

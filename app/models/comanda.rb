@@ -4,7 +4,6 @@ class Comanda < ApplicationRecord
   has_many :ordenes, inverse_of: :comanda
   has_many :articulos, through: :ordenes
 
-  before_save :set_totales
   validates :descuento, :total, :venta, numericality: {
     greater_than_or_equal_to: 0
   }
