@@ -62,17 +62,10 @@ class Api::ComandasController < Api::ApiController
             return
           end
         end
-        render :show, status: :created, location: @comanda
+        render :show, status: :ok, location: @comanda
       else
         render json: @comanda.errors, status: :unprocessable_entity
       end
-    end
-
-
-    if @comanda.update(comanda_params)
-      render :show, status: :ok, location: @comanda
-    else
-      render json: @comanda.errors, status: :unprocessable_entity
     end
   end
 

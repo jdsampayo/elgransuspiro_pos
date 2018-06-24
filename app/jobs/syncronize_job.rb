@@ -25,7 +25,7 @@ class SyncronizeJob < ApplicationJob
           raise 'Not supported'
         end
 
-      if resultado.code == 200
+      if resultado.code == 200 || resultado.code == 201 || resultado.code == 202 || resultado.code == 204
         sincronizacion.update(exito: true, webhooked_at: Time.current)
       elsif resultado.code == 409
         sincronizacion.update(
