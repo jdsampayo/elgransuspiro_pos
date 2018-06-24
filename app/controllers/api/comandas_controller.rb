@@ -38,10 +38,34 @@ class Api::ComandasController < Api::ApiController
   def update
     @comanda = Comanda.find(params[:id])
 
-    if @comanda.update(comanda_params)
-      render :show, status: :ok, location: @comanda
-    else
-      render json: @comanda.errors, status: :unprocessable_entity
+    ordenes_params = comanda_params.delete("ordenes_attributes")
+
+    ActiveRecord::Base.transaction do
+      if @comanda.update!(comanda_params)
+        ordenes_params.each do |orden_params|
+          extra_ordenes_params = orden_params.delete("extra_ordenes_attributes")
+          extra_ordenes_params ||= []
+
+          @orden = Orden.where(id: orden_params[:id]).first_or_initialize
+
+          if @orden.update!(orden_params)
+            extra_ordenes_params.each do |extra_orden_params|
+              @extra_orden = ExtraOrden.where(id: extra_orden_params[:id]).first_or_initialize
+
+              unless @extra_orden.update!(extra_orden_params)
+                render json: @extra_orden.errors, status: :unprocessable_entity
+                return
+              end
+            end
+          else
+            render json: @orden.errors, status: :unprocessable_entity
+            return
+          end
+        end
+        render :show, status: :ok, location: @comanda
+      else
+        render json: @comanda.errors, status: :unprocessable_entity
+      end
     end
   end
 
