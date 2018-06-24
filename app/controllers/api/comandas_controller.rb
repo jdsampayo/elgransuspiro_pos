@@ -2,9 +2,30 @@ class Api::ComandasController < Api::ApiController
 
   # POST /api/comandas
   def create
+    ordenes_params = comanda_params.delete("ordenes_attributes")
     @comanda = Comanda.new(comanda_params)
 
     if @comanda.save
+      ordenes_params.each do |orden_params|
+        extra_ordenes_params = orden_params.delete("extra_ordenes_attributes")
+        extra_ordenes_params ||= []
+
+        @orden = Orden.new(orden_params)
+
+        if @orden.save
+          extra_ordenes_params.each do |extra_orden_params|
+            @extra_orden = ExtraOrden.new(extra_orden_params)
+
+            unless @extra_orden.save
+              render json: @extra_orden.errors, status: :unprocessable_entity
+              return
+            end
+          end
+        else
+          render json: @orden.errors, status: :unprocessable_entity
+          return
+        end
+      end
       render :show, status: :created, location: @comanda
     else
       render json: @comanda.errors, status: :unprocessable_entity
@@ -33,7 +54,7 @@ class Api::ComandasController < Api::ApiController
 
   private
   def comanda_params
-    PrettyApi.with_nested_attributes(
+    @comanda_params ||= PrettyApi.with_nested_attributes(
       pretty_comanda_params,
       ordenes: [:extra_ordenes]
     )
