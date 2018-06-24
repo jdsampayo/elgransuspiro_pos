@@ -33,6 +33,6 @@ class Api::GastosController < Api::ApiController
 
   private
     def gasto_params
-      params.require(:gasto).permit(:monto, :descripcion, :corte_id, :created_at, :updated_at, :deleted_at)
+      params.require(:gasto).permit(:id, :monto, :descripcion, :corte_id, :created_at, :updated_at, :deleted_at)
     end
 end
