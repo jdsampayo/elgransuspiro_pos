@@ -5,7 +5,7 @@ class SyncronizeJob < ApplicationJob
 
   def perform
     Sincronizacion.where(exito: false).each do |sincronizacion|
-      json = JSON.parse(sincronizacion.mensaje)
+      json = sincronizacion.mensaje.present? ? JSON.parse(sincronizacion.mensaje) : nil
       url = "#{BASE_URL}#{sincronizacion.path}"
       connection = HTTP.headers(token: "auth")
 
@@ -20,7 +20,7 @@ class SyncronizeJob < ApplicationJob
         when 'PATCH'
           connection.patch(url, json: json)
         when 'DELETE'
-          connection.delete(url, json: json)
+          connection.delete(url)
         else
           raise 'Not supported'
         end

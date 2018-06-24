@@ -27,8 +27,6 @@ class Api::ComandasController < Api::ApiController
             return
           end
         end
-        @comanda.reload
-        @comanda.save!
         render :show, status: :created, location: @comanda
       else
         render json: @comanda.errors, status: :unprocessable_entity
@@ -49,7 +47,7 @@ class Api::ComandasController < Api::ApiController
 
   # DELETE /api/comandas/1
   def destroy
-    @comanda = comanda.find(params[:id])
+    @comanda = Comanda.find(params[:id])
 
     @comanda.destroy
 
