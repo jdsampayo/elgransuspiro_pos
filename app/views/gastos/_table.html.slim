@@ -15,10 +15,11 @@ table
           small= gasto.descripcion
         -unless gasto.corte.cerrado?
           td.actions
-            = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
-              i.fas.fa-pencil-alt
-            = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
-              i.fas.fa-trash
+            -unless matriz?
+              = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
+                i.fas.fa-pencil-alt
+              = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
+                i.fas.fa-trash
     - unless @gastos.empty?
       tr.table-dark
         td Total del día

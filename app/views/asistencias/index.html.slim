@@ -1,6 +1,7 @@
 h1.float-left Asistencias
 
-.float-right= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'
+-unless matriz?
+  .float-right= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'
 
 .clearfix
 
@@ -35,7 +36,9 @@ table
         td = asistencia.horas
         td = asistencia.retardo ? 'Si' : 'No'
         td = asistencia.falta ? 'Si' : 'No'
-        td = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
+        td
+          -unless matriz?
+            = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
 
 br
 

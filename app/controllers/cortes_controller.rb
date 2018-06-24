@@ -42,7 +42,7 @@ class CortesController < ApplicationController
   end
 
   def propinas
-    @cortes = Corte.order(dia: :desc).page params[:page]
+    @cortes = Corte.includes(:asistencias).order(dia: :desc).page params[:page]
 
     @semana_actual = [
       {
