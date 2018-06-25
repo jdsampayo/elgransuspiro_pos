@@ -40,13 +40,22 @@ class Api::ComandasController < Api::ApiController
 
     ordenes_params = comanda_params.delete("ordenes_attributes")
 
+    old_ordenes_ids = @comanda.ordenes.pluck(:id)
+    new_ordenes_ids = ordenes_params.map { |orden| orden["id"] }
+
     ActiveRecord::Base.transaction do
       if @comanda.update!(comanda_params)
         ordenes_params.each do |orden_params|
           extra_ordenes_params = orden_params.delete("extra_ordenes_attributes")
           extra_ordenes_params ||= []
 
+
           @orden = Orden.where(id: orden_params[:id]).first_or_initialize
+
+          old_extra_ordenes_ids = @orden.extra_ordenes.pluck(:id)
+          new_extra_ordenes_ids = extra_ordenes_params.map { |extra_orden| extra_orden["id"] }
+
+          ExtraOrden.where(id: old_extra_ordenes_ids - new_extra_ordenes_ids).destroy_all
 
           if @orden.update!(orden_params)
             extra_ordenes_params.each do |extra_orden_params|
@@ -62,6 +71,8 @@ class Api::ComandasController < Api::ApiController
             return
           end
         end
+        Orden.where(id: old_ordenes_ids - new_ordenes_ids).destroy_all
+
         render :show, status: :ok, location: @comanda
       else
         render json: @comanda.errors, status: :unprocessable_entity
