@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  cantidad_actual: 1
+  unidad: MyString
+  deleted_at: 2018-06-25 21:56:32
+
+two:
+  nombre: MyString
+  cantidad_actual: 1
+  unidad: MyString
+  deleted_at: 2018-06-25 21:56:32

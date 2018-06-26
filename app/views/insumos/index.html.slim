@@ -1,0 +1,25 @@
+h1.float-left Insumos
+
+.float-right
+  = link_to 'Nuevo Insumo', new_insumo_path, class: "btn btn-primary"
+
+
+table
+  thead
+    tr
+      th Nombre
+      th Cantidad actual
+      th Unidad
+      th
+
+  tbody
+    - @insumos.each do |insumo|
+      tr
+        td = insumo.nombre
+        td = insumo.cantidad_actual
+        td = insumo.unidad
+        td.actions
+          = link_to edit_insumo_path(insumo), class: "btn btn-info btn-sm" do
+            i.fas.fa-pencil-alt
+          = link_to insumo, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
+            i.fas.fa-trash

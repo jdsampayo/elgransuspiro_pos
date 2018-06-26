@@ -22,4 +22,5 @@
 //= require cocoon
 //= require Chart.bundle
 //= require chartkick
+//= require data-confirm-modal
 //= require_tree .

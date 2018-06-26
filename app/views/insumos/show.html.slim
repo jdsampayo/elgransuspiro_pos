@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Nombre:
+  = @insumo.nombre
+p
+  strong Cantidad actual:
+  = @insumo.cantidad_actual
+p
+  strong Unidad:
+  = @insumo.unidad
+p
+  strong Deleted at:
+  = @insumo.deleted_at
+
+=> link_to 'Edit', edit_insumo_path(@insumo)
+'|
+=< link_to 'Back', insumos_path

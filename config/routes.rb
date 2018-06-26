@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :insumos
   namespace :api do
     resources :asistencias, defaults: { format: 'json' }
     resources :desechables, defaults: { format: 'json' }
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   resources :meseros
   resources :articulos
   resources :cuentas
+  resources :insumos
 
   namespace :contabilidad do
     resources :cuentas, only: [:index, :new]

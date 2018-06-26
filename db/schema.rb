@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605022409) do
+ActiveRecord::Schema.define(version: 2018_06_26_025632) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "articulos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -147,6 +147,15 @@ ActiveRecord::Schema.define(version: 20180605022409) do
     t.uuid "corte_id"
     t.index ["corte_id"], name: "index_gastos_on_corte_id"
     t.index ["deleted_at"], name: "idx_19769_index_gastos_on_deleted_at"
+  end
+
+  create_table "insumos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "nombre"
+    t.integer "cantidad_actual"
+    t.string "unidad"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "meseros", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

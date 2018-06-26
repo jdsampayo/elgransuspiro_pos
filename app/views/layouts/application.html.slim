@@ -2,6 +2,9 @@ doctype html
 html
   head
     title El Gran Suspiro - Punto de Venta
+
+    meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+
     = csrf_meta_tags
 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -23,6 +26,7 @@ html
             a#dropdown_inventario.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" Inventario
             .dropdown-menu aria-labelledby="dropdown_inventario"
               =active_link_to "Artículos", articulos_path, class: "nav-item nav-link"
+              =active_link_to "Insumos", insumos_path, class: "nav-item nav-link"
               =active_link_to "Desechables", desechables_path, class: "nav-item nav-link"
           -if current_user
             li.nav-item.dropdown

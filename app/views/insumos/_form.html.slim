@@ -1,0 +1,12 @@
+= simple_form_for(@insumo) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :nombre
+    = f.input :cantidad_actual
+    = f.input :unidad, collection: Insumo.unidades
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', insumos_path

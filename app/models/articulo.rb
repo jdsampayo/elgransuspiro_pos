@@ -1,6 +1,7 @@
 class Articulo < ApplicationRecord
   has_many :comandas, through: :ordenes
   has_many :conteos
+  has_many :insumos
   has_and_belongs_to_many :desechables
   belongs_to :categoria
 

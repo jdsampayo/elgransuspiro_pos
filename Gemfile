@@ -72,3 +72,5 @@ gem 'cancancan', '~> 2.0'
 
 # Production
 gem 'unicorn'
+
+gem 'data-confirm-modal'
