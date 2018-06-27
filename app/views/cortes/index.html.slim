@@ -16,39 +16,40 @@ h1 Cortes
 section
   h2 Detalle
 
-  table
-    thead
-      tr
-        th Día
-        th Inicial
-        th
-          | (+) Ventas
-        th
-          | (-) Con Tarjeta
-        th
-          | (-) Gastos
-        th
-          | (=) Caja Chica
-        th
-          | (-) Siguiente Día
-        th
-          | (=) Caja Fuerte
-        th Propinas
-
-    tbody
-      - @cortes.each do |corte|
+  .table-responsive-sm
+    table
+      thead
         tr
-          td = link_to corte.dia, corte
-          td = corte.inicial
-          td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
-            = corte.ventas
-          td= corte.pagos_con_tarjeta
-          td class=(corte.gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
-            = corte.gastos
-          td = corte.caja_chica
-          td = corte.siguiente_dia
-          td = corte.sobre
-          td = corte.propinas
+          th Día
+          th Inicial
+          th
+            | (+) Ventas
+          th
+            | (-) Con Tarjeta
+          th
+            | (-) Gastos
+          th
+            | (=) Caja Chica
+          th
+            | (-) Siguiente Día
+          th
+            | (=) Caja Fuerte
+          th Propinas
+
+      tbody
+        - @cortes.each do |corte|
+          tr
+            td = link_to corte.dia, corte
+            td = corte.inicial
+            td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
+              = corte.ventas
+            td= corte.pagos_con_tarjeta
+            td class=(corte.gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
+              = corte.gastos
+            td = corte.caja_chica
+            td = corte.siguiente_dia
+            td = corte.sobre
+            td = corte.propinas
 
   = paginate @cortes, theme: 'twitter-bootstrap-4'
 

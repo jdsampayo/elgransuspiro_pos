@@ -12,33 +12,34 @@ h1.float-left Asistencias
   .form-actions
     = f.button :submit, 'Buscar', class: 'btn btn-primary'
 
-table
-  thead
-    tr
-      th #
-      th Persona
-      th Día
-      th Entrada
-      th Salida
-      th Horas
-      th Retardo
-      th Falta
-      th
+.table-responsive-sm
+  table
+    thead
+      tr
+        th #
+        th Persona
+        th Día
+        th Entrada
+        th Salida
+        th Horas
+        th Retardo
+        th Falta
+        th
 
-  tbody
-    - @asistencias.each do |asistencia|
-      tr class="#{asistencia.retardo ? "table-warning" : ""}"
-        td = asistencia.id
-        td = asistencia.mesero
-        td = l asistencia.corte.dia if asistencia.corte
-        td = asistencia.hora_entrada&.strftime('%H:%M')
-        td = asistencia.hora_salida&.strftime('%H:%M') unless asistencia.horas.blank?
-        td = asistencia.horas
-        td = asistencia.retardo ? 'Si' : 'No'
-        td = asistencia.falta ? 'Si' : 'No'
-        td
-          -unless matriz?
-            = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
+    tbody
+      - @asistencias.each do |asistencia|
+        tr class="#{asistencia.retardo ? "table-warning" : ""}"
+          td = asistencia.id
+          td = asistencia.mesero
+          td = l asistencia.corte.dia if asistencia.corte
+          td = asistencia.hora_entrada&.strftime('%H:%M')
+          td = asistencia.hora_salida&.strftime('%H:%M') unless asistencia.horas.blank?
+          td = asistencia.horas
+          td = asistencia.retardo ? 'Si' : 'No'
+          td = asistencia.falta ? 'Si' : 'No'
+          td
+            -unless matriz?
+              = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
 
 br
 
