@@ -9,12 +9,12 @@ module Contabilidad
 
       unless params[:debit_account_id].blank?
         @entries = @entries.joins(:debit_accounts).
-          where("plutus_accounts.id = #{params[:debit_account_id]}").distinct
+          where("plutus_accounts.id = '#{params[:debit_account_id]}'").distinct
       end
 
       unless params[:credit_account_id].blank?
         @entries = @entries.joins(:credit_accounts).
-          where("plutus_accounts.id = #{params[:credit_account_id]}").distinct
+          where("plutus_accounts.id = '#{params[:credit_account_id]}'").distinct
       end
 
       @entries = @entries.where("description like ?", "%#{params[:description]}%").
