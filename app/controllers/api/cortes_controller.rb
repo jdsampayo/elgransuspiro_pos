@@ -16,7 +16,7 @@ class Api::CortesController < Api::ApiController
 
     if @corte.update(corte_params)
       @corte.finalize_comandas
-      @corte.create_registro_contable
+      @corte.registros_contables!
 
       render :show, status: :ok, location: @corte
     else

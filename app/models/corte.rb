@@ -44,7 +44,7 @@ class Corte < ApplicationRecord
     reload
 
     finalize_comandas
-    create_registro_contable
+    registros_contables!
 
     nuevo_corte = Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
     nuevo_corte.syncronize_create
@@ -54,27 +54,59 @@ class Corte < ApplicationRecord
     Comanda.del_dia(dia).update_all(closed_at: Time.now)
   end
 
-  def create_registro_contable
-    debits = []
-    debits << {account_name: "Caja Chica", amount: pagos_con_efectivo}
-    debits << {account_name: "Caja Fuerte", amount: sobre - gastos}
-    debits << {account_name: "Banco", amount: pagos_con_tarjeta} if pagos_con_tarjeta > 0
-    debits << {account_name: "Gastos de Operación", amount: gastos} if gastos > 0
+  def registros_contables!
+    debits = credits = []
 
-    credits = []
-    credits << {account_name: "Caja Chica", amount: sobre}
-    credits << {account_name: "Ventas", amount: ventas}
+    # Los gastos de operacion salen de la caja chica
+    debits << {
+      account_name: 'Caja Chica',
+      amount: pagos_con_efectivo - gastos
+    }
+    credits << {
+      account_name: 'Ventas',
+      amount: ventas
+    }
+
+    if pagos_con_tarjeta.positive?
+      debits << {
+        account_name: 'Banco',
+        amount: pagos_con_tarjeta
+      }
+    end
+    if gastos.positive?
+      debits << {
+        account_name: 'Gastos de Operación',
+        amount: gastos
+      }
+    end
 
     entry = Plutus::Entry.new(
       description: "Corte del día #{dia}",
       date: dia,
       debits: debits,
-      credits: credits
+      credits: credits,
+      commercial_document: corte
     )
 
-    unless entry.save
-      raise "Registro contable erróneo: #{dia}"
-    end
+    raise "Registro contable erróneo: #{dia}" unless entry.save
+
+    credits = debits = []
+    credits << {
+      account_name: 'Caja Chica', amount: sobre
+    }
+    debits << {
+      account_name: 'Caja Fuerte', amount: sobre
+    }
+
+    entry = Plutus::Entry.new(
+      description: "Retiro del día #{dia}",
+      date: dia,
+      debits: debits,
+      credits: credits,
+      commercial_document: corte
+    )
+
+    raise "Registro contable erróneo: #{dia}" unless entry.save
   end
 
   def set_subtotals
