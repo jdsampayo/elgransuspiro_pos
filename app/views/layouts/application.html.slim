@@ -13,43 +13,12 @@ html
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       button.navbar-toggler.navbar-toggler-right data-target="#navbar-admin" data-toggle="collapse" type="button" aria-controls="navbarNav" aria-expanded="false"
         span.navbar-toggler-icon
-      a.navbar-brand href="/" Punto de Venta
-      #navbar-admin.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          -if current_user
-            =active_link_to "Cortes", cortes_path, class: "nav-item nav-link"
-          =active_link_to "Propinas", propinas_path, class: "nav-item nav-link"
-          =active_link_to "Asistencias", asistencias_path, class: "nav-item nav-link"
-          =active_link_to "Comandas", comandas_path, class: "nav-item nav-link"
-          =active_link_to "Gastos", gastos_path, class: "nav-item nav-link"
-          li.nav-item.dropdown
-            a#dropdown_inventario.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" Inventario
-            .dropdown-menu aria-labelledby="dropdown_inventario"
-              =active_link_to "Artículos", articulos_path, class: "nav-item nav-link"
-              =active_link_to "Insumos", insumos_path, class: "nav-item nav-link"
-              =active_link_to "Desechables", desechables_path, class: "nav-item nav-link"
-          -if current_user
-            li.nav-item.dropdown
-              a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" Contabilidad
-              .dropdown-menu aria-labelledby="dropdown_contabilidad"
-                =active_link_to "Libro Mayor", contabilidad_cuentas_path, class: "dropdown-item"
-                =active_link_to "Libro Diario", contabilidad_entradas_path, class: "dropdown-item"
-                =active_link_to "Hoja de Balance", contabilidad_reportes_balance_sheet_path, class: "dropdown-item"
-                =active_link_to "Estado de Resultados", contabilidad_reportes_income_statement_path, class: "dropdown-item"
+      a.navbar-brand href="/" El Gran Suspiro
 
-        form.form-inline.mt-2.mt-md-0
-          -if current_user
-            = link_to logout_path, class: "btn btn-outline-default" do
-              i.fas.fa-sign-out
-              |  Cerrar Sesión
-          -else
-            = link_to login_path, class: "btn btn-outline-default" do
-              i.fas.fa-sign-in
-              |  Iniciar Sesión
-
-          -unless matriz?
-            = link_to 'Nueva Gasto', new_gasto_path, class: "btn btn-outline-warning"
-            = link_to 'Nueva Comanda', new_comanda_path, class: "btn btn-outline-info"
+      - if matriz?
+        =render 'layouts/menu_matriz'
+      - else
+        =render 'layouts/menu_pos'
 
     .container-fluid
       - flash.each do |type, content|

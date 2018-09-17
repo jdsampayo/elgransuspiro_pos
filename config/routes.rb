@@ -7,8 +7,8 @@ Rails.application.routes.draw do
     resources :gastos, defaults: { format: 'json' }
     resources :comandas, defaults: { format: 'json' }
     resources :cortes, defaults: { format: 'json' }
+    resources :meseros, defaults: { format: 'json' }
   end
-
   resources :asistencias
   resources :desechables
   resources :conteos
@@ -45,15 +45,15 @@ Rails.application.routes.draw do
 
   resources :sesiones
 
-  get "propinas", controller: "cortes", action: "propinas", as: "propinas"
-  get "acceso_denegado", controller: "sesiones", action: "acceso_denegado", as: "acceso_denegado"
-  get "login", controller: "sesiones", action: "new", as: "login"
-  get "logout", controller: "sesiones", action: "destroy", as: "logout"
+  get 'propinas', controller: 'cortes', action: 'propinas', as: 'propinas'
+  get 'acceso_denegado', controller: 'sesiones', action: 'acceso_denegado', as: 'acceso_denegado'
+  get 'login', controller: 'sesiones', action: 'new', as: 'login'
+  get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
 
   if Rails.env.development?
-    root "tableros#index"
+    root 'tableros#index'
   else
-    root "contabilidad/cuentas#index"
+    root 'contabilidad/cuentas#index'
   end
 
   match '*a', to: 'errors#routing', via: [:get, :post]

@@ -1,5 +1,4 @@
 class Api::GastosController < Api::ApiController
-
   # POST /api/gastos
   def create
     @gasto = Gasto.new(gasto_params)

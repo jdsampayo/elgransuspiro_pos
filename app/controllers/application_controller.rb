@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def matriz?
-    Rails.application.config.x.sucursal == "matriz"
+    true# Rails.application.config.x.sucursal == "matriz"
   end
 
   rescue_from CanCan::AccessDenied do |exception|
