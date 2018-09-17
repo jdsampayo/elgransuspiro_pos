@@ -4,13 +4,11 @@ class MeserosController < ApplicationController
   before_action :set_mesero, only: [:show, :edit, :update, :destroy]
 
   # GET /meseros
-  # GET /meseros.json
   def index
     @meseros = Mesero.all
   end
 
   # GET /meseros/1
-  # GET /meseros/1.json
   def show
   end
 
@@ -24,43 +22,34 @@ class MeserosController < ApplicationController
   end
 
   # POST /meseros
-  # POST /meseros.json
   def create
     @mesero = Mesero.new(mesero_params)
 
-    respond_to do |format|
-      if @mesero.save
-        format.html { redirect_to @mesero, notice: 'Creado exitosamente.' }
-        format.json { render :show, status: :created, location: @mesero }
-      else
-        format.html { render :new }
-        format.json { render json: @mesero.errors, status: :unprocessable_entity }
-      end
+    if @mesero.save
+      @mesero.syncronize_create
+      redirect_to @mesero, notice: 'Creado exitosamente.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /meseros/1
-  # PATCH/PUT /meseros/1.json
   def update
-    respond_to do |format|
-      if @mesero.update(mesero_params)
-        format.html { redirect_to @mesero, notice: 'Actualizado exitosamente.' }
-        format.json { render :show, status: :ok, location: @mesero }
-      else
-        format.html { render :edit }
-        format.json { render json: @mesero.errors, status: :unprocessable_entity }
-      end
+    if @mesero.update(mesero_params)
+      @mesero.syncronize_update
+
+      redirect_to @mesero, notice: 'Actualizado exitosamente.'
+    else
+      render :edit
     end
   end
 
   # DELETE /meseros/1
-  # DELETE /meseros/1.json
   def destroy
     @mesero.destroy
-    respond_to do |format|
-      format.html { redirect_to meseros_url, notice: 'Mesero was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @mesero.syncronize_destroy
+
+    redirect_to meseros_url, notice: 'Eliminado correctamente.'
   end
 
   private

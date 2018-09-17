@@ -4,14 +4,10 @@ class SyncronizeJob < ApplicationJob
   BASE_URL = ENV['MATRIZ_BASE_URL']
 
   def perform
-    Sincronizacion.where(exito: false).each do |sincronizacion|
+    Sincronizacion.order(created_at: :asc).where(exito: false).each do |sincronizacion|
       json = sincronizacion.mensaje.present? ? JSON.parse(sincronizacion.mensaje) : nil
       url = "#{BASE_URL}#{sincronizacion.path}"
-      connection = HTTP.headers(token: "auth")
-
-      puts "***************"
-      puts url
-      puts json
+      connection = HTTP.headers(token: 'auth')
 
       resultado =
         case sincronizacion.tipo
@@ -30,12 +26,12 @@ class SyncronizeJob < ApplicationJob
       elsif resultado.code == 409
         sincronizacion.update(
           exito: true,
-          error: JSON.parse(resultado.body.to_s)["message"],
+          error: JSON.parse(resultado.body.to_s)['message'],
           webhooked_at: Time.current
         )
       else
         sincronizacion.update(
-          error: JSON.parse(resultado.body.to_s)["message"],
+          error: JSON.parse(resultado.body.to_s)['message'],
           webhooked_at: Time.current
         )
       end
