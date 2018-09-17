@@ -55,7 +55,8 @@ class Corte < ApplicationRecord
   end
 
   def registros_contables!
-    debits = credits = []
+    debits = []
+    credits = []
 
     # Los gastos de operacion salen de la caja chica
     debits << {
@@ -90,7 +91,9 @@ class Corte < ApplicationRecord
 
     raise "Registro contable erróneo: #{dia}" unless entry.save
 
-    credits = debits = []
+    credits = []
+    debits = []
+
     credits << {
       account_name: 'Caja Chica', amount: sobre
     }
