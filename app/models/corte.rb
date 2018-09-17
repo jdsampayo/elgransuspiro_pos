@@ -85,7 +85,7 @@ class Corte < ApplicationRecord
       date: dia,
       debits: debits,
       credits: credits,
-      commercial_document: corte
+      commercial_document: self
     )
 
     raise "Registro contable erróneo: #{dia}" unless entry.save
@@ -103,7 +103,7 @@ class Corte < ApplicationRecord
       date: dia,
       debits: debits,
       credits: credits,
-      commercial_document: corte
+      commercial_document: self
     )
 
     raise "Registro contable erróneo: #{dia}" unless entry.save
