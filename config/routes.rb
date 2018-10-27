@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   namespace :contabilidad do
     resources :cuentas, only: [:index, :new]
-    resources :entradas, only: [:index, :new, :create]
+    resources :entradas, only: [:index, :new, :create, :destroy]
     namespace :reportes do
       get :balance_sheet
       get :income_statement

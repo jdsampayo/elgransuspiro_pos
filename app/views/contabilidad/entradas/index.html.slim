@@ -32,6 +32,7 @@ table
       th width=100 Debe
       th width=100 Haber
       th width=100 Fecha
+      th width=30
 
   - @entries.each do |entry|
     tr.table-dark
@@ -40,12 +41,17 @@ table
         .text-center
           =number_with_precision(entry.debit_amounts.map(&:amount).sum, precision: 2)
       td =l entry.date
+      td.actions
+        = link_to contabilidad_entrada_path(entry.id), data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
+          i.fas.fa-trash
+
       - entry.debit_amounts.each do |debit_amount|
         tr
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;
             =debit_amount&.account&.name || "Desconocido"
           td=number_with_precision(debit_amount&.amount, precision: 2)
+          td
           td
           td
       - entry.credit_amounts.each do |credit_amount|
@@ -55,6 +61,7 @@ table
             =credit_amount&.account&.name || "Desconocido"
           td
           td=number_with_precision(credit_amount&.amount, precision: 2)
+          td
           td
 
 = paginate @entries, theme: 'twitter-bootstrap-4'

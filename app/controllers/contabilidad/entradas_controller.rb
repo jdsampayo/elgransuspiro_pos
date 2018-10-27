@@ -49,6 +49,19 @@ module Contabilidad
       end
     end
 
+    def destroy
+      @entry = Plutus::Entry.find(params[:id])
+
+      if @entry
+        @entry.delete
+        Plutus::Amount.where(entry_id: params[:id]).delete_all
+
+        redirect_to contabilidad_entradas_url, notice: 'Eliminada.'
+      else
+        redirect_to contabilidad_entradas_url, notice: 'El registro no existe.'
+      end
+    end
+
     def entrada_params
       params.require(:entrada).permit(:date, :description, debits_attributes: [:account_id, :amount], credits_attributes: [:account_id, :amount])
     end
