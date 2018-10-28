@@ -10,6 +10,6 @@ h1.pull-left Hoja de Balance
 
 br
 
-= render 'account', name: "Activos", accounts: @assets
-= render 'account', name: "Pasivos", accounts: @liabilities
-= render 'account', name: "Patrimonio", accounts: @equity
+= render 'account', name: 'Activos', accounts: @assets, account_type: 'Plutus::Asset'
+= render 'account', name: 'Pasivos', accounts: @liabilities, account_type: 'Plutus::Liability'
+= render 'account', name: 'Patrimonio', accounts: @equity, account_type: 'Plutus::Equity'

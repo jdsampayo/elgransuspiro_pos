@@ -1,6 +1,5 @@
-h1.pull-left Libro Diario
-
-.pull-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-info"
+h1.float-left Libro Diario
+.float-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-info"
 
 .clearfix
 
@@ -15,22 +14,29 @@ h1.pull-left Libro Diario
     label for='description' Descripción contiene
     = text_field_tag :description, params[:description], class: 'form-control mx-sm-3'
   .form-group.mt-3
-    label for='debit_account_id' Cargo
+    label for='debit_account_id' Cargo (debit)
     = select_tag :debit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:debit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
   .form-group.mt-3
-    label for='credit_account_id' Abono
+    label for='credit_account_id' Abono (credit)
     = select_tag :credit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:credit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
   .form-group.mt-3
     button.btn.btn-primary.mx-sm-3 type="submit" Refrescar
 
 br
 
+-Cuenta::COLORS.each do |color|
+  span class=plutus_to_badge(color.first)
+    =Cuenta::TIPOS[color.first.split('::').last.downcase.to_sym]
+
+br
+br
+
 table
   thead
     tr
       th Descripción
-      th width=100 Debe
-      th width=100 Haber
+      th width=100 Cargo
+      th width=100 Abono
       th width=100 Fecha
       th width=30
 
@@ -46,7 +52,7 @@ table
           i.fas.fa-trash
 
       - entry.debit_amounts.each do |debit_amount|
-        tr
+        tr class=plutus_to_tr(debit_amount&.account&.type)
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;
             =debit_amount&.account&.name || "Desconocido"
@@ -55,9 +61,9 @@ table
           td
           td
       - entry.credit_amounts.each do |credit_amount|
-        tr
+        tr class=plutus_to_tr(credit_amount&.account&.type)
           td
-            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             =credit_amount&.account&.name || "Desconocido"
           td
           td=number_with_precision(credit_amount&.amount, precision: 2)

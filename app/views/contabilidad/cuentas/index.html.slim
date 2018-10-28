@@ -1,18 +1,25 @@
-h1.pull-left Libro Mayor
+h1.float-left Libro Mayor
+
+.clearfix
+
+-Cuenta::COLORS.each do |color|
+  span class=plutus_to_badge(color.first)
+    =Cuenta::TIPOS[color.first.split('::').last.downcase.to_sym]
+
+br
+br
 
 table
-  tr
+  tr.table-dark
     th Nombre
-    th Tipo
-    th Abono (credit)
     th Cargo (debit)
+    th Abono (credit)
     th Balance
   - @accounts.each do |account|
-    tr
+    tr class=plutus_to_tr(account.type)
       td= account.name
-      td= Cuenta.plutus_a_tipo(account.type)
-      td= account.credits_balance.round(2)
-      td= account.debits_balance.round(2)
-      td= account.balance.round(2)
+      td= number_with_precision(account.debits_balance, precision: 2)
+      td= number_with_precision(account.credits_balance, precision: 2)
+      td= number_with_precision(account.balance, precision: 2)
 
-h5 Equilibrio: #{Plutus::Account.trial_balance.round(2)}
+h5 Equilibrio: #{number_with_precision(Plutus::Account.trial_balance, precision: 2)}

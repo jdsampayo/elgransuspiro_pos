@@ -1,6 +1,15 @@
-h1.pull-left Cuentas Contables
-.pull-right
+h1.float-left Cuentas Contables
+.float-right
   =link_to "Nueva cuenta", new_cuenta_path, class: "btn btn-primary"
+
+.clearfix
+
+-Cuenta::COLORS.each do |color|
+  span class=plutus_to_badge(color.first)
+    =Cuenta::TIPOS[color.first.split('::').last.downcase.to_sym]
+
+br
+br
 
 table
   thead
@@ -11,7 +20,8 @@ table
       th
   tbody
     - @cuentas.each do |cuenta|
-      tr
-        td = cuenta.name
-        td = Cuenta.plutus_a_tipo(cuenta.type)
-        td = cuenta.contra ? "Sí" : "No"
+      tr class=plutus_to_tr(cuenta.type)
+        td
+          = cuenta.name
+        td
+          = cuenta.contra ? 'Sí' : 'No'

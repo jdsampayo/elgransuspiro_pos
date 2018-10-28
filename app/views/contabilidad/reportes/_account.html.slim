@@ -18,7 +18,7 @@ table
           - running_total += balance
           td=running_total.round(2)
 
-      tr.table-primary
+      tr class=plutus_to_tr(account_type)
         td Gran Total
         td=number_to_currency(running_total.round(2))
         td

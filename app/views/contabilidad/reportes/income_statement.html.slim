@@ -13,5 +13,5 @@ h1.pull-left Estado de Resultados
 
 br
 
-= render 'account', name: "Ingresos", accounts: @revenues
-= render 'account', name: "Egresos", accounts: @expenses
+= render 'account', name: 'Ingresos', accounts: @revenues, account_type: 'Plutus::Revenue'
+= render 'account', name: 'Egresos', accounts: @expenses, account_type: 'Plutus::Expense'

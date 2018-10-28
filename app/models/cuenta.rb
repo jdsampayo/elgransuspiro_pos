@@ -4,12 +4,20 @@ class Cuenta
   include ActiveModel::Model
 
   TIPOS = {
-    asset: "Activo",
-    liability: "Pasivo",
-    equity: "Patrimonio",
-    revenue: "Ingreso",
-    expense: "Egreso"
-  }
+    asset: 'Activo',
+    liability: 'Pasivo',
+    equity: 'Patrimonio',
+    revenue: 'Ingreso',
+    expense: 'Egreso'
+  }.freeze
+
+  COLORS = {
+    'Plutus::Asset' => 'success',
+    'Plutus::Liability' => 'danger',
+    'Plutus::Revenue' => 'primary',
+    'Plutus::Expense' => 'warning',
+    'Plutus::Equity' => 'info'
+  }.freeze
 
   ACCOUNTS = {
     "Banco" => :asset,
