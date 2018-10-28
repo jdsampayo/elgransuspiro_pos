@@ -10,11 +10,12 @@ br
 br
 
 table
-  tr.table-dark
-    th Nombre
-    th Cargo (debit)
-    th Abono (credit)
-    th Balance
+  thead
+    tr
+      th Nombre
+      th Cargo (debit)
+      th Abono (credit)
+      th Balance
   - @accounts.each do |account|
     tr class=plutus_to_tr(account.type)
       td= account.name
