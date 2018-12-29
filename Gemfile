@@ -7,9 +7,9 @@ end
 
 gem 'rails-erd', require: false, group: :development
 
-gem 'rails', '~> 5.2.0'
-gem 'pg'
-gem 'puma', '~> 3.7'
+gem 'rails', '~> 5.2.2'
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0.7'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
@@ -40,7 +40,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-gem 'simple_form', '~> 4.0.1'
+gem 'simple_form', '~> 4.1.0'
 gem 'slim-rails'
 gem 'jquery-rails'
 gem 'cocoon'
