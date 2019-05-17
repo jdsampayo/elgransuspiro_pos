@@ -1,0 +1,7 @@
+h1.pull-left Proyección Mensual
+
+= render 'account', name: 'Ingresos', accounts: @revenues, account_type: 'Plutus::Revenue'
+= render 'account', name: 'Egresos', accounts: @expenses, account_type: 'Plutus::Expense'
+= render 'account', name: 'Activos', accounts: @assets, account_type: 'Plutus::Asset'
+= render 'account', name: 'Pasivos', accounts: @liabilities, account_type: 'Plutus::Liability'
+= render 'account', name: 'Capital', accounts: @equity, account_type: 'Plutus::Equity'

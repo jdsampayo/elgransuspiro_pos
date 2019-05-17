@@ -7,7 +7,7 @@ end
 
 gem 'rails-erd', require: false, group: :development
 
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 5.2.3'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0.7'
@@ -48,7 +48,7 @@ gem 'paranoia', '~> 2.4.1'
 gem 'font-awesome-sass', '~> 5.0.9'
 gem 'active_link_to'
 gem 'auto_strip_attributes', '~> 2.4'
-gem 'ransack'
+gem 'ransack', '~> 2.1.0'
 gem 'groupdate'
 gem 'chartkick'
 gem 'timecop'

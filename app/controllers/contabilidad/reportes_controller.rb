@@ -4,7 +4,7 @@ module Contabilidad
 
     def balance_sheet
       first_entry = Plutus::Entry.order('date ASC').first
-      @from_date = first_entry ? first_entry.date: Date.today
+      @from_date = first_entry ? first_entry.date : Date.today
       @to_date = params[:date] ? Date.parse(params[:date]) : Date.today
       @assets = Plutus::Asset.all
       @liabilities = Plutus::Liability.all
@@ -18,6 +18,22 @@ module Contabilidad
     def income_statement
       @from_date = params[:from_date] ? Date.parse(params[:from_date]) : Date.today.at_beginning_of_month
       @to_date = params[:to_date] ? Date.parse(params[:to_date]) : Date.today
+      @revenues = Plutus::Revenue.all
+      @expenses = Plutus::Expense.all
+
+      respond_to do |format|
+        format.html # index.html.erb
+      end
+    end
+
+    def monthly
+      time = 14.months.ago
+      @from_date = time.beginning_of_month.to_date
+      @to_date = time.end_of_month.to_date
+
+      @assets = Plutus::Asset.all
+      @liabilities = Plutus::Liability.all
+      @equity = Plutus::Equity.all
       @revenues = Plutus::Revenue.all
       @expenses = Plutus::Expense.all
 
