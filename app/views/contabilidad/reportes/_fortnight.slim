@@ -1,4 +1,4 @@
-table
+table.table.table-sm
   tr
     th Día
     th Corte
@@ -16,8 +16,8 @@ table
     - sobre = cortes.sum(:sobre)
     - banco = cortes.sum(:pagos_con_tarjeta)
     - gastos = Plutus::Expense.all.balance(from_date: from_date, to_date: to_date)
-    td=sobre + banco - gastos
-    td=sobre
-    td=banco
-    td=gastos
+    td.bg-success=sobre + banco - gastos
+    td.bg-info=sobre
+    td.bg-info=banco
+    td.bg-danger=gastos
 

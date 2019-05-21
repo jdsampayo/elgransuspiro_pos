@@ -1,4 +1,15 @@
 h1.pull-left Proyección Mensual
 
-= render 'fortnight', from_date: @from_date, to_date: @to_date
-= render 'fortnight', from_date: @second_from_date, to_date: @second_to_date
+.clearfix
+
+= form_tag({action: 'monthly'}, {method: :get, class: 'form-inline'}) do
+  .form-group
+    = label_tag :date, nil, class: 'sr-only'
+    = text_field_tag :date, @to_date, class: 'datepicker form-control mx-sm-3'
+    button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+
+br
+
+.row
+  .col-md-6= render 'fortnight', from_date: @from_date, to_date: @to_date
+  .col-md-6= render 'fortnight', from_date: @second_from_date, to_date: @second_to_date

@@ -27,19 +27,10 @@ module Contabilidad
     end
 
     def monthly
-      time = 14.months.ago
-      @from_date = time.beginning_of_month.to_date
-      @to_date = time.end_of_month.to_date
+      time = params[:date] ? Date.parse(params[:date]) : Date.today
 
-      @assets = Plutus::Asset.all
-      @liabilities = Plutus::Liability.all
-      @equity = Plutus::Equity.all
-      @revenues = Plutus::Revenue.all
-      @expenses = Plutus::Expense.all
-
-      time = 9.months.ago
-      first_fortnight = time.beginning_of_month#Time.current
-      second_fortnight = time.end_of_month#Time.current
+      first_fortnight = time.beginning_of_month
+      second_fortnight = time.end_of_month
 
       @from_date = beginning_of_fortnight(first_fortnight).to_date
       @to_date = end_of_fortnight(first_fortnight).to_date
