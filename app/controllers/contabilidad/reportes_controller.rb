@@ -37,6 +37,17 @@ module Contabilidad
       @revenues = Plutus::Revenue.all
       @expenses = Plutus::Expense.all
 
+      time = 9.months.ago
+      first_fortnight = time.beginning_of_month#Time.current
+      second_fortnight = time.end_of_month#Time.current
+
+      @from_date = beginning_of_fortnight(first_fortnight).to_date
+      @to_date = end_of_fortnight(first_fortnight).to_date
+
+      @second_from_date = beginning_of_fortnight(second_fortnight).to_date
+      @second_to_date = end_of_fortnight(second_fortnight).to_date
+
+
       respond_to do |format|
         format.html # index.html.erb
       end

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: categorias
+#
+#  id         :uuid             not null, primary key
+#  nombre     :text
+#  created_at :datetime
+#  updated_at :datetime
+#  deleted_at :datetime
+#
+
 class CategoriasController < ApplicationController
   load_and_authorize_resource
 

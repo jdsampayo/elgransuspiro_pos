@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: usuarios
+#
+#  id                :uuid             not null, primary key
+#  email             :text
+#  crypted_password  :text
+#  password_salt     :text
+#  persistence_token :text
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 class Usuario < ActiveRecord::Base
   acts_as_authentic do |configuration|
     configuration.session_class = Sesion

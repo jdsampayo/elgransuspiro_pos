@@ -1,0 +1,23 @@
+table
+  tr
+    th Día
+    th Corte
+    th Banco
+    th Gasto Contable
+  - (from_date).upto(to_date) do |date|
+    - corte = Corte.where(dia: date).take
+    tr
+      td=date.day
+      td=corte&.sobre
+      td=corte&.pagos_con_tarjeta
+      td=link_to(Plutus::Expense.all.balance(from_date: date, to_date: date), contabilidad_reportes_income_statement_path(from_date: date, to_date: date))
+  tr.table-dark
+    - cortes = Corte.where(dia: from_date..to_date)
+    - sobre = cortes.sum(:sobre)
+    - banco = cortes.sum(:pagos_con_tarjeta)
+    - gastos = Plutus::Expense.all.balance(from_date: from_date, to_date: to_date)
+    td=sobre + banco - gastos
+    td=sobre
+    td=banco
+    td=gastos
+
