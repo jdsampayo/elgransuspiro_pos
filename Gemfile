@@ -63,6 +63,7 @@ gem 'plutus', github: "jdsampayo/plutus", branch: "fix_rails_5_assets"
 #gem 'chunky_png'
 #gem 'escpos'
 #gem 'escpos-image'
+gem 'rmagick', require: false
 gem 'escper'
 
 # Auth

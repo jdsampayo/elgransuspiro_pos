@@ -369,6 +369,7 @@ DEPENDENCIES
   rails-assets-tether (>= 1.3.3)!
   rails-erd
   ransack (~> 2.1.0)
+  rmagick
   sass-rails (~> 5.0.7)
   scrypt (= 3.0.6)
   selenium-webdriver
@@ -385,4 +386,4 @@ DEPENDENCIES
   webdack-uuid_migration
 
 BUNDLED WITH
-   1.16.2
+   1.17.2
