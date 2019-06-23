@@ -16,6 +16,6 @@ class Extra < ApplicationRecord
   acts_as_paranoid
 
   def to_s
-    nombre
+    nombre.titleize
   end
 end

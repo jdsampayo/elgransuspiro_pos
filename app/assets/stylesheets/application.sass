@@ -9,6 +9,7 @@
 
 body
   padding-top: 70px
+  font-family: "Roboto", "Helvetica Neue", "Open Sans", Arial, sans-serif
 
 section
   margin-top: 40px
@@ -17,9 +18,6 @@ h1
   margin-bottom: 20px
   padding-bottom: 9px
   border-bottom: 1px solid #eee
-
-.form-actions
-  padding: 40px 0
 
 .actions
   a, button
@@ -62,6 +60,10 @@ form.form-inline
     tr.table-dark, tr.table-dark:hover
       background-color: rgba(0, 0, 0, 0.600)!important
 
+  .form-inline
+    padding: 20px
+
+
 span.or
   padding: 0 10px
 
@@ -91,3 +93,13 @@ tr.table-dark, .table-dark > th, .table-dark > td
 
 .table-bordered th, .container-fluid table th, .table-bordered td, .container-fluid table td
   border: 1px solid rgba(0,0,0,0.4)
+
+@keyframes yellowfade
+  from
+    background: $yellow
+
+  to
+    background: transparent
+
+.item-highlight
+  animation: yellowfade 1s

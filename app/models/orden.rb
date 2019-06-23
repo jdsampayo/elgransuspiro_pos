@@ -62,4 +62,10 @@ class Orden < ApplicationRecord
   def to_s
     ((cantidad > 1) ? "(#{cantidad}) " : "") + articulo.to_s
   end
+
+  def full_name
+    return to_s if extra_ordenes.blank?
+
+    to_s + " [#{extra_ordenes.map(&:to_s).to_sentence}]"
+  end
 end

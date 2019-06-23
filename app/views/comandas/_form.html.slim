@@ -3,7 +3,7 @@
 
   .form-inputs
     .row
-      .col-md-3= f.input :mesa
+      .col-md-3= f.input :mesa, as: :string
       .col-md-3= f.input :comensales
       .col-md-3
         = f.association :mesero, collection: Corte.actual.meseros.activos
@@ -38,6 +38,9 @@
     .links
       = link_to_add_association 'Agregar artículos', f, :ordenes
 
+  br
+  br
+  
   .form-actions
     = f.button :submit, class: "btn btn-primary"
     span.or o

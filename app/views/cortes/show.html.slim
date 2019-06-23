@@ -2,35 +2,74 @@ h1
   | Corte
   small.text-muted<=l @corte.dia, format: :long
 
-table
-  tr
-    td Inicial
-    td=@corte.inicial
-  tr
-    td Efectivo
-    td=@corte.pagos_con_efectivo
-    td Tarjeta
-    td=@corte.pagos_con_tarjeta
-    td Ventas
-    td=@corte.ventas
-    td Propinas
-    td=@corte.propinas
-  tr
-    td Gastos
-    td=@corte.gastos
-  tr
-    td Caja Chica
-    td=@corte.total
-  tr
-    td Siguiente Día
-    td=@corte.siguiente_dia
-  tr
-    td Caja Fuerte
-    td=@corte.sobre
+.row
+  .col-md-12
+    table
+      tbody
+        tr.table-dark
+          td colspan=3 Corte
+        tr.table-success
+          td.text-right width=200
+            strong Inicial:
+          td width=50
+            =@corte.inicial
+          td
+        tr.table-success
+          td.text-right
+            strong
+              | (+) Ventas:
+          td=@corte.ventas
+          td
+            .small
+              | Sólo se contabilizan comandas cerradas
+        tr.table-success
+          td.text-right
+            strong
+              | Subtotal:
+          td=@corte.inicial + @corte.ventas
+          td
+        tr.table-danger
+          td.text-right
+            strong
+              | (-) Pagos con Tarjeta:
+          td=@corte.pagos_con_tarjeta
+          td
+            .small
+              | No es dinero en caja chica
+        tr.table-danger
+          td.text-right
+            strong
+              | (-) Gastos:
+          td=@corte.gastos
+          td
+        tr.table-info
+          td.text-right
+            strong<
+              | (=) Caja Chica:
+          td=@caja
+          td
+        tr.table-danger
+          td.text-right
+            strong
+            | (-) Siguiente día:
+          td=@corte.siguiente_dia
+          td
+        tr.table-info
+          td.text-right
+            strong<
+              | (=) Caja Fuerte:
+          td=@corte.sobre
+          td
+        tr
+          td.text-right
+            strong Total de Propinas:
+          td=@propinas
+          td
+
 
 h2 Comandas
 
-=render "comandas/table"
+=render partial: "comandas/table", locals: { comandas: @comandas }
 
 h2 Gastos
 

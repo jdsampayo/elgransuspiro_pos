@@ -11,7 +11,8 @@ h1.float-left Comandas
 
 h5=l @corte.dia, format: :long
 
-.table-responsive-sm=render "table"
+.table-responsive-sm
+  =render partial: "table", locals: { comandas: @comandas }
 
 .row
   .col-md-12
@@ -19,7 +20,7 @@ h5=l @corte.dia, format: :long
       tbody
         tr.table-dark
           td colspan=3 Precorte
-        tr.table-info
+        tr.table-success
           td.text-right width=200
             strong Inicial:
           td width=50
@@ -32,20 +33,28 @@ h5=l @corte.dia, format: :long
           td=@total_comandas_cerradas
           td
             .small
-              | (Sólo se contabilizan comandas cerradas)
-        tr.table-warning
+              | Sólo se contabilizan comandas cerradas
+        tr.table-success
+          td.text-right
+            strong
+              | Subtotal:
+          td=@corte.inicial + @total_comandas_cerradas
+          td
+        tr.table-danger
           td.text-right
             strong
               | (-) Pagos con Tarjeta:
           td=@total_con_tarjeta
           td
+            .small
+              | No es dinero en caja chica
         tr.table-danger
           td.text-right
             strong
               | (-) Gastos:
           td=@total_de_gastos
           td
-        tr.table-success
+        tr.table-info
           td.text-right
             strong<
               | (=) Caja Chica:

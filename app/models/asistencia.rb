@@ -27,9 +27,9 @@ class Asistencia < ApplicationRecord
   }
 
   ENTRADA_HORARIOS = {
-    matutino: 9,
+    matutino: 7,
     vespertino: 15,
-    intermedio: 18
+    intermedio: 17
   }
 
   def calcular_horas
@@ -63,6 +63,10 @@ class Asistencia < ApplicationRecord
     ordenados = Hash[valores_absolutos.sort_by {|k, v| v}]
 
     ENTRADA_HORARIOS[ordenados.first.first]
+  end
+
+  def puede_salir?
+    horas.blank? && !falta
   end
 
   def self.meseros_del_dia

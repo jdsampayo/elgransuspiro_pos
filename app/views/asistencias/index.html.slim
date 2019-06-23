@@ -16,9 +16,8 @@ h1.float-left Asistencias
   table
     thead
       tr
-        th #
-        th Persona
         th Día
+        th Persona
         th Entrada
         th Salida
         th Horas
@@ -29,9 +28,8 @@ h1.float-left Asistencias
     tbody
       - @asistencias.each do |asistencia|
         tr class="#{asistencia.retardo ? "table-warning" : ""}"
-          td = asistencia.id
-          td = asistencia.mesero
           td = l asistencia.corte.dia if asistencia.corte
+          td = asistencia.mesero
           td = asistencia.hora_entrada&.strftime('%H:%M')
           td = asistencia.hora_salida&.strftime('%H:%M') unless asistencia.horas.blank?
           td = asistencia.horas
@@ -39,7 +37,7 @@ h1.float-left Asistencias
           td = asistencia.falta ? 'Si' : 'No'
           td
             -unless matriz?
-              = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success" if asistencia.horas.blank? && !asistencia.falta
+              = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success btn-sm" if asistencia.puede_salir?
 
 br
 

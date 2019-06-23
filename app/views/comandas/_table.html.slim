@@ -1,17 +1,15 @@
-- if @comandas.empty?
+- if comandas.empty?
   .alert.alert-secondary No hay comandas registradas.
 - else
   table
     thead
       tr
         th
-          i.fas.fa-hashtag
-        th
-          i.fas.fa-users
-        th
           i.fas.fa-sticky-note
         th
           i.fas.fa-id-card-alt
+        th
+          i.fas.fa-users
         th width=50
           i.fas.fa-hourglass-start
         th width=50
@@ -29,50 +27,16 @@
         th width=200
           i.fas.fa-cog
 
-    tbody
-      - @comandas.each do |comanda|
-        tr
-          td
-            = link_to comanda.folio, comanda
-          td
-            small= comanda.comensales
-          td
-            small= comanda.mesa.capitalize
-          td
-            small= comanda.mesero
-          td
-            small= comanda.created_at.strftime("%H:%M")
-          td
-            small= comanda.closed_at.strftime("%H:%M") if comanda.closed_at
-          td
-            small= Time.at(comanda.tiempo).utc.strftime("%H:%M")
-          td colspan=2
-            small= comanda.ordenes.ordered.map(&:to_s).to_sentence
-          td
-            strong= comanda.total
-          td
-            small= comanda.propina
-          td
-            -if comanda.closed_at
-              -if comanda.pago_con_tarjeta
-                i.fas.fa-credit-card
-              -else
-                i.fas.fa-money-bill-alt
-          -if comanda.abierta?
-            td.actions
-              -unless matriz?
-                = link_to edit_comanda_path(comanda), class: "btn btn-primary", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Editar" do
-                  i.fas.fa-pencil-alt.fa-fw
-                = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Imprimir" do
-                  i.fas.fa-print.fa-fw
-                = link_to pay_comanda_path(comanda), class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Pagar" do
-                  i.fas.fa-dollar-sign.fa-fw
-          -else
-            td.actions
-              button.btn.btn-secondary.btn-disabled
-                i.fas.fa-lock.fa-fw data-toggle="tooltip" data-placement="left" title="Comanda cerrada"
-              -unless matriz?
-                = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Reimprimir" do
-                  i.fas.fa-print.fa-fw
-                = link_to switch_comanda_path(comanda), method: :post, class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
-                  i.fas.fa-sync.fa-fw
+    -if matriz?
+      tbody
+        - comandas.each do |comanda|
+          = render partial: "comandas/column", locals: { comanda: comanda }
+
+    -else
+      tbody
+        - comandas.abiertas.each do |comanda|
+          = render partial: "comandas/column", locals: { comanda: comanda }
+
+      tbody class="table-success"
+        - comandas.cerradas.each do |comanda|
+          = render partial: "comandas/column", locals: { comanda: comanda }
