@@ -21,12 +21,13 @@ class Cuenta
 
   ACCOUNTS = {
     "Banco" => :asset,
+    "Café en Verde" => :expense,
     "Caja Chica" => :asset,
     "Caja Fuerte" => :asset,
     "Capital Jorge" => :equity,
     "Capital Zuiry" => :equity,
     "Compra de Insumos" => :expense,
-    "Tarjeta Crédito Cotsco" => :liability,
+    "Comisiones" => :expense,
     "Cursos" => :expense,
     "Desechables" => :expense,
     "Egreso sin Categorizar" => :expense,
@@ -42,8 +43,10 @@ class Cuenta
     "Renta" => :expense,
     "Reparaciones y Mantenimiento" => :expense,
     "Sueldos" => :expense,
+    "Tarjeta Crédito Cotsco" => :liability,
     "Teléfono e Internet" => :expense,
     "Transportación" => :expense,
+    "Tueste" => :expense,
     "Uniformes" => :expense,
     "Venta a Granel" => :revenue,
     "Ventas" => :revenue
