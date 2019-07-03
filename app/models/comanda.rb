@@ -30,7 +30,7 @@ class Comanda < ApplicationRecord
   }
   validates :comensales, numericality: {
     greater_than: 0
-  }  
+  }
   validates :porcentaje_de_descuento, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100,
@@ -128,7 +128,7 @@ class Comanda < ApplicationRecord
   end
 
   def print_ticket
-    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write to_text }    
+    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write to_text }
   end
 
   def switch_payment_method!

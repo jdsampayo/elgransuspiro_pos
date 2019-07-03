@@ -44,7 +44,8 @@ class ComandasController < ApplicationController
 
     @total_de_gastos = @gastos.sum(:monto)
 
-    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta -
+            @total_de_gastos
 
     @propinas = @comandas.sum(:propina)
     @total_de_ventas = @comandas.sum(:total)
@@ -76,7 +77,8 @@ class ComandasController < ApplicationController
 
     if @comanda.save
       @comanda.syncronize_create
-      redirect_to comandas_path(id: @comanda.id), success: '¡La comanda fue creada exitosamente!'
+      message = '¡La comanda fue creada exitosamente!'
+      redirect_to comandas_path(id: @comanda.id), success: message
     else
       render :new
     end
@@ -88,7 +90,8 @@ class ComandasController < ApplicationController
       @comanda.set_totales
       @comanda.save
       @comanda.syncronize_update
-      redirect_to comandas_path(id: @comanda.id), notice: 'Actualizada exitosamente.'
+      message = 'Actualizada exitosamente.'
+      redirect_to comandas_path(id: @comanda.id), notice: message
     else
       render :edit
     end
@@ -98,7 +101,8 @@ class ComandasController < ApplicationController
     @comanda.switch_payment_method!
     @comanda.syncronize_update
 
-    redirect_to comandas_url(id: @comanda.id), notice: '¡Se intercambió el método de pago!'
+    message = '¡Se intercambió el método de pago!'
+    redirect_to comandas_url(id: @comanda.id), notice: message
   end
 
   def print
@@ -106,7 +110,8 @@ class ComandasController < ApplicationController
 
     redirect_to comandas_url(id: @comanda.id), notice: '¡Impresa!'
   rescue Errno::ENOENT
-    redirect_to comandas_url(id: @comanda.id), flash: { error: '¡No se encuentra la impresora! Revisa que este conectada a la corriente y a la computadora.' }
+    message = '¡No se encuentra la impresora! Revisa que este conectada.'
+    redirect_to comandas_url(id: @comanda.id), flash: { error: message }
   rescue => e
     redirect_to comandas_url(id: @comanda.id), flash: { error: e.message }
   end
@@ -135,46 +140,44 @@ class ComandasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comanda
-      @comanda = Comanda.find(params[:id])
-    end
 
-    def check_comanda
-      redirect_to @comanda, notice: '¡Imposible! La comanda ya se encuentra cerrada.' unless @comanda.abierta?
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comanda
+    @comanda = Comanda.find(params[:id])
+  end
 
-    def check_corte
-      if Corte.actual.nil? || Corte.actual.cerrado?
-        redirect_to comandas_path, notice: '¡Imposible! El corte de este día ya está cerrado.'
-      end
-    end
+  def check_comanda
+    message = '¡Imposible! La comanda ya se encuentra cerrada.'
+    redirect_to @comanda, notice: message unless @comanda.abierta?
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def comanda_params
-      params.require(:comanda).permit(
-        :mesa,
-        :total,
-        :descuento,
-        :mesero_id,
-        :comensales,
-        :porcentaje_de_descuento,
-        ordenes_attributes: [
-          :id,
-          :articulo_id,
-          :cantidad,
-          :para_llevar,
-          :_destroy,
-          extra_ordenes_attributes: [
-            :id,
-            :extra_id,
-            :_destroy
-          ]
-        ]
-      )
+  def check_corte
+    if Corte.actual.nil? || Corte.actual.cerrado?
+      message = '¡Imposible! El corte de este día ya está cerrado.'
+      redirect_to comandas_path, notice: message
     end
+  end
 
-    def close_comanda_params
-      params.require(:comanda).permit(:pago_con_tarjeta, :propina)
-    end
+  def comanda_params
+    params.require(:comanda).permit(
+      :mesa,
+      :total,
+      :descuento,
+      :mesero_id,
+      :comensales,
+      :porcentaje_de_descuento,
+      ordenes_attributes: [
+        :id,
+        :articulo_id,
+        :cantidad,
+        :para_llevar,
+        :_destroy,
+        extra_ordenes_attributes: %i[id extra_id _destroy]
+      ]
+    )
+  end
+
+  def close_comanda_params
+    params.require(:comanda).permit(:pago_con_tarjeta, :propina)
+  end
 end
