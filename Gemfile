@@ -67,7 +67,7 @@ gem 'escper'
 
 # Auth
 gem 'authlogic'
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.13'
 gem 'scrypt', '3.0.6'
 gem 'cancancan', '~> 3.0'
 
