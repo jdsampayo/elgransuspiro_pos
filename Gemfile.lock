@@ -72,7 +72,7 @@ GEM
       activerecord (>= 4.0)
     autoprefixer-rails (9.6.0)
       execjs
-    bcrypt (3.1.11)
+    bcrypt (3.1.13)
     bindex (0.7.0)
     bootstrap (4.3.1)
       autoprefixer-rails (>= 9.1.0)
@@ -335,7 +335,7 @@ DEPENDENCIES
   annotate
   authlogic
   auto_strip_attributes (~> 2.4)
-  bcrypt (~> 3.1.7)
+  bcrypt (~> 3.1.13)
   bootstrap (~> 4.3.1)
   bootstrap-datepicker-rails
   bootstrap4-kaminari-views
