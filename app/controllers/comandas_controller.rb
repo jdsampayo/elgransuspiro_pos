@@ -112,7 +112,7 @@ class ComandasController < ApplicationController
   rescue Errno::ENOENT
     message = '¡No se encuentra la impresora! Revisa que este conectada.'
     redirect_to comandas_url(id: @comanda.id), flash: { error: message }
-  rescue => e
+  rescue StandardError => e
     redirect_to comandas_url(id: @comanda.id), flash: { error: e.message }
   end
 
@@ -147,15 +147,17 @@ class ComandasController < ApplicationController
   end
 
   def check_comanda
+    return if @comanda.abierta?
+
     message = '¡Imposible! La comanda ya se encuentra cerrada.'
-    redirect_to @comanda, notice: message unless @comanda.abierta?
+    redirect_to @comanda, notice: message
   end
 
   def check_corte
-    if Corte.actual.nil? || Corte.actual.cerrado?
-      message = '¡Imposible! El corte de este día ya está cerrado.'
-      redirect_to comandas_path, notice: message
-    end
+    return if Corte.actual&.abierto?
+
+    message = '¡Imposible! El corte de este día ya está cerrado.'
+    redirect_to comandas_path, notice: message
   end
 
   def comanda_params
@@ -166,15 +168,19 @@ class ComandasController < ApplicationController
       :mesero_id,
       :comensales,
       :porcentaje_de_descuento,
-      ordenes_attributes: [
-        :id,
-        :articulo_id,
-        :cantidad,
-        :para_llevar,
-        :_destroy,
-        extra_ordenes_attributes: %i[id extra_id _destroy]
-      ]
+      ordenes_attributes: ordenes_attributes
     )
+  end
+
+  def ordenes_attributes
+    [
+      :id,
+      :articulo_id,
+      :cantidad,
+      :para_llevar,
+      :_destroy,
+      extra_ordenes_attributes: %i[id extra_id _destroy]
+    ]
   end
 
   def close_comanda_params
