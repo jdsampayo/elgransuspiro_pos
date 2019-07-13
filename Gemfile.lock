@@ -69,7 +69,7 @@ GEM
       activesupport (>= 5.2, < 6.1)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
-    auto_strip_attributes (2.4.0)
+    auto_strip_attributes (2.5.0)
       activerecord (>= 4.0)
     autoprefixer-rails (9.6.0)
       execjs
@@ -338,7 +338,7 @@ DEPENDENCIES
   active_link_to
   annotate
   authlogic
-  auto_strip_attributes (~> 2.4)
+  auto_strip_attributes (~> 2.5)
   bcrypt (~> 3.1.13)
   bootstrap (~> 4.3.1)
   bootstrap-datepicker-rails
