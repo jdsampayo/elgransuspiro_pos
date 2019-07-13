@@ -30,21 +30,27 @@ class ComandasController < ApplicationController
   # GET /comandas
   def index
     @corte = Corte.actual
-    @comandas = @corte.comandas.order(closed_at: :asc)
+    @comandas = @corte.comandas.order(created_at: :desc)
     @gastos = Gasto.where(corte: @corte)
+
+    @cerradas = @comandas.cerradas
+    @abiertas = @comandas.abiertas
 
     @con_tarjeta = @comandas.con_tarjeta
     @con_efectivo = @comandas.con_efectivo
 
-    @total_comandas_cerradas = @comandas.cerradas.sum(:total)
-    @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
+    @total_comandas_cerradas = @cerradas.sum(:total)
+    @total_con_tarjeta = @con_tarjeta.sum(:total)
 
     @total_de_gastos = @gastos.sum(:monto)
 
-    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta -
+            @total_de_gastos
 
     @propinas = @comandas.sum(:propina)
     @total_de_ventas = @comandas.sum(:total)
+
+    @id = params[:id]
   end
 
   # GET /comandas/1
@@ -71,7 +77,8 @@ class ComandasController < ApplicationController
 
     if @comanda.save
       @comanda.syncronize_create
-      redirect_to @comanda, success: '¡La comanda fue creada exitosamente!'
+      message = '¡La comanda fue creada exitosamente!'
+      redirect_to comandas_path(id: @comanda.id), success: message
     else
       render :new
     end
@@ -83,7 +90,8 @@ class ComandasController < ApplicationController
       @comanda.set_totales
       @comanda.save
       @comanda.syncronize_update
-      redirect_to @comanda, notice: 'Actualizada exitosamente.'
+      message = 'Actualizada exitosamente.'
+      redirect_to comandas_path(id: @comanda.id), notice: message
     else
       render :edit
     end
@@ -93,15 +101,19 @@ class ComandasController < ApplicationController
     @comanda.switch_payment_method!
     @comanda.syncronize_update
 
-    redirect_to comandas_url, notice: '¡Se intercambió el método de pago!'
+    message = '¡Se intercambió el método de pago!'
+    redirect_to comandas_url(id: @comanda.id), notice: message
   end
 
   def print
     @comanda.print_ticket
 
-    redirect_to comandas_url, notice: '¡Impresa!'
+    redirect_to comandas_url(id: @comanda.id), notice: '¡Impresa!'
   rescue Errno::ENOENT
-    redirect_to comandas_url, flash: { error: '¡No se encuentra la impresora! Revisa que este conectada a la corriente y a la computadora.' }
+    message = '¡No se encuentra la impresora! Revisa que este conectada.'
+    redirect_to comandas_url(id: @comanda.id), flash: { error: message }
+  rescue StandardError => e
+    redirect_to comandas_url(id: @comanda.id), flash: { error: e.message }
   end
 
   # DELETE /comandas/1
@@ -128,46 +140,50 @@ class ComandasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comanda
-      @comanda = Comanda.find(params[:id])
-    end
 
-    def check_comanda
-      redirect_to @comanda, notice: '¡Imposible! La comanda ya se encuentra cerrada.' unless @comanda.abierta?
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comanda
+    @comanda = Comanda.find(params[:id])
+  end
 
-    def check_corte
-      if Corte.actual.nil? || Corte.actual.cerrado?
-        redirect_to comandas_path, notice: '¡Imposible! El corte de este día ya está cerrado.'
-      end
-    end
+  def check_comanda
+    return if @comanda.abierta?
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def comanda_params
-      params.require(:comanda).permit(
-        :mesa,
-        :total,
-        :descuento,
-        :mesero_id,
-        :comensales,
-        :porcentaje_de_descuento,
-        ordenes_attributes: [
-          :id,
-          :articulo_id,
-          :cantidad,
-          :para_llevar,
-          :_destroy,
-          extra_ordenes_attributes: [
-            :id,
-            :extra_id,
-            :_destroy
-          ]
-        ]
-      )
-    end
+    message = '¡Imposible! La comanda ya se encuentra cerrada.'
+    redirect_to @comanda, notice: message
+  end
 
-    def close_comanda_params
-      params.require(:comanda).permit(:pago_con_tarjeta, :propina)
-    end
+  def check_corte
+    return if Corte.actual&.abierto?
+
+    message = '¡Imposible! El corte de este día ya está cerrado.'
+    redirect_to comandas_path, notice: message
+  end
+
+  def comanda_params
+    params.require(:comanda).permit(
+      :mesa,
+      :total,
+      :descuento,
+      :mesero_id,
+      :comensales,
+      :porcentaje_de_descuento,
+      ordenes_attributes: ordenes_attributes
+    )
+  end
+
+  def ordenes_attributes
+    [
+      :id,
+      :articulo_id,
+      :cantidad,
+      :para_llevar,
+      :_destroy,
+      extra_ordenes_attributes: %i[id extra_id _destroy]
+    ]
+  end
+
+  def close_comanda_params
+    params.require(:comanda).permit(:pago_con_tarjeta, :propina)
+  end
 end

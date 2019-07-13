@@ -28,7 +28,9 @@ class Comanda < ApplicationRecord
   validates :descuento, :total, :venta, numericality: {
     greater_than_or_equal_to: 0
   }
-
+  validates :comensales, numericality: {
+    greater_than: 0
+  }
   validates :porcentaje_de_descuento, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100,
@@ -89,7 +91,7 @@ class Comanda < ApplicationRecord
   end
 
   def folio
-    id.last(9)
+    id.first(8)
   end
 
   def to_text
@@ -136,5 +138,4 @@ class Comanda < ApplicationRecord
   def to_sync_json
     to_json( include: { ordenes: { include: :extra_ordenes } } )
   end
-
 end

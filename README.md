@@ -20,6 +20,12 @@ income per day
 `RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create`
 `psql -Uelgransuspiro  elgransuspiro_pos_production < elgransuspiro.bak`
 
+
+sudo -u postgres createuser --superuser pepito
+ALTER USER pepito WITH PASSWORD 'eldeloscuentos123';
+
+psql -U db_user db_name < dump_name.sql
+
 # Limpiar sidekiq
 Sidekiq.redis { |conn| conn.flushdb }
 

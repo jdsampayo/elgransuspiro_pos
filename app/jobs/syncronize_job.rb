@@ -1,9 +1,11 @@
 class SyncronizeJob < ApplicationJob
   queue_as :default
 
-  BASE_URL = ENV['MATRIZ_BASE_URL']
+  BASE_URL = Rails.application.config.x.matriz_base_url
 
   def perform
+    return if BASE_URL.blank?
+
     Sincronizacion.order(created_at: :asc).where(exito: false).each do |sincronizacion|
       json = sincronizacion.mensaje.present? ? JSON.parse(sincronizacion.mensaje) : nil
       url = "#{BASE_URL}#{sincronizacion.path}"
