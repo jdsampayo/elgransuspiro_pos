@@ -3,9 +3,10 @@ module Contabilidad
     authorize_resource class: false
 
     def balance_sheet
-      first_entry = Plutus::Entry.order('date ASC').first
-      @from_date = first_entry ? first_entry.date : Date.today
-      @to_date = params[:date] ? Date.parse(params[:date]) : Date.today
+      @from_date = from_date(params, true)
+      @to_date = to_date(params)
+
+      # accounts
       @assets = Plutus::Asset.all
       @liabilities = Plutus::Liability.all
       @equity = Plutus::Equity.all
@@ -16,8 +17,10 @@ module Contabilidad
     end
 
     def income_statement
-      @from_date = params[:from_date] ? Date.parse(params[:from_date]) : Date.today.at_beginning_of_month
-      @to_date = params[:to_date] ? Date.parse(params[:to_date]) : Date.today
+      @from_date = from_date(params, true)
+      @to_date = to_date(params)
+
+      # accounts
       @revenues = Plutus::Revenue.all
       @expenses = Plutus::Expense.all
 
@@ -27,7 +30,7 @@ module Contabilidad
     end
 
     def monthly
-      time = params[:date] ? Date.parse(params[:date]) : Date.today
+      time = params[:date] ? Date.parse(params[:date] + "-01") : Date.today.beginning_of_month
 
       first_fortnight = time.beginning_of_month
       second_fortnight = time.end_of_month
@@ -38,10 +41,24 @@ module Contabilidad
       @second_from_date = beginning_of_fortnight(second_fortnight).to_date
       @second_to_date = end_of_fortnight(second_fortnight).to_date
 
-
       respond_to do |format|
         format.html # index.html.erb
       end
+    end
+
+    private
+
+    def from_date(params, yearly=false)
+      return Date.parse(params[:start]) if params[:start]
+      return Date.today.at_beginning_of_year if yearly
+
+      Date.today.at_beginning_of_month
+    end
+
+    def to_date(params)
+      return Date.parse(params[:end]) if params[:end]
+
+      Date.today
     end
   end
 end

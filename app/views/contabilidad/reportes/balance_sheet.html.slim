@@ -3,10 +3,11 @@ h1.pull-left Hoja de Balance
 .clearfix
 
 = form_tag({action: 'balance_sheet'}, {method: :get, class: 'form-inline'}) do
-  .form-group
-    = label_tag :date, nil, class: 'sr-only'
-    = text_field_tag :date, @to_date, class: 'datepicker form-control mx-sm-3'
-    button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+  .input-daterange.input-group#datepicker
+    = text_field_tag :start, @from_date, class: 'form-control'
+    span.input-group-addon< a
+    = text_field_tag :end, @to_date, class: 'form-control'
+  button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
 
 br
 

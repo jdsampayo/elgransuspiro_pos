@@ -3,13 +3,11 @@ h1.pull-left Estado de Resultados
 .clearfix
 
 = form_tag({action: 'income_statement'}, {method: :get, class: 'form-inline'}) do
-  .form-group
-    = label_tag :from_date, nil, class: 'sr-only'
-    = text_field_tag :from_date, @from_date, class: 'datepicker form-control', placeholder: "Fecha"
-  .form-group
-    = label_tag :to_date, nil, class: 'sr-only'
-    = text_field_tag :to_date, @to_date, class: 'datepicker form-control mx-sm-3'
-    button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+  .input-daterange.input-group#datepicker
+    = text_field_tag :start, @from_date, class: 'form-control'
+    span.input-group-addon< a
+    = text_field_tag :end, @to_date, class: 'form-control'
+  button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
 
 br
 

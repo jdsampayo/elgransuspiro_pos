@@ -16,11 +16,11 @@ table
       th Cargo (debit)
       th Abono (credit)
       th Balance
-  - @accounts.each do |account|
-    tr class=plutus_to_tr(account.type)
-      td= account.name
+  - @accounts.order(:name).each do |account|
+    tr
+      td class=plutus_to_tr(account.type)
+        = account.name
       td= number_with_precision(account.debits_balance, precision: 2)
       td= number_with_precision(account.credits_balance, precision: 2)
-      td= number_with_precision(account.balance, precision: 2)
-
-h5 Equilibrio: #{number_with_precision(Plutus::Account.trial_balance, precision: 2)}
+      td class=plutus_to_tr(account.type)
+        = number_with_precision(account.balance, precision: 2)

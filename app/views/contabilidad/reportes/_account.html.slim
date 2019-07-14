@@ -12,11 +12,12 @@ table
 
       - accounts.each do |account|
         - balance = account.balance(from_date: @from_date, to_date: @to_date)
-        tr
-          td=account.name
-          td=balance.round(2)
-          - running_total += balance
-          td=running_total.round(2)
+        - if balance > 0
+          tr
+            td=account.name
+            td=balance.round(2)
+            - running_total += balance
+            td=running_total.round(2)
 
       tr class=plutus_to_tr(account_type)
         td Gran Total

@@ -1,26 +1,33 @@
 h1.float-left Libro Diario
-.float-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-info"
+.float-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-primary"
 
 .clearfix
 
-= form_tag({action: 'index'}, {method: :get, class: 'form-inline'}) do
-  .form-group.mt-3
-    label for='limit' Por página
-    = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control mx-sm-3'
-  .form-group.mt-3
-    label for='order' Orden
-    = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control mx-sm-3'
-  .form-group.mt-3
-    label for='description' Descripción contiene
-    = text_field_tag :description, params[:description], class: 'form-control mx-sm-3'
-  .form-group.mt-3
-    label for='debit_account_id' Cargo (debit)
-    = select_tag :debit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:debit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
-  .form-group.mt-3
-    label for='credit_account_id' Abono (credit)
-    = select_tag :credit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:credit_account_id]), include_blank: true, class: 'form-control mx-sm-3'
-  .form-group.mt-3
-    button.btn.btn-primary.mx-sm-3 type="submit" Refrescar
+= form_tag( { action: 'index' }, { method: :get } ) do
+  .form-row
+    .form-group.col-6
+      label for='description' Descripción contiene
+      = text_field_tag :description, params[:description], class: 'form-control'
+    .form-group.col-3
+      label for='debit_account_id' Cargo (debit)
+      = select_tag :debit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:debit_account_id]), include_blank: true, class: 'form-control'
+    .form-group.col-3
+      label for='credit_account_id' Abono (credit)
+      = select_tag :credit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:credit_account_id]), include_blank: true, class: 'form-control'
+  .form-row.align-items-end
+    .col-sm-3.my-1
+      label for='limit' Por página
+      = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control'
+    .col-sm-3.my-1
+      label for='order' Orden
+      = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control'
+    .col-sm-3.my-1
+      .input-daterange.input-group#datepicker
+        = text_field_tag :start, @from_date, class: 'form-control'
+        span.input-group-addon< a
+        = text_field_tag :end, @to_date, class: 'form-control'
+    .col-auto.my-1
+      button.btn.btn-primary type="submit" Buscar
 
 br
 
@@ -31,43 +38,43 @@ br
 br
 br
 
-table
+table.table-sm
   thead
     tr
+      th width=100 Fecha
       th Descripción
       th width=100 Cargo
       th width=100 Abono
-      th width=100 Fecha
       th width=30
 
-  - @entries.each do |entry|
-    tr.table-dark
+  - @entries.each_with_index do |entry, index|
+    tr data-toggle='collapse' id="entry_#{entry.id.last(8)}" data-target=".entry_#{entry.id.last(8)}collapsed" style=(index % 2 == 0 ? 'background-color: rgba(0, 0, 0, 0.05)' : 'background-color: rgba(0, 0, 0, 0)')
+      td =l entry.date
       td=entry.description
       td colspan=2
         .text-center
           =number_with_precision(entry.debit_amounts.map(&:amount).sum, precision: 2)
-      td =l entry.date
       td.actions
         = link_to contabilidad_entrada_path(entry.id), data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
           i.fas.fa-trash
 
       - entry.debit_amounts.each do |debit_amount|
-        tr class=plutus_to_tr(debit_amount&.account&.type)
+        tr class="#{plutus_to_tr(debit_amount&.account&.type)} collapse out entry_#{entry.id.last(8)}collapsed"
+          td
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;
             =debit_amount&.account&.name || "Desconocido"
           td=number_with_precision(debit_amount&.amount, precision: 2)
           td
           td
-          td
       - entry.credit_amounts.each do |credit_amount|
-        tr class=plutus_to_tr(credit_amount&.account&.type)
+        tr class="#{plutus_to_tr(credit_amount&.account&.type)} collapse out entry_#{entry.id.last(8)}collapsed"
+          td
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             =credit_amount&.account&.name || "Desconocido"
           td
           td=number_with_precision(credit_amount&.amount, precision: 2)
-          td
           td
 
 = paginate @entries, theme: 'twitter-bootstrap-4'
