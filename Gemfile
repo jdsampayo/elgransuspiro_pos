@@ -71,7 +71,7 @@ gem 'escper'
 gem 'rmagick', require: false
 
 # Auth
-gem 'authlogic'
+gem 'authlogic', '~> 4.4.3'
 gem 'bcrypt', '~> 3.1.13'
 gem 'cancancan', '~> 3.0'
 gem 'scrypt', '3.0.6'

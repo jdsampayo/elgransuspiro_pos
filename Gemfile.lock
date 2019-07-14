@@ -63,10 +63,9 @@ GEM
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
-    authlogic (5.0.2)
-      activemodel (>= 5.2, < 6.1)
-      activerecord (>= 5.2, < 6.1)
-      activesupport (>= 5.2, < 6.1)
+    authlogic (4.4.3)
+      activerecord (>= 4.2, < 5.3)
+      activesupport (>= 4.2, < 5.3)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
     auto_strip_attributes (2.5.0)
@@ -337,7 +336,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   annotate
-  authlogic
+  authlogic (~> 4.4.3)
   auto_strip_attributes (~> 2.5)
   bcrypt (~> 3.1.13)
   bootstrap (~> 4.3.1)
