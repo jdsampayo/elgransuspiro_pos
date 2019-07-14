@@ -8,54 +8,54 @@ h1
       tbody
         tr.table-dark
           td colspan=3 Corte
-        tr.table-success
-          td.text-right width=200
+        tr
+          td.table-primary.text-right width=200
             strong Inicial:
           td width=50
             =@corte.inicial
           td
-        tr.table-success
-          td.text-right
+        tr
+          td.table-primary.text-right
             strong
               | (+) Ventas:
           td=@corte.ventas
           td
             .small
               | Sólo se contabilizan comandas cerradas
-        tr.table-success
-          td.text-right
+        tr
+          td.table-primary.text-right
             strong
               | Subtotal:
           td=@corte.inicial + @corte.ventas
           td
-        tr.table-danger
-          td.text-right
+        tr
+          td.table-warning.text-right
             strong
               | (-) Pagos con Tarjeta:
           td=@corte.pagos_con_tarjeta
           td
             .small
               | No es dinero en caja chica
-        tr.table-danger
-          td.text-right
+        tr
+          td.table-warning.text-right
             strong
               | (-) Gastos:
           td=@corte.gastos
           td
-        tr.table-info
-          td.text-right
+        tr
+          td.table-success.text-right
             strong<
               | (=) Caja Chica:
           td=@caja
           td
-        tr.table-danger
-          td.text-right
+        tr
+          td.table-warning.text-right
             strong
             | (-) Siguiente día:
           td=@corte.siguiente_dia
           td
-        tr.table-info
-          td.text-right
+        tr
+          td.table-success.text-right
             strong<
               | (=) Caja Fuerte:
           td=@corte.sobre
