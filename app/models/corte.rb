@@ -156,7 +156,7 @@ class Corte < ApplicationRecord
     Corte.find_by(dia: (Time.current - 3.hours).to_date)
   end
 
-  def self.de_la_semana(inicio, campo)
+  def self.de_la_semana(inicio, campo=:ventas)
     fecha_inicio = inicio.beginning_of_week
 
     semana = []

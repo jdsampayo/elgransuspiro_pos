@@ -28,36 +28,28 @@ class CortesController < ApplicationController
   def index
     @cortes = Corte.order(dia: :desc).page params[:page]
 
-    @semana_actual = [
+    date = Date.today.beginning_of_week
+
+    @semanal = [
       {
-        name: "Ventas",
-        data: Corte.de_la_semana(Date.today, :ventas)
-      },
-      {
-        name: "Gastos",
-        data: Corte.de_la_semana(Date.today, :gastos)
-      }
-    ]
-    @semana_anterior = [
-      {
-        name: "Ventas",
-        data: Corte.de_la_semana(1.week.ago, :ventas)
-      },
-      {
-        name: "Gastos",
-        data: Corte.de_la_semana(1.week.ago, :gastos)
+        name: "Semana actual",
+        data: Corte.de_la_semana(date)
       }
     ]
 
-    por_semana_query = Corte.group_by_week(:dia, time_zone: false)
+    (1..9).each do |index|
+      @semanal <<
+        {
+          name: "Semana -#{index}",
+          data: Corte.de_la_semana(date - index.week)
+        }
+    end
+
+    por_semana_query = Corte.group_by_week(:dia, last: 10)
     @por_semana = [
       {
         name: "Ventas",
         data: por_semana_query.sum(:ventas)
-      },
-      {
-        name: "Gastos",
-        data: por_semana_query.sum(:gastos)
       }
     ]
   end
