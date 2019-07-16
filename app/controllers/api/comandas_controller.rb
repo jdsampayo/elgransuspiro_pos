@@ -1,4 +1,5 @@
 class Api::ComandasController < Api::ApiController
+  before_action :check_age
 
   # POST /api/comandas
   def create
@@ -90,6 +91,17 @@ class Api::ComandasController < Api::ApiController
   end
 
   private
+
+  def check_age
+    created_at = comanda_params['created_at']
+
+    if Time.parse(created_at) < 1.month.ago
+      render json: { message: "Too old: #{created_at}" }, status: :created
+    end
+
+    true
+  end
+
   def comanda_params
     @comanda_params ||= PrettyApi.with_nested_attributes(
       pretty_comanda_params,
