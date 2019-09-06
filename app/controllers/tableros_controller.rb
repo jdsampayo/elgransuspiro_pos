@@ -18,6 +18,6 @@ class TablerosController < ApplicationController
     @total_de_ventas = @comandas.sum(:total)
     @cheque_promedio = @total_de_ventas / @comandas.sum(:comensales)
 
-    @gastos_por_dia = Gasto.group_by_day(:created_at, time_zone: false).sum(:monto)
+    @gastos_por_dia = Gasto.where(created_at: 3.months.ago..1.day.ago).group_by_day(:created_at, time_zone: false).sum(:monto)
   end
 end
