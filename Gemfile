@@ -10,7 +10,7 @@ end
 gem 'rails-erd', require: false, group: :development
 
 gem 'coffee-rails', '~> 5.0'
-gem 'dotenv-rails', '~> 2.7.4', require: 'dotenv/rails-now'
+gem 'dotenv-rails', '~> 2.7.5', require: 'dotenv/rails-now'
 gem 'http'
 gem 'jbuilder', '~> 2.9'
 gem 'pg', '>= 0.18', '< 2.0'
