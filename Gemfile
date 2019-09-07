@@ -26,6 +26,7 @@ group :development, :test do
   gem 'capybara', '~> 3.29'
   gem 'pry'
   gem 'selenium-webdriver'
+  gem 'factory_bot_rails'
 end
 
 group :development do

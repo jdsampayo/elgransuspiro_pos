@@ -22,15 +22,15 @@ class Asistencia < ApplicationRecord
   before_create :checar_retardo
   before_update :calcular_horas
 
-  scope :activas, -> {
+  scope :activas, lambda {
     where(horas: nil).where(falta: false)
   }
 
   ENTRADA_HORARIOS = {
     matutino: 7,
     vespertino: 15,
-    intermedio: 17
-  }
+    intermedio: 19
+  }.freeze
 
   def calcular_horas
     self.horas = ((hora_salida - hora_entrada) / 1.hour).to_i if hora_salida
@@ -52,7 +52,7 @@ class Asistencia < ApplicationRecord
       self.retardo = true
     end
 
-    self.retardo
+    retardo
   end
 
   def obtener_entrada_mas_cercana(hora_actual)
@@ -60,7 +60,7 @@ class Asistencia < ApplicationRecord
       { key => (value - hora_actual).abs }
     end.reduce(:merge)
 
-    ordenados = Hash[valores_absolutos.sort_by {|k, v| v}]
+    ordenados = Hash[valores_absolutos.sort_by { |_, v| v }]
 
     ENTRADA_HORARIOS[ordenados.first.first]
   end
@@ -70,7 +70,7 @@ class Asistencia < ApplicationRecord
   end
 
   def self.meseros_del_dia
-    meseros_registrados = Asistencia.where(corte: Corte.actual).pluck(:mesero_id)
-    Mesero.where.not(id: meseros_registrados)
+    registrados = Asistencia.where(corte: Corte.actual).pluck(:mesero_id)
+    Mesero.where.not(id: registrados)
   end
 end

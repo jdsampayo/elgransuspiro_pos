@@ -28,32 +28,32 @@ class Usuario < ActiveRecord::Base
   validates_presence_of :email, :password, :password_confirmation
 
   validates :email,
-    format: {
-      with: EMAIL,
-      message: proc {
-        ::Authlogic::I18n.t(
-          "error_messages.email_invalid",
-          default: "should look like an email address."
-        )
-      }
-    },
-    length: { maximum: 100 },
-    uniqueness: {
-      case_sensitive: false,
-      if: :will_save_change_to_email?
-    }
+            format: {
+              with: EMAIL,
+              message: proc {
+                ::Authlogic::I18n.t(
+                  'error_messages.email_invalid',
+                  default: 'should look like an email address.'
+                )
+              }
+            },
+            length: { maximum: 100 },
+            uniqueness: {
+              case_sensitive: false,
+              if: :will_save_change_to_email?
+            }
 
   validates :password,
-    confirmation: { if: :require_password? },
-    length: {
-      minimum: 8,
-      if: :require_password?
-    }
+            confirmation: { if: :require_password? },
+            length: {
+              minimum: 8,
+              if: :require_password?
+            }
   validates :password_confirmation,
-    length: {
-      minimum: 8,
-      if: :require_password?
-  }
+            length: {
+              minimum: 8,
+              if: :require_password?
+            }
 
   def to_s
     email

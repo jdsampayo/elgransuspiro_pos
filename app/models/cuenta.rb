@@ -75,7 +75,7 @@ class Cuenta
     'Uniformes' => 'Uniformes',
     'Uncategorized Expense' => 'Egreso sin Categorizar',
     'Payroll - Employee Expenses Paid' => 'Egreso sin Categorizar',
-    'Payroll – Employee Benefits' => 'Egreso sin Categorizar',
+    'Payroll - Employee Benefits' => 'Egreso sin Categorizar',
     'Productos de Limpieza' => 'Reparaciones y Mantenimiento',
     'Panadería' => 'Panadería',
     'Café en grano' => 'Venta a Granel',
