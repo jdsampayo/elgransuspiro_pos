@@ -69,7 +69,7 @@ gem 'escper'
 gem 'rmagick', require: false
 
 # Auth
-gem 'authlogic', '~> 5.0.2'
+gem 'authlogic', '~> 5.0.4'
 gem 'bcrypt', '~> 3.1.13'
 gem 'cancancan', '~> 3.0'
 gem 'scrypt', '3.0.6'
