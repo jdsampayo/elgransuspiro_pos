@@ -18,4 +18,8 @@ class Conteo < ApplicationRecord
   has_many :cortes
 
   acts_as_paranoid
+
+  def self.de_articulos
+    group(:articulo_id).order('sum_total DESC').limit(10).sum(:total)
+  end
 end

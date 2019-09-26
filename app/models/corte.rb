@@ -32,6 +32,10 @@ class Corte < ApplicationRecord
   end
 
   validates :dia, uniqueness: true
+  validates :siguiente_dia, numericality: { greater_than: 0 }, on: :update
+  validates :sobre, numericality: { greater_than: 0 }, on: :update
+
+  default_scope { order(created_at: :asc) }
 
   acts_as_paranoid
 

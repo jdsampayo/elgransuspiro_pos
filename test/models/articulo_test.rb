@@ -14,7 +14,18 @@
 require 'test_helper'
 
 class ArticuloTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'articulo should include desechable ids when is serialized' do
+    articulo = create(:articulo)
+    articulo.desechables << create(:desechable, :tapa)
+    articulo.desechables << create(:desechable, :vaso)
+    articulo.save
+
+    desechables = articulo.desechables
+
+    assert_not_empty(desechables)
+    assert_equal(
+      JSON.parse(articulo.to_sync_json)['articulo']['desechable_ids'],
+      desechables.pluck(:id)
+    )
+  end
 end

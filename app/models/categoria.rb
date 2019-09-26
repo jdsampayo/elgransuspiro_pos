@@ -12,7 +12,7 @@
 class Categoria < ApplicationRecord
   has_many :articulos
 
-  default_scope { order(:nombre) }
+  default_scope { order(Arel.sql('LOWER(nombre)')) }
 
   acts_as_paranoid
 

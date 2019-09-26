@@ -1,10 +1,13 @@
+- readonly = @gastos.first&.corte&.cerrado?
+
 table
   thead
     tr
       th Día
       th Monto
       th width=400 Descripción
-      th Acciones
+      - unless readonly
+        th Acciones
 
   tbody
     - @gastos.each do |gasto|
@@ -13,7 +16,7 @@ table
         td = gasto.monto
         td
           small= gasto.descripcion
-        -unless gasto.corte.cerrado?
+        - unless readonly
           td.actions
             -unless matriz?
               = link_to edit_gasto_path(gasto), class: "btn btn-info btn-sm" do
@@ -25,4 +28,5 @@ table
         td Total del día
         td = @gastos.sum(:monto)
         td
-        td
+        - unless readonly
+          td

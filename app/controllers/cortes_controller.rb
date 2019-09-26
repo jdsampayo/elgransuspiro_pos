@@ -45,7 +45,7 @@ class CortesController < ApplicationController
         }
     end
 
-    por_semana_query = Corte.group_by_week(:dia, last: 10)
+    por_semana_query = Corte.unscoped.group_by_week(:dia, last: 10)
     @por_semana = [
       {
         name: "Ventas",
