@@ -61,7 +61,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'kaminari'
 gem 'ransack', '~> 2.3.0'
-gem 'simple_form', '~> 4.1.0'
+gem 'simple_form', '~> 5.0.0'
 gem 'slim-rails'
 gem 'timecop'
 
