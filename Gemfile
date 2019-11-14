@@ -73,7 +73,7 @@ gem 'rmagick', require: false
 gem 'authlogic', '~> 5.0.4'
 gem 'bcrypt', '~> 3.1.13'
 gem 'cancancan', '~> 3.0'
-gem 'scrypt', '3.0.6'
+gem 'scrypt', '3.0.7'
 
 # Production
 gem 'unicorn'
