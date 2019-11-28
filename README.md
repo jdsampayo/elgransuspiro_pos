@@ -1,5 +1,9 @@
 # README
 
+Calculates the amount owed by the customer, indicates that amount, prepare an invoice for the customer (which may be printed), and indicates the options to make payment.
+
+
+
 ## TODO
 history
 income per day
