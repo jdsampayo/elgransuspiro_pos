@@ -6,76 +6,58 @@ h1
   .col-md-12
     table
       tbody
-        tr.table-dark
-          td colspan=3 Corte
         tr
-          td.table-primary.text-right width=200
+          td.text-right width=200
             strong Inicial:
           td width=50
             =@corte.inicial
-          td
+          td width=20
+          td Dinero inicial
         tr
-          td.table-primary.text-right
-            strong
-              | (+) Ventas:
+          td.text-right
+            =link_to 'Ventas:', corte_comandas_path(@corte)
           td=@corte.ventas
           td
-            .small
-              | Sólo se contabilizan comandas cerradas
+            | +
+          td Total de comandas cerradas
         tr
-          td.table-primary.text-right
-            strong
-              | Subtotal:
-          td=@corte.inicial + @corte.ventas
-          td
-        tr
-          td.table-warning.text-right
-            strong
-              | (-) Pagos con Tarjeta:
+          td.text-right
+            strong Pagos con Tarjeta:
           td=@corte.pagos_con_tarjeta
           td
-            .small
-              | No es dinero en caja chica
+            | -
+          td No es dinero en caja chica
         tr
-          td.table-warning.text-right
-            strong
-              | (-) Gastos:
-          td=@corte.gastos
+          td.text-right
+            =link_to 'Gastos:', corte_gastos_path(@corte)
+          td=@corte.sum_gastos
           td
+            | -
+          td Gastos de caja
         tr
-          td.table-success.text-right
-            strong<
-              | (=) Caja Chica:
+          td.text-right
+            strong Caja Chica:
           td=@caja
           td
+            | =
+          td Dinero en caja
         tr
-          td.table-warning.text-right
-            strong
-            | (-) Siguiente día:
+          td.text-right
+            strong Siguiente día:
           td=@corte.siguiente_dia
           td
+            | -
+          td Dinero dejado para el siguiente día
         tr
-          td.table-success.text-right
-            strong<
-              | (=) Caja Fuerte:
+          td.text-right
+            strong Caja Fuerte:
           td=@corte.sobre
           td
+            | =
+          td Dinero retirado
         tr
           td.text-right
             strong Total de Propinas:
           td=@propinas
           td
-
-
-h2 Comandas
-
-=render partial: "comandas/table", locals: { comandas: @comandas }
-
-h2 Gastos
-
-=render "gastos/table"
-
-= link_to 'Regresar', cortes_path, class: "btn btn-primary"
-
-br
-br
+          td

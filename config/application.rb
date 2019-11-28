@@ -25,6 +25,7 @@ module ElgransuspiroPos
 
     config.active_job.queue_adapter = :sidekiq
 
+
     config.x.sucursal = ENV['SUCURSAL']
     config.x.matriz_base_url = ENV['MATRIZ_BASE_URL']
     # Settings in config/environments/* take precedence over those specified here.

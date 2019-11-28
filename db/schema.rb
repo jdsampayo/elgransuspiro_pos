@@ -2,20 +2,40 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_26_025632) do
+ActiveRecord::Schema.define(version: 2019_11_21_024947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "record_id", null: false
+    t.string "record_type", null: false
+    t.uuid "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "articulos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "nombre"
@@ -40,8 +60,8 @@ ActiveRecord::Schema.define(version: 2018_06_26_025632) do
     t.uuid "corte_id"
     t.bigint "horas"
     t.bigint "horas_extra"
-    t.boolean "retardo"
-    t.boolean "falta"
+    t.boolean "retardo", default: false, null: false
+    t.boolean "falta", default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "hora_entrada"
@@ -92,7 +112,7 @@ ActiveRecord::Schema.define(version: 2018_06_26_025632) do
     t.date "dia"
     t.decimal "inicial", default: "0.0"
     t.decimal "ventas", default: "0.0"
-    t.decimal "gastos", default: "0.0"
+    t.decimal "sum_gastos", default: "0.0"
     t.decimal "total", default: "0.0"
     t.decimal "siguiente_dia", default: "0.0"
     t.decimal "sobre", default: "0.0"
@@ -151,7 +171,7 @@ ActiveRecord::Schema.define(version: 2018_06_26_025632) do
 
   create_table "insumos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "nombre"
-    t.integer "cantidad_actual"
+    t.integer "cantidad_actual", default: 0
     t.string "unidad"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -169,7 +189,7 @@ ActiveRecord::Schema.define(version: 2018_06_26_025632) do
   create_table "ordenes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "articulo_id"
     t.uuid "comanda_id"
-    t.bigint "cantidad"
+    t.bigint "cantidad", default: 1
     t.decimal "precio_unitario", default: "0.0"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -229,6 +249,7 @@ ActiveRecord::Schema.define(version: 2018_06_26_025632) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "asistencias", "cortes", name: "asistencias_corte_id_fkey"
   add_foreign_key "asistencias", "meseros", name: "asistencias_mesero_id_fkey"
   add_foreign_key "conteos", "articulos", name: "conteos_articulo_id_fkey"

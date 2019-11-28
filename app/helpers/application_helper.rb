@@ -15,4 +15,21 @@ module ApplicationHelper
   def plutus_to_tr(account_type)
     "table-#{Cuenta::COLORS[account_type]}"
   end
+
+  def trash_icon
+    "<i class='fas fa-trash'></i>".html_safe
+  end
+
+  def plus_icon
+    "<i class='fas fa-plus'></i>".html_safe
+  end
+
+  def menu_link(title, path)
+    active_link_to(title, path, class: 'nav-item nav-link')
+  end
+
+  def submenu_link(title, path)
+    active_link_to(title, path, class: 'dropdown-item')
+  end
+
 end

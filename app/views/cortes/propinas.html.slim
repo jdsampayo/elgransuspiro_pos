@@ -1,22 +1,6 @@
 h1 Propinas
 
-.row
-  .col-md-6
-    h5 Diarias - Semana anterior
-    = column_chart @semana_anterior
-
-  .col-md-6
-    h5 Diarias - Semana actual
-    = column_chart @semana_actual
-
-.row
-  .col-md-12
-    h5 Totales semanales
-    = column_chart @por_semana
-
 section
-  h2 Detalle
-
   table
     thead
       tr

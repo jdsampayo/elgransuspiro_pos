@@ -70,7 +70,7 @@ class CortesController < ApplicationController
       }
     ]
 
-    por_semana_query = Corte.group_by_week(:dia, time_zone: false)
+    por_semana_query = Corte.unscoped.group_by_week(:dia, time_zone: false)
     @por_semana = [
       {
         name: "Propinas",
@@ -90,7 +90,7 @@ class CortesController < ApplicationController
     @total_comandas_cerradas = @comandas.cerradas.sum(:total)
     @total_con_tarjeta = @con_tarjeta.cerradas.sum(:total)
 
-    @total_de_gastos = @corte.gastos
+    @total_de_gastos = @corte.sum_gastos
 
     @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta - @total_de_gastos
 

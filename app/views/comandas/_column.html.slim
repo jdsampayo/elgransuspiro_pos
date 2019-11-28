@@ -29,18 +29,18 @@ tr class=(comanda.id == @id ? "item-highlight" : "")
   -if comanda.abierta?
     td.actions
       -unless matriz?
-        = link_to edit_comanda_path(comanda), class: "btn btn-primary", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Editar" do
-          i.fas.fa-pencil-alt.fa-fw
-        = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Imprimir" do
-          i.fas.fa-print.fa-fw
-        = link_to pay_comanda_path(comanda), class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Pagar" do
-          i.fas.fa-dollar-sign.fa-fw
+        = link_to edit_comanda_path(comanda), class: "btn btn-outline-primary", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Editar" do
+          =icon('fas', 'pencil-alt')
+        = link_to print_comanda_path(comanda), method: :post, class: "btn btn-outline-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Imprimir" do
+          =icon('fas', 'receipt')
+        = link_to pay_comanda_path(comanda), class: "btn btn-outline-success", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Pagar" do
+          =icon('fas', 'hand-holding-usd')
   -else
     td.actions
-      button.btn.btn-secondary.btn-disabled
+      button.btn.btn-outline-secondary.btn-disabled
         i.fas.fa-lock.fa-fw data-toggle="tooltip" data-placement="left" title="Comanda cerrada"
       -unless matriz?
-        = link_to print_comanda_path(comanda), method: :post, class: "btn btn-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Reimprimir" do
+        = link_to print_comanda_path(comanda), method: :post, class: "btn btn-outline-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Reimprimir" do
           i.fas.fa-print.fa-fw
-        = link_to switch_comanda_path(comanda), method: :post, class: "btn btn-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
+        = link_to switch_comanda_path(comanda), method: :post, class: "btn btn-outline-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
           i.fas.fa-sync.fa-fw

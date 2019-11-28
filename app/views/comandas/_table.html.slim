@@ -3,29 +3,18 @@
 - else
   table
     thead
-      tr
-        th
-          i.fas.fa-sticky-note
-        th
-          i.fas.fa-id-card-alt
-        th
-          i.fas.fa-users
-        th width=50
-          i.fas.fa-hourglass-start
-        th width=50
-          i.fas.fa-hourglass-end
-        th width=50
-          i.fas.fa-clock
-        th width=400 colspan=2
-          i.fas.fa-shopping-cart
-        th
-          i.fas.fa-dollar-sign
-        th
-          i.fas.fa-hand-holding-usd
-        th
-          i.fas.fa-inbox
-        th width=200
-          i.fas.fa-cog
+      tr.text-center
+        th(data-toggle='tooltip' data-placement='top' title='Mesa')=icon('fas', 'chair')
+        th(data-toggle='tooltip' data-placement='top' title='Mesero')=icon('fas', 'id-card-alt')
+        th(data-toggle='tooltip' data-placement='top' title='Comensales')=icon('fas', 'users')
+        th(data-toggle='tooltip' data-placement='top' title='Hora de Llegada' width=50)=icon('fas', 'hourglass-start')
+        th(data-toggle='tooltip' data-placement='top' title='Hora de Salida' width=50)=icon('fas', 'hourglass-end')
+        th(data-toggle='tooltip' data-placement='top' title='Tiempo' width=50)=icon('fas', 'clock')
+        th(data-toggle='tooltip' data-placement='top' title='Orden' width=400 colspan=2)=icon('fas', 'shopping-cart')
+        th(data-toggle='tooltip' data-placement='top' title='Venta')=icon('fas', 'dollar-sign')
+        th(data-toggle='tooltip' data-placement='top' title='Propina')=icon('fas', 'donate')
+        th(data-toggle='tooltip' data-placement='top' title='Pago')=icon('fas', 'inbox')
+        th(data-toggle='tooltip' data-placement='top' title='Acciones' width=200)=icon('fas', 'cog')
 
     -if matriz?
       tbody
@@ -37,6 +26,5 @@
         - comandas.abiertas.each do |comanda|
           = render partial: "comandas/column", locals: { comanda: comanda }
 
-      tbody class="table-success"
         - comandas.cerradas.each do |comanda|
           = render partial: "comandas/column", locals: { comanda: comanda }

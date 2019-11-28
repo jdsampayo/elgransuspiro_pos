@@ -7,10 +7,10 @@ h1.float-left Asistencias
 
 = search_form_for @q, wrapper: :inline_form, html: { method: :get, class: 'form-inline' } do |f|
   .form-inputs
-    = f.input :mesero_id_in, collection: Mesero.all, wrapper: false, include_blank: "Persona"
+    = f.input :mesero_id_in, collection: Mesero.order(:nombre), wrapper: false, include_blank: "Persona"
     = f.input :corte_dia_in, input_html: { class: 'datepicker' }, wrapper: false, placeholder: "Día"
   .form-actions
-    = f.button :submit, 'Buscar', class: 'btn btn-primary'
+    = f.button :button, icon('fas', 'search').html_safe, class: 'btn btn-primary'
 
 br
 
@@ -24,19 +24,17 @@ br
         th Salida
         th Horas
         th Retardo
-        th Falta
         th
 
     tbody
       - @asistencias.each do |asistencia|
-        tr class="#{asistencia.retardo ? "table-warning" : ""}"
+        tr
           td = l asistencia.corte.dia if asistencia.corte
           td = asistencia.mesero
           td = asistencia.hora_entrada&.strftime('%H:%M')
           td = asistencia.hora_salida&.strftime('%H:%M') unless asistencia.horas.blank?
           td = asistencia.horas
           td = asistencia.retardo ? 'Si' : 'No'
-          td = asistencia.falta ? 'Si' : 'No'
           td
             -unless matriz?
               = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success btn-sm" if asistencia.puede_salir?

@@ -69,7 +69,7 @@ class Asistencia < ApplicationRecord
     horas.blank? && !falta
   end
 
-  def self.meseros_del_dia
+  def self.meseros_del_dia_por_asistir
     registrados = Asistencia.where(corte: Corte.actual).pluck(:mesero_id)
     Mesero.where.not(id: registrados)
   end

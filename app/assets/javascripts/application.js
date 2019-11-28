@@ -14,13 +14,17 @@
 //= require turbolinks
 //= require tether
 //= require jquery3
+//= require sifter
+//= require microplugin
 //= require selectize
 //= require popper
 //= require bootstrap
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require bootstrap-input-spinner
 //= require cocoon
 //= require Chart.bundle
 //= require chartkick
 //= require data-confirm-modal
+//= require image-picker
 //= require_tree .

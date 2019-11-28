@@ -18,8 +18,8 @@
 class AsistenciasController < ApplicationController
   load_and_authorize_resource
 
+  before_action :set_corte, only: [:index, :show, :new, :create]
   before_action :set_asistencia, only: [:show, :edit, :update, :destroy]
-  before_action :requiere_corte_actual, only: [:new, :edit]
 
   # GET /asistencias
   def index
@@ -34,7 +34,7 @@ class AsistenciasController < ApplicationController
   # GET /asistencias/new
   def new
     @asistencia = Asistencia.new
-    @asistencia.corte = Corte.actual
+    @asistencia.corte = @corte
   end
 
   # GET /asistencias/1/edit
@@ -62,7 +62,7 @@ class AsistenciasController < ApplicationController
     if @asistencia.update(asistencia_params)
       @asistencia.syncronize_update
 
-      redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!."
+      redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!"
     else
       render :edit
     end
@@ -78,6 +78,10 @@ class AsistenciasController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_corte
+      @corte = current_corte
+    end
+
     def set_asistencia
       @asistencia = Asistencia.find(params[:id])
     end

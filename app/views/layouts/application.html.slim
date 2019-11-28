@@ -10,18 +10,20 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+    nav.navbar.navbar-expand-lg.navbar-dark.fixed-top
       button.navbar-toggler.navbar-toggler-right data-target="#navbar-admin" data-toggle="collapse" type="button" aria-controls="navbarNav" aria-expanded="false"
         span.navbar-toggler-icon
-      a.navbar-brand href="/" El Gran Suspiro
+      a.navbar-brand href="/"
+        ="#{icon('fab', 'evernote')} El Gran Suspiro".html_safe
 
       - if matriz?
-        =render 'layouts/menu_matriz'
+        =render 'layouts/menu_admin'
       - else
         =render 'layouts/menu_pos'
 
-    .container-fluid
+    .toast-container.position-absolute.w-100.d-flex.flex-column.p-4
       - flash.each do |type, content|
         = render 'partials/flash', type: type, content: content
 
+    .container-fluid
       = yield

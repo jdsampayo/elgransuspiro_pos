@@ -1,7 +1,7 @@
 class TablerosController < ApplicationController
   load_and_authorize_resource class: false
 
-  before_action :requiere_corte_actual, only: [:index]
+  before_action :set_corte, only: [:index]
 
   def index
     @total_de_articulos = Articulo.all.count
@@ -28,4 +28,9 @@ class TablerosController < ApplicationController
       created_at: 3.months.ago..1.day.ago
     ).group_by_day(:created_at, time_zone: false).sum(:monto)
   end
+
+  private
+    def set_corte
+      @corte = current_corte
+    end
 end
