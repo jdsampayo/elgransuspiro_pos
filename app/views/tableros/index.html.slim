@@ -1,7 +1,7 @@
 .container
   h1
     | Sucursal
-    small #{Rails.application.config.x.sucursal}
+    small.ml-3 #{Rails.application.config.x.sucursal}
 
   h2 Actualmente
 
@@ -13,7 +13,7 @@
             .col-sm-3
               i.fas.fa-users.fa-4x
             .col-sm-9.text-right
-              .huge=Corte.actual.asistencias.activas.count
+              .huge=@corte.asistencias.activas.count
               div Personas trabajando
         =link_to new_asistencia_path do
           .card-footer
@@ -28,7 +28,7 @@
             .col-sm-3
               i.fas.fa-tasks.fa-4x
             .col-sm-9.text-right
-              .huge=Corte.actual.comandas.abiertas.count
+              .huge=@corte.comandas.abiertas.count
               div Comandas abiertas
         =link_to comandas_path do
           .card-footer

@@ -3,7 +3,21 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "turbolinks:load", ->
-  $('form.simple_form select').selectize()
+  $('select.image-picker').imagepicker
+    show_label: true
+
+  if $('.toast').length
+    $('.toast-container').addClass('front-100')
+
+    $('.toast').on 'hidden.bs.toast', ->
+      $('.toast-container').removeClass('front-100')
+
+    $('.toast').toast('show')
+
+  $('[data-toggle="tooltip"]').tooltip()
+
+  $('form.simple_form select').not('.image-picker').selectize()
+  $("input[type='number']").not(':input[readonly]').inputSpinner()
 
   checkbox_selector = "#ordenes .nested-fields input.boolean"
 
@@ -25,4 +39,8 @@ $(document).on "turbolinks:load", ->
       if ($(checkbox_selector + ':checked').length > 0)
         $('#comanda_para_llevar').prop("indeterminate", true)
 
-  $('[data-toggle="tooltip"]').tooltip()
+
+  $('.simple_form').on 'cocoon:after-insert', (e, insertedItem, originalEvent) ->
+    $('select', insertedItem).not('.image-picker').selectize();
+    $("input[type='number']", insertedItem).inputSpinner();
+

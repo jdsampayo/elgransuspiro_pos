@@ -2,12 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :mesero, label: 'Persona', collection: Asistencia.meseros_del_dia
+    = f.association :mesero, label: 'Persona', collection: Asistencia.meseros_del_dia_por_asistir.order(:nombre).map{|mesero| [mesero.nombre, mesero.id, {data: {'img-src' => mesero.public_avatar_url}}]}, input_html: { class: 'image-picker' }
+
     = f.input :corte_id, as: :hidden
-    /= f.input :horas
-    /= f.input :horas_extra
-    /= f.input :retardo
-    = f.input :falta
 
   .form-actions
     = f.button :submit, "Guardar", class: "btn btn-primary"

@@ -13,11 +13,13 @@ Rails.application.routes.draw do
   resources :desechables
   resources :conteos
   resources :categorias
-  resources :gastos
   resources :cortes do
     collection do
       get :propinas
     end
+    resources :comandas
+    resources :gastos
+    resources :asistencias
   end
   resources :extras
   resources :ordenes
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
       patch :close
     end
   end
+  resources :gastos
   resources :meseros
   resources :articulos
   resources :cuentas
@@ -57,5 +60,5 @@ Rails.application.routes.draw do
     root 'contabilidad/cuentas#index'
   end
 
-  match '*a', to: 'errors#routing', via: [:get, :post]
+  #match '*a', to: 'errors#routing', via: [:get, :post]
 end

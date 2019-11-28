@@ -22,14 +22,13 @@
 class ComandasController < ApplicationController
   load_and_authorize_resource
 
+  before_action :set_corte, only: [:index, :show, :new, :create]
+  before_action :check_corte, only: [:new, :create]
   before_action :set_comanda, only: [:show, :edit, :update, :destroy, :pay, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
-  before_action :check_corte, only: [:new, :create]
-  before_action :requiere_corte_actual, only: [:index]
 
   # GET /comandas
   def index
-    @corte = Corte.actual
     @comandas = @corte.comandas.order(created_at: :desc)
     @gastos = Gasto.where(corte: @corte)
 
@@ -71,7 +70,7 @@ class ComandasController < ApplicationController
   # POST /comandas
   def create
     @comanda = Comanda.new(comanda_params)
-    @comanda.corte = Corte.actual
+    @comanda.corte = @corte
     @comanda.descuento ||= 0
     @comanda.set_totales
 
@@ -142,6 +141,10 @@ class ComandasController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def set_corte
+    @corte = current_corte
+  end
+
   def set_comanda
     @comanda = Comanda.find(params[:id])
   end
@@ -154,7 +157,7 @@ class ComandasController < ApplicationController
   end
 
   def check_corte
-    return if Corte.actual&.abierto?
+    return if @corte.abierto?
 
     message = '¡Imposible! El corte de este día ya está cerrado.'
     redirect_to comandas_path, notice: message

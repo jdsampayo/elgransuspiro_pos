@@ -16,7 +16,7 @@ class MeserosController < ApplicationController
 
   # GET /meseros
   def index
-    @meseros = Mesero.all
+    @meseros = Mesero.with_attached_avatar.order(:nombre)
   end
 
   # GET /meseros/1
@@ -71,6 +71,6 @@ class MeserosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mesero_params
-      params.require(:mesero).permit(:nombre)
+      params.require(:mesero).permit(:nombre, :avatar)
     end
 end

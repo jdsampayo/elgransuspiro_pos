@@ -1,28 +1,24 @@
-= simple_form_for(@comanda) do |f|
+= simple_form_for(@comanda, wrapper: :inline_form, class: 'form-inline') do |f|
   = f.error_notification
 
   .form-inputs
     .row
-      .col-md-3= f.input :mesa, as: :string
-      .col-md-3= f.input :comensales
-      .col-md-3
-        = f.association :mesero, collection: Corte.actual.meseros.activos
-        small
-          | ¡No aparezco!
-          =link_to "Agrégame", new_asistencia_url 
-      .col-md-3= f.input :porcentaje_de_descuento
+      .col-md-4= f.input :mesa, collection: Comanda::MESAS, placeholder: 'Mesa'
+      .col-md-4= f.input :comensales, placeholder: 'Comensales'
+      .col-md-4= f.association :mesero, collection: Corte.actual.meseros.activos, prompt: 'Mesero'
 
-  hr
+  br
 
-  h3 Orden
   #ordenes
     .row
       .col-md-8
         .row
           .col-md-2
-            label name="comanda_para_llevar"
-              input#comanda_para_llevar type="checkbox" indeterminate=true checked=true
-              strong Para Llevar
+            .custom-control.custom-checkbox
+              input.custom-control-input#comanda_para_llevar.mr-2 type="checkbox" indeterminate=true
+              label.custom-control-label for="comanda_para_llevar"
+                strong Para Llevar
+
           .col-md-2
             strong Cantidad
           .col-md-8
@@ -36,13 +32,12 @@
     = f.simple_fields_for :ordenes do |orden|
       = render 'orden_fields', f: orden
     .links
-      = link_to_add_association 'Agregar artículos', f, :ordenes
+      = link_to_add_association icon('fas', 'plus'), f, :ordenes, class: "btn btn-outline-primary btn-sm"
 
   br
-  br
-  
+
   .form-actions
-    = f.button :submit, class: "btn btn-primary"
+    = f.button :submit, class: "btn btn-success"
     span.or o
     = link_to 'cancelar', comandas_path
 

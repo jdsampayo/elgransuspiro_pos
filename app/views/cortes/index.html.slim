@@ -1,18 +1,16 @@
 h1 Cortes
 
-.row
+/.row
   .col-md-12
     h5 Diario - Semanal
     = column_chart @semanal
 
-.row
+/.row
   .col-md-12
     h5 Por Semana
     = column_chart @por_semana
 
 section
-  h2 Detalle
-
   .table-responsive-sm
     table
       thead
@@ -41,8 +39,8 @@ section
             td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
               = corte.ventas
             td= corte.pagos_con_tarjeta
-            td class=(corte.gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
-              = corte.gastos
+            td class=(corte.sum_gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
+              = corte.sum_gastos
             td = corte.caja_chica
             td = corte.siguiente_dia
             td = corte.sobre

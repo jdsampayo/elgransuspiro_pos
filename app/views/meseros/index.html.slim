@@ -1,21 +1,17 @@
-h1 Meseros
+h1.float-left Meseros
 
-table
-  thead
-    tr
-      th Nombre
-      th
-      th
-      th
+.float-right= link_to 'Nuevo Mesero', new_mesero_path
 
-  tbody
-    - @meseros.each do |mesero|
-      tr
-        td = mesero.nombre
-        td = link_to 'Mostrar', mesero
-        td = link_to 'Editar', edit_mesero_path(mesero)
-        td = link_to 'Eliminar', mesero, data: { confirm: '¿Estás seguro?' }, method: :delete
+.clearfix
 
-br
+.row
+  - @meseros.each do |mesero|
+    .col-sm-3
+      .card
+        - if mesero.avatar.attached?
+          =image_tag mesero.avatar, class: 'card-img-top'
+        .card-body
+          h5.card-title=mesero.nombre
+          = link_to icon('fas', 'pencil-alt'), edit_mesero_path(mesero), class: 'btn btn-outline-primary mr-3'
+          = link_to icon('fas', 'trash'), mesero, data: { confirm: '¿Estás seguro?' }, method: :delete, class: 'btn btn-outline-danger'
 
-= link_to 'Nuevo Mesero', new_mesero_path

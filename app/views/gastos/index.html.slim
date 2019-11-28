@@ -1,4 +1,9 @@
-h1 Gastos de Operación
+h1.float-left Gastos de Operación
+
+-unless matriz?
+  .float-right= link_to 'Registrar Gasto', new_gasto_path, class: 'btn btn-primary'
+
+.clearfix
 
 .table-responsive-sm= render "table"
 = paginate @gastos, theme: 'twitter-bootstrap-4'

@@ -14,12 +14,12 @@
 class GastosController < ApplicationController
   load_and_authorize_resource
 
+  before_action :set_corte, only: [:index, :show, :new, :create]
   before_action :set_gasto, only: [:show, :edit, :update, :destroy]
-  before_action :requiere_corte_actual, only: [:new, :edit, :index]
 
   # GET /gastos
   def index
-    @gastos = Gasto.where(corte_id: Corte.actual.id).order(created_at: :desc).page(params[:page]).per(20)
+    @gastos = @corte.gastos.order(created_at: :desc).page(params[:page])
   end
 
   # GET /gastos/1
@@ -29,7 +29,7 @@ class GastosController < ApplicationController
   # GET /gastos/new
   def new
     @gasto = Gasto.new
-    @gasto.corte = Corte.actual
+    @gasto.corte = @corte
   end
 
   # GET /gastos/1/edit
@@ -67,6 +67,10 @@ class GastosController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_corte
+      @corte = current_corte
+    end
+
     def set_gasto
       @gasto = Gasto.find(params[:id])
     end

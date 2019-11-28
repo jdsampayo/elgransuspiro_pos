@@ -57,6 +57,22 @@ class Comanda < ApplicationRecord
     where(closed_at: nil)
   }
 
+  MESAS = [
+    'Para Llevar',
+    'Entrada 10',
+    'Entrada 20',
+    'Entrada 30',
+    'Entrada 40',
+    'Entrada 50',
+    'Entrada 60',
+    'Sala 10',
+    'Sala 20',
+    'Sala 30',
+    'Sala 40',
+    'Sala 50',
+    'Sala 60'
+  ]
+
   def actualizar_conteos
     ordenes.each do |orden|
       conteo = Conteo.where(

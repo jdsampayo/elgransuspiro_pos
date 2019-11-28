@@ -1,9 +1,8 @@
-p#notice = notice
+.card style=("width: 18rem;")
+  =image_tag @mesero.avatar, class: 'card-img-top'
 
-p
-  strong Nombre:
-  = @mesero.nombre
-
-= link_to 'Editar', edit_mesero_path(@mesero)
-'  |
-= link_to 'Regresar', meseros_path
+  .card-body
+    h5.card-title=@mesero.nombre
+  .card-footer
+    =link_to 'Editar', edit_mesero_path(@mesero), class: 'card-link'
+    =link_to 'Deshabilitar', mesero_path(@mesero, method: :delete), class: 'card-link'
