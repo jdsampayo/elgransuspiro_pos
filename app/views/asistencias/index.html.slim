@@ -5,12 +5,13 @@ h1.float-left Asistencias
 
 .clearfix
 
-= search_form_for @q, wrapper: :inline_form, html: { method: :get, class: 'form-inline' } do |f|
-  .form-inputs
-    = f.input :mesero_id_in, collection: Mesero.order(:nombre), wrapper: false, include_blank: "Persona"
-    = f.input :corte_dia_in, input_html: { class: 'datepicker' }, wrapper: false, placeholder: "Día"
-  .form-actions
-    = f.button :button, icon('fas', 'search').html_safe, class: 'btn btn-primary'
+- if matriz?
+  = search_form_for @q, wrapper: :inline_form, html: { method: :get, class: 'form-inline' } do |f|
+    .form-inputs
+      = f.input :mesero_id_in, collection: Mesero.order(:nombre), wrapper: false, include_blank: "Persona"
+      = f.input :corte_dia_in, input_html: { class: 'datepicker' }, wrapper: false, placeholder: "Día"
+    .form-actions
+      = f.button :button, icon('fas', 'search').html_safe, class: 'btn btn-primary'
 
 br
 

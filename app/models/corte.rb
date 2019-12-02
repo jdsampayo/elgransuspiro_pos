@@ -78,8 +78,16 @@ class Corte < ApplicationRecord
   end
 
   def close_asistencias
+    current_time = Time.current
+    corte_time = dia.to_time
+
     asistencias.each do |asistencia|
-      asistencia.hora_salida = Time.current
+      asistencia.hora_salida = if current_time > corte_time.end_of_day
+        corte_time + 23.hours
+      else
+        current_time
+      end
+
       asistencia.save
     end
   end

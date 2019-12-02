@@ -23,8 +23,14 @@ class AsistenciasController < ApplicationController
 
   # GET /asistencias
   def index
-    @q = Asistencia.includes([:corte, :mesero]).ransack(params[:q])
-    @asistencias = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
+    if matriz?
+      @q = Asistencia.includes([:corte, :mesero]).ransack(params[:q])
+      @asistencias = @q.result(distinct: true)
+    else
+      @asistencias = @corte.asistencias
+    end
+
+    @asistencias = @asistencias.order(created_at: :desc).page(params[:page])
   end
 
   # GET /asistencias/1
