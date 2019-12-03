@@ -17,7 +17,7 @@ $(document).on "turbolinks:load", ->
   $('[data-toggle="tooltip"]').tooltip()
 
   $('form.simple_form select').not('.image-picker').selectize()
-  $("input[type='number']").not(':input[readonly]').inputSpinner()
+  $("input[type='number']").not(':input[readonly]').not('.no_spinner').inputSpinner()
 
   checkbox_selector = "#ordenes .nested-fields input.boolean"
 
