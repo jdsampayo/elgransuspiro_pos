@@ -46,7 +46,9 @@ class ComandasController < ApplicationController
     @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta -
             @total_de_gastos
 
-    @propinas = @comandas.sum(:propina)
+    @propinas_con_efectivo = @comandas.sum(:propina_con_efectivo)
+    @propinas_con_tarjeta = @comandas.sum(:propina_con_tarjeta)
+
     @total_de_ventas = @comandas.sum(:total)
 
     @id = params[:id]
@@ -187,6 +189,6 @@ class ComandasController < ApplicationController
   end
 
   def close_comanda_params
-    params.require(:comanda).permit(:pago_con_tarjeta, :propina)
+    params.require(:comanda).permit(:pago_con_tarjeta, :propina_con_efectivo, :propina_con_tarjeta)
   end
 end

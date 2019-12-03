@@ -40,17 +40,17 @@ class Corte < ApplicationRecord
 
   acts_as_paranoid
 
-  attr_accessor :caja, :subtotal
+  attr_accessor :caja, :subtotal, :propinas_con_efectivo, :propinas_con_tarjeta, :sobre_sin_propinas
 
   VENTAS_LIMITE = 2000
   GASTOS_LIMITE = 100
 
-  def calcular_propinas
-    comandas.sum(:propina)
+  def propinas_con_efectivo
+    comandas.sum(:propina_con_efectivo)
   end
 
-  def reparto_de_propinas
-    propinas / asistencias.count if propinas.present? && asistencias&.count > 0
+  def propinas_con_tarjeta
+    comandas.sum(:propina_con_tarjeta)
   end
 
   def to_s
@@ -169,9 +169,10 @@ class Corte < ApplicationRecord
     self.total = inicial + pagos_con_efectivo - sum_gastos
     self.sobre = total - siguiente_dia
 
-    self.propinas = calcular_propinas
+    self.propinas = propinas_con_efectivo + propinas_con_tarjeta
 
-    self.caja = total + propinas
+    self.caja = total + propinas_con_efectivo
+    self.sobre_sin_propinas = sobre - propinas_con_tarjeta
   end
 
   # Por si se quedan a trabajar despues de las 00:00am

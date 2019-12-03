@@ -3,30 +3,54 @@
 
   .form-inputs
     .row
-      .col-md-3
+      .col-md-1
       .col-md-3= f.input :inicial, readonly: true
+      .col-md-1
+      .col-md-3
+      .col-md-3= f.input :propinas, readonly: true, label: "Total de Propinas"
     .row
+      .col-md-1
+      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Ventas Con Efectivo"
+      .col-md-1
       .col-md-3= f.input :ventas, readonly: true, label: "Total de Ventas Contables"
-      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Aumento en Caja"
-      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Aumento en Banco"
+      .col-md-3= f.input :propinas_con_efectivo, readonly: true, label: "Propinas Con Efectivo"
     .row
-      .col-md-3
+      .col-md-1
       .col-md-3= f.input :subtotal, readonly: true, label: "Subtotal"
+      .col-md-1
+      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Ventas Con Tarjeta"
+      .col-md-3= f.input :propinas_con_tarjeta, readonly: true, label: "Propinas Con Tarjeta"
     .row
-      .col-md-3
+      .col-md-1
       .col-md-3= f.input :sum_gastos, readonly: true, label: "Gastos del día"
+      .col-md-1
     .row
-      .col-md-3= f.input :caja, readonly: true, label: "Caja Chica + Propinas"
+      .col-md-1
       .col-md-3= f.input :total, readonly: true, label: "Caja Chica"
-      .col-md-3= f.input :propinas, readonly: true, label: "Propinas"
-    .row
+      .col-md-1
       .col-md-3
+        br
+        .text-right.small Si se juntan las propinas en efectivo con dinero en caja:
+      .col-md-3= f.input :caja, readonly: true, label: "Caja Chica + Propinas Con Efectivo"
+    .row
+      .col-md-1
       .col-md-3= f.input :siguiente_dia, label: "Siguiente Día", input_html: { class: 'no_spinner', min: '0', step: '1' }
+      .col-md-1
     .row
+      .col-md-1
+      .col-md-3= f.input :sobre, readonly: true, label: "Caja Fuerte"
+      .col-md-1
       .col-md-3
-      .col-md-3= f.input :sobre, readonly: true, label: "Caja Fuerte", hint: "Si se dieron propinas con tarjeta, al repartirse en efectivo al final del día, a la caja fuerte le faltará ese monto"
+        br
+        .text-right.small Si se reparten las propinas con tarjeta de caja:
+      .col-md-3= f.input :sobre_sin_propinas, readonly: true, label: "Caja Fuerte - Propinas Con Tarjeta"
 
-  .form-actions
+  br
+
+  .form-actions.text-center
     = f.button :submit, "Realizar Corte", class: "btn btn-primary"
     span.or o
     = link_to 'cancelar', comandas_path
+
+br
+br

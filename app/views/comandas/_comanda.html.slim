@@ -24,38 +24,48 @@ hr
         th Precio Unitario
         th width=150
         th Venta
-    -@comanda.ordenes.ordered.each do |orden|
+    tbody
+      -@comanda.ordenes.ordered.each do |orden|
+        tr
+          td= orden.para_llevar ? "Sí" : "No"
+          td= orden.cantidad
+          td
+            = orden.articulo
+            - if orden.extra_ordenes.present?
+              br
+              .small
+                = orden.extra_ordenes.join("<br>").html_safe
+          td= number_to_currency orden.precio_unitario
+          td
+          td= number_to_currency orden.precio
       tr
-        td= orden.para_llevar ? "Sí" : "No"
-        td= orden.cantidad
+        td colspan=4
+        td.text-right
+          strong Subtotal:
+        td= number_to_currency @comanda.venta
+      tr
+        td colspan=4
+        td.text-right
+          strong Descuento (#{@comanda.porcentaje_de_descuento}%):
+        td= number_to_currency @comanda.descuento
+      tr
+        td colspan=4
+        td.text-right
+          strong Total:
         td
-          = orden.articulo
-          - if orden.extra_ordenes.present?
-            br
-            .small
-              = orden.extra_ordenes.join("<br>").html_safe
-        td= number_to_currency orden.precio_unitario
-        td
-        td= number_to_currency orden.precio
-    tr
-      td colspan=4
-      td.text-right
-        strong Subtotal:
-      td= number_to_currency @comanda.venta
-    tr
-      td colspan=4
-      td.text-right
-        strong Descuento (#{@comanda.porcentaje_de_descuento}%):
-      td= number_to_currency @comanda.descuento
-    tr
-      td colspan=4
-      td.text-right
-        strong Total:
-      td
-        strong= number_to_currency @comanda.total
-    tr
-      td colspan=4
-      td.text-right
-        strong Propina:
-      td
-        strong= number_to_currency @comanda.propina
+          strong= number_to_currency @comanda.total
+
+    - unless @comanda.abierta?
+      tbody.table-brand
+        tr
+          td colspan=4
+          td.text-right
+            strong Propina Con Efectivo:
+          td
+            strong= number_to_currency @comanda.propina_con_efectivo
+        tr
+          td colspan=4
+          td.text-right
+            strong Propina Con Tarjeta:
+          td
+            strong= number_to_currency @comanda.propina_con_tarjeta

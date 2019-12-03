@@ -104,6 +104,10 @@ class Comanda < ApplicationRecord
     closed_at ? closed_at - created_at : Time.current - created_at
   end
 
+  def propina
+    propina_con_tarjeta + propina_con_efectivo
+  end
+
   def abierta?
     closed_at.blank?
   end
