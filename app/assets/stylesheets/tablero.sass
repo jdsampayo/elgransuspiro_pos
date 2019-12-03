@@ -1,45 +1,15 @@
-.card-green
-  border-color: #5cb85c
+.card-brand
+  border-color: $brand
 
-.card-green > .card-heading
-  border-color: #5cb85c
-  color: white
-  background-color: #5cb85c
+  > .card-heading
+    border-color: $brand
+    color: white
+    background-color: $brand
+  > a
+    color: $brand
 
-.card-green > a
-  color: #5cb85c
-
-.card-green > a:hover
-  color: #3d8b3d
-
-.card-red
-  border-color: #d9534f
-
-.card-red > .card-heading
-  border-color: #d9534f
-  color: white
-  background-color: #d9534f
-
-.card-red > a
-  color: #d9534f
-
-.card-red > a:hover
-  color: #b52b27
-
-.card-yellow
-  border-color: #f0ad4e
-
-.card-yellow > .card-heading
-  border-color: #f0ad4e
-  color: white
-  background-color: #f0ad4e
-
-.card-yellow > a
-  color: #f0ad4e
-
-.card-yellow > a:hover
-  color: #df8a13
-
+    &:hover
+      color: lighten($brand, 20)
 
 .card
   margin-bottom: 1rem

@@ -21,7 +21,6 @@
 //= require bootstrap
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
-//= require bootstrap-input-spinner
 //= require cocoon
 //= require Chart.bundle
 //= require chartkick

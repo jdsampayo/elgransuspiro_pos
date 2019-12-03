@@ -21,7 +21,7 @@ html
       - else
         =render 'layouts/menu_pos'
 
-    .toast-container.position-absolute.w-100.d-flex.flex-column.p-4
+    .toast-container.position-absolute.d-flex.flex-column.p-4
       - flash.each do |type, content|
         = render 'partials/flash', type: type, content: content
 
