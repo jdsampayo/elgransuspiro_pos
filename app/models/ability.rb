@@ -10,7 +10,7 @@ class Ability
 
     if Rails.env.development?
       can :manage, Sesion
-      can [:edit, :update, :propinas], Corte
+      can [:show, :edit, :update, :propinas], Corte
       can :index, :tablero
       can :manage, Asistencia
       can :manage, Comanda

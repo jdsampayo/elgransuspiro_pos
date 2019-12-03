@@ -3,20 +3,28 @@
 
   .form-inputs
     .row
+      .col-md-3
       .col-md-3= f.input :inicial, readonly: true
     .row
-      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Pagos en Efectivo"
-      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Pagos con Tarjeta"
-      .col-md-3= f.input :ventas, readonly: true, label: "Total de Ventas"
-      .col-md-3= f.input :propinas, readonly: true
+      .col-md-3= f.input :ventas, readonly: true, label: "Total de Ventas Contables"
+      .col-md-3= f.input :pagos_con_efectivo, readonly: true, label: "Aumento en Caja"
+      .col-md-3= f.input :pagos_con_tarjeta, readonly: true, label: "Aumento en Banco"
     .row
-      .col-md-3= f.input :sum_gastos, readonly: true, label: "Gastos"
+      .col-md-3
+      .col-md-3= f.input :subtotal, readonly: true, label: "Subtotal"
     .row
+      .col-md-3
+      .col-md-3= f.input :sum_gastos, readonly: true, label: "Gastos del día"
+    .row
+      .col-md-3= f.input :caja, readonly: true, label: "Caja Chica + Propinas"
       .col-md-3= f.input :total, readonly: true, label: "Caja Chica"
+      .col-md-3= f.input :propinas, readonly: true, label: "Propinas"
     .row
-      .col-md-3= f.input :siguiente_dia, label: "Siguiente Día"
+      .col-md-3
+      .col-md-3= f.input :siguiente_dia, label: "Siguiente Día", input_html: { class: 'no_spinner', min: '0', step: '1' }
     .row
-      .col-md-3= f.input :sobre, readonly: true, label: "Caja Fuerte"
+      .col-md-3
+      .col-md-3= f.input :sobre, readonly: true, label: "Caja Fuerte", hint: "Si se dieron propinas con tarjeta, al repartirse en efectivo al final del día, a la caja fuerte le faltará ese monto"
 
   .form-actions
     = f.button :submit, "Realizar Corte", class: "btn btn-primary"

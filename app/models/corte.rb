@@ -40,6 +40,8 @@ class Corte < ApplicationRecord
 
   acts_as_paranoid
 
+  attr_accessor :caja, :subtotal
+
   VENTAS_LIMITE = 2000
   GASTOS_LIMITE = 100
 
@@ -161,15 +163,15 @@ class Corte < ApplicationRecord
     self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
     self.pagos_con_efectivo = comandas_del_dia.con_efectivo.sum(:total)
 
+    self.subtotal = inicial + pagos_con_efectivo
+
     self.sum_gastos = gastos.sum(:monto)
-    self.total = inicial + ventas - sum_gastos
-    self.sobre = caja_chica - siguiente_dia
+    self.total = inicial + pagos_con_efectivo - sum_gastos
+    self.sobre = total - siguiente_dia
 
     self.propinas = calcular_propinas
-  end
 
-  def caja_chica
-    total - pagos_con_tarjeta
+    self.caja = total + propinas
   end
 
   # Por si se quedan a trabajar despues de las 00:00am

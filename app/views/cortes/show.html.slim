@@ -18,15 +18,21 @@ h1
             =link_to 'Ventas:', corte_comandas_path(@corte)
           td=@corte.ventas
           td
-            | +
           td Total de comandas cerradas
         tr
           td.text-right
             strong Pagos con Tarjeta:
           td=@corte.pagos_con_tarjeta
           td
-            | -
           td No es dinero en caja chica
+        tr
+          td.text-right
+            strong Pagos con Efectivo:
+          td=@corte.pagos_con_efectivo
+          td
+            | +
+          td Aumenta caja
+
         tr
           td.text-right
             =link_to 'Gastos:', corte_gastos_path(@corte)

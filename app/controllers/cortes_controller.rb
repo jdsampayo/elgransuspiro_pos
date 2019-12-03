@@ -135,7 +135,7 @@ class CortesController < ApplicationController
     if @corte.update(corte_params)
       @corte.cerrar
       @corte.syncronize_update
-      redirect_to comandas_path, notice: 'El corte se cerró correctamente.'
+      redirect_to @corte, notice: 'El corte se cerró correctamente.'
     else
       render :edit
     end
