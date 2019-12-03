@@ -24,9 +24,10 @@ table
               = link_to gasto, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm"
                 i.fas.fa-trash
     - unless @gastos.empty?
-      tr.table-dark
-        td Total del día
-        td = @gastos.sum(:monto)
-        td
-        - unless readonly
+      tbody.table-brand
+        tr
+          td Total del día
+          td = @gastos.sum(:monto)
           td
+          - unless readonly
+            td
