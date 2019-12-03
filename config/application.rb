@@ -28,6 +28,8 @@ module ElgransuspiroPos
 
     config.x.sucursal = ENV['SUCURSAL']
     config.x.matriz_base_url = ENV['MATRIZ_BASE_URL']
+    config.x.sync = ActiveModel::Type::Boolean.new.cast(ENV['SYNC'])
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

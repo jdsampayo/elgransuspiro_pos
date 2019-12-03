@@ -101,7 +101,7 @@ class ComandasController < ApplicationController
     @comanda.syncronize_update
 
     message = '¡Se intercambió el método de pago!'
-    redirect_to comandas_url(id: @comanda.id), notice: message
+    redirect_to comandas_path(id: @comanda.id), notice: message
   end
 
   def print
@@ -132,7 +132,7 @@ class ComandasController < ApplicationController
       @comanda.syncronize_update
       @comanda.actualizar_conteos
 
-      redirect_to comandas_url, notice: '¡Cerrada!'
+      redirect_to comandas_path(id: @comanda.id), notice: '¡Cerrada!'
     else
       render :edit
     end

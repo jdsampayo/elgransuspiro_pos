@@ -3,9 +3,18 @@
 
   .form-inputs
     .row
-      .col-md-4= f.input :mesa, collection: Comanda::MESAS, placeholder: 'Mesa'
-      .col-md-4= f.input :comensales, placeholder: 'Comensales'
-      .col-md-4= f.association :mesero, collection: Corte.actual.meseros.activos, prompt: 'Mesero'
+      .col-md-3
+        = f.label :mesa
+        = f.input :mesa, collection: Comanda::MESAS
+      .col-md-3
+        = f.label :comensales
+        = f.input :comensales
+      .col-md-3
+        = f.label :mesero
+        = f.association :mesero, collection: Corte.actual.meseros.activos
+      .col-md-3
+        = f.label :porcentaje_de_descuento
+        = f.input :porcentaje_de_descuento, input_html: { min: '0', max: '100', step: '5' }
 
   br
 

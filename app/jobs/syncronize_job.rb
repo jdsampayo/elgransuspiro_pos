@@ -2,6 +2,7 @@ class SyncronizeJob < ApplicationJob
   queue_as :default
 
   BASE_URL = Rails.application.config.x.matriz_base_url
+  SUCCESS_CODES = [200, 201, 202, 204]
 
   def perform
     return if BASE_URL.blank?
@@ -23,7 +24,7 @@ class SyncronizeJob < ApplicationJob
           raise 'Not supported'
         end
 
-      if resultado.code == 200 || resultado.code == 201 || resultado.code == 202 || resultado.code == 204
+      if resultado.code.in?(SUCCESS_CODES)
         sincronizacion.update(exito: true, webhooked_at: Time.current)
       elsif resultado.code == 409
         sincronizacion.update(
@@ -36,7 +37,11 @@ class SyncronizeJob < ApplicationJob
           error: JSON.parse(resultado.body.to_s)['message'],
           webhooked_at: Time.current
         )
+
+        return false
       end
     end
+
+    return true
   end
 end
