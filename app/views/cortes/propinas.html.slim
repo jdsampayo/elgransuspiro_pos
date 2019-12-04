@@ -1,13 +1,13 @@
 h1 Propinas
 
+=line_chart @propinas
+
 section
   table
     thead
       tr
         th Día
         th Propinas
-        th Entre
-        th Reparto
 
     tbody
       - @cortes.each do |corte|
@@ -17,4 +17,4 @@ section
 
   = paginate @cortes, theme: 'twitter-bootstrap-4'
 
-  br
+br

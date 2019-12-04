@@ -3,67 +3,103 @@ h1
   small.text-muted<=l @corte.dia, format: :long
 
 .row
-  .col-md-12
-    table
-      tbody
-        tr
-          td.text-right width=200
-            strong Inicial:
-          td width=50
-            =@corte.inicial
-          td width=20
-          td Dinero inicial
-        tr
-          td.text-right
-            =link_to 'Ventas:', corte_comandas_path(@corte)
-          td=@corte.ventas
-          td
-          td Total de comandas cerradas
-        tr
-          td.text-right
-            strong Pagos con Tarjeta:
-          td=@corte.pagos_con_tarjeta
-          td
-          td No es dinero en caja chica
-        tr
-          td.text-right
-            strong Pagos con Efectivo:
-          td=@corte.pagos_con_efectivo
-          td
-            | +
-          td Aumenta caja
+  .col-md-1
+  .col-md-3
+    p
+      | Inicial
+      br
+      =@corte.inicial
+  .col-md-1
+  .col-md-3
+  .col-md-3
+    p
+      | Total de Propinas
+      br
+      =@corte.propinas
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Ventas Con Efectivo
+      br
+      =@corte.pagos_con_efectivo
+  .col-md-1
+  .col-md-3
+    p
+      | Total de Ventas
+      br
+      =@corte.ventas
+  .col-md-3
+    p
+      | Propinas Con Efectivo
+      br
+      =@corte.propinas_con_efectivo
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Subtotal
+      br
+      =@corte.subtotal
+  .col-md-1
+  .col-md-3
+    p
+      | Ventas Con Tarjeta
+      br
+      =@corte.pagos_con_tarjeta
+  .col-md-3
+    p
+      | Propinas Con Tarjeta
+      br
+      =@corte.propinas_con_tarjeta
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Gastos del día
+      br
+      =@corte.sum_gastos
+  .col-md-1
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Caja Chica
+      br
+      =@corte.total
+  .col-md-1
+  .col-md-3
+    br
+    .text-right.small Si se juntan las propinas en efectivo con dinero en caja:
+  .col-md-3
+    p
+      | Caja Chica + Propinas Con Efectivo
+      br
+      =@corte.caja
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Siguiente Día
+      br
+      =@corte.siguiente_dia
+  .col-md-1
+.row
+  .col-md-1
+  .col-md-3
+    p
+      | Caja Fuerte
+      br
+      =@corte.sobre
+  .col-md-1
+  .col-md-3
+    br
+    .text-right.small Si se reparten las propinas con tarjeta de caja:
+  .col-md-3
+    p
+      | Caja Fuerte - Propinas Con Tarjeta
+      br
+      =@corte.sobre_sin_propinas
 
-        tr
-          td.text-right
-            =link_to 'Gastos:', corte_gastos_path(@corte)
-          td=@corte.sum_gastos
-          td
-            | -
-          td Gastos de caja
-        tr
-          td.text-right
-            strong Caja Chica:
-          td=@caja
-          td
-            | =
-          td Dinero en caja
-        tr
-          td.text-right
-            strong Siguiente día:
-          td=@corte.siguiente_dia
-          td
-            | -
-          td Dinero dejado para el siguiente día
-        tr
-          td.text-right
-            strong Caja Fuerte:
-          td=@corte.sobre
-          td
-            | =
-          td Dinero retirado
-        tr
-          td.text-right
-            strong Total de Propinas:
-          td=@propinas
-          td
-          td
+br
+br
