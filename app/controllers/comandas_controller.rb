@@ -13,7 +13,7 @@
 #  mesa                    :text             default("PARA LLEVAR")
 #  created_at              :datetime
 #  updated_at              :datetime
-#  pago_con_tarjeta        :boolean          default(FALSE)
+#  es_pago_con_tarjeta        :boolean          default(FALSE)
 #  corte_id                :uuid
 #  propina                 :decimal(, )      default(0.0)
 #  porcentaje_de_descuento :bigint(8)        default(0)
@@ -129,14 +129,16 @@ class ComandasController < ApplicationController
   end
 
   def close
+    @comanda.closing = true
     @comanda.closed_at = Time.now
+
     if @comanda.update(close_comanda_params)
       @comanda.syncronize_update
       @comanda.actualizar_conteos
 
       redirect_to comandas_path(id: @comanda.id), notice: '¡Cerrada!'
     else
-      render :edit
+      render :pay
     end
   end
 
@@ -189,6 +191,12 @@ class ComandasController < ApplicationController
   end
 
   def close_comanda_params
-    params.require(:comanda).permit(:pago_con_tarjeta, :propina_con_efectivo, :propina_con_tarjeta)
+    params.require(:comanda).permit(
+      :es_pago_con_tarjeta,
+      :propina_con_efectivo,
+      :propina_con_tarjeta,
+      :pago_con_efectivo,
+      :pago_con_tarjeta
+    )
   end
 end

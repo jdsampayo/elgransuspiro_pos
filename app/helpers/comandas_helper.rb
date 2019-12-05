@@ -13,7 +13,7 @@
 #  mesa                    :text             default("PARA LLEVAR")
 #  created_at              :datetime
 #  updated_at              :datetime
-#  pago_con_tarjeta        :boolean          default(FALSE)
+#  es_pago_con_tarjeta        :boolean          default(FALSE)
 #  corte_id                :uuid
 #  propina                 :decimal(, )      default(0.0)
 #  porcentaje_de_descuento :bigint(8)        default(0)

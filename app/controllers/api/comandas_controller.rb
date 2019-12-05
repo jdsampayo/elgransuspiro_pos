@@ -123,7 +123,7 @@ class Api::ComandasController < Api::ApiController
       :deleted_at,
       :venta,
       :closed_at,
-      :pago_con_tarjeta,
+      :es_pago_con_tarjeta,
       :corte_id,
       :propina,
       ordenes: [

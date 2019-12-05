@@ -13,7 +13,7 @@
 #  mesa                    :text             default("PARA LLEVAR")
 #  created_at              :datetime
 #  updated_at              :datetime
-#  pago_con_tarjeta        :boolean          default(FALSE)
+#  es_pago_con_tarjeta     :boolean          default(FALSE)
 #  corte_id                :uuid
 #  propina                 :decimal(, )      default(0.0)
 #  porcentaje_de_descuento :bigint(8)        default(0)
@@ -38,19 +38,22 @@ class Comanda < ApplicationRecord
     less_than_or_equal_to: 100,
     message: 'Debe estar entre 0 y 100'
   }
+  validate :monto_pagado, if: :closing
 
   accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
   acts_as_paranoid
 
+  attr_accessor :closing
+
   scope :del_dia, ->(dia) {
     where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
   }
   scope :con_tarjeta, -> {
-    where(pago_con_tarjeta: true)
+    where(es_pago_con_tarjeta: true)
   }
   scope :con_efectivo, -> {
-    where(pago_con_tarjeta: false)
+    where(es_pago_con_tarjeta: false)
   }
   scope :cerradas, -> {
     where.not(closed_at: nil)
@@ -104,6 +107,10 @@ class Comanda < ApplicationRecord
     closed_at ? closed_at - created_at : Time.current - created_at
   end
 
+  def pago
+    pago_con_tarjeta + pago_con_efectivo
+  end
+
   def propina
     propina_con_tarjeta + propina_con_efectivo
   end
@@ -154,10 +161,16 @@ class Comanda < ApplicationRecord
   end
 
   def switch_payment_method!
-    update_attribute(:pago_con_tarjeta, !pago_con_tarjeta)
+    update_attribute(:es_pago_con_tarjeta, !es_pago_con_tarjeta)
   end
 
   def to_sync_json
     to_json( include: { ordenes: { include: :extra_ordenes } } )
+  end
+
+  def monto_pagado
+    unless pago == venta
+      errors.add(:pago_con_efectivo, "La suma de los montos de pago debe ser: #{venta} y actualmente es: #{pago}")
+    end
   end
 end

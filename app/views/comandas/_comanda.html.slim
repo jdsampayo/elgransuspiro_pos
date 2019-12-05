@@ -22,7 +22,7 @@ hr
         th Cantidad
         th Artículo
         th Precio Unitario
-        th width=150
+        th width=200
         th Venta
     tbody
       -@comanda.ordenes.ordered.each do |orden|
@@ -55,8 +55,20 @@ hr
         td
           strong= number_to_currency @comanda.total
 
-    - unless @comanda.abierta?
+    - if @comanda.closed_at && !@comanda.changed?
       tbody.table-brand
+        tr
+          td colspan=4
+          td.text-right
+            strong Pago Con Efectivo:
+          td
+            strong= number_to_currency @comanda.pago_con_efectivo
+        tr
+          td colspan=4
+          td.text-right
+            strong Pago Con Tarjeta:
+          td
+            strong= number_to_currency @comanda.pago_con_tarjeta
         tr
           td colspan=4
           td.text-right
