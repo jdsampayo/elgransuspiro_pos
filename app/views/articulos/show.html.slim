@@ -1,19 +1,18 @@
 h1=@articulo
 
-p#notice = notice
+.card style=("width: 400px")
+  /=image_tag '/default-product.jpg', size: '400x400'
+  .card-body
+    h5.card-title Precio
+    p.card-text=@articulo.precio
+  ul.list-group.list-group-flush
+    li.list-group-item Total vendidos: #{@total.to_i}
+  .card-body
+    =link_to 'Primera venta', comanda_path(@first_sale.comanda), class: 'card-link'
+    =link_to 'Última venta', comanda_path(@last_sale.comanda), class: 'card-link'
 
-h2 Historia
+h2 Ventas por mes
 
-=line_chart @articulos_por_dia
+=column_chart @products_per_day
 
-br
-br
-
-h2 Distribución
-
-=scatter_chart Orden.where(articulo_id: @articulo.id).pluck(:cantidad, :comanda_id), xtitle: "Cantidad", ytitle: "Comanda"
-
-= link_to 'Regresar', articulos_path, class: "btn btn-info"
-
-br
 br

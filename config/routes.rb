@@ -35,7 +35,11 @@ Rails.application.routes.draw do
   end
   resources :gastos
   resources :meseros
-  resources :articulos
+  resources :articulos do
+    collection do
+      get :report
+    end
+  end
   resources :cuentas
   resources :insumos
 

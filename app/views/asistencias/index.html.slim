@@ -1,7 +1,10 @@
 h1.float-left Asistencias
 
--unless matriz?
-  .float-right= link_to 'Registrar Asistencia', new_asistencia_path, class: 'btn btn-primary'
+- unless matriz?
+  .float-right
+    = link_to new_asistencia_path, class: 'btn btn-primary' do
+      = icon('fas', 'plus')
+      |  Asistencia
 
 .clearfix
 
@@ -13,7 +16,7 @@ h1.float-left Asistencias
     .form-actions
       = f.button :button, icon('fas', 'search').html_safe, class: 'btn btn-primary'
 
-br
+  br
 
 .table-responsive-sm
   table

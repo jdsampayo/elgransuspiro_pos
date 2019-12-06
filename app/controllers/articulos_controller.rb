@@ -21,10 +21,25 @@ class ArticulosController < ApplicationController
     @categorias = Categoria.order(nombre: :asc)
   end
 
+  def report
+    @best_products = Orden
+      .group(:articulo_id)
+      .select('articulo_id SUM(cantidad) as total')
+      .order('total desc')
+  end
+
   # GET /articulos/1
   def show
-    @articulos_por_dia = Orden.where(articulo_id: @articulo.id).
-      group_by_day(:created_at, time_zone: false).sum(:cantidad)
+    @products_per_day = Orden
+      .where(articulo_id: @articulo.id)
+      .group_by_month(:created_at, time_zone: false)
+      .sum(:cantidad)
+
+    orders = Orden.joins(:comanda).where(articulo_id: @articulo.id).order(created_at: :desc)
+
+    @first_sale = orders.last
+    @last_sale = orders.first
+    @total = orders.sum(:cantidad)
   end
 
   # GET /articulos/new

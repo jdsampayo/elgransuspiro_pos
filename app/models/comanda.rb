@@ -49,12 +49,6 @@ class Comanda < ApplicationRecord
   scope :del_dia, ->(dia) {
     where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
   }
-  scope :con_tarjeta, -> {
-    where(es_pago_con_tarjeta: true)
-  }
-  scope :con_efectivo, -> {
-    where(es_pago_con_tarjeta: false)
-  }
   scope :cerradas, -> {
     where.not(closed_at: nil)
   }

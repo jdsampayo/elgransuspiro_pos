@@ -1,8 +1,12 @@
 h1.float-left Artículos
 
-.float-right
-  -unless matriz?
-    = link_to 'Nuevo Artículo', new_articulo_path, class: "btn btn-primary"
+-unless matriz?
+  .float-right
+    = link_to new_articulo_path, class: 'btn btn-primary' do
+      =icon('fas', 'plus')
+      |  Artículo
+
+.clearfix
 
 table
 
@@ -14,6 +18,7 @@ table
     tr
       th Nombre
       th Precio
+      th
 
     - categoria.articulos.each do |articulo|
       tr

@@ -160,8 +160,8 @@ class Corte < ApplicationRecord
     comandas_del_dia = comandas
 
     self.ventas = comandas_del_dia.sum(:total)
-    self.pagos_con_tarjeta = comandas_del_dia.con_tarjeta.sum(:total)
-    self.pagos_con_efectivo = comandas_del_dia.con_efectivo.sum(:total)
+    self.pagos_con_tarjeta = comandas_del_dia.sum(:pago_con_tarjeta)
+    self.pagos_con_efectivo = comandas_del_dia.sum(:pago_con_efectivo)
 
     self.subtotal = inicial + pagos_con_efectivo
 
