@@ -35,11 +35,10 @@ class ComandasController < ApplicationController
     @cerradas = @comandas.cerradas
     @abiertas = @comandas.abiertas
 
-    @con_tarjeta = @comandas.con_tarjeta
-    @con_efectivo = @comandas.con_efectivo
-
     @total_comandas_cerradas = @cerradas.sum(:total)
-    @total_con_tarjeta = @con_tarjeta.sum(:total)
+
+    @total_con_efectivo = @comandas.sum(:pago_con_efectivo)
+    @total_con_tarjeta = @comandas.sum(:pago_con_tarjeta)
 
     @total_de_gastos = @gastos.sum(:monto)
 
