@@ -55,8 +55,8 @@ class CortesController < ApplicationController
   end
 
   def propinas
-    @propinas = Corte.order(dia: :desc).page(params[:page]).pluck(:dia, :propinas)
-    @cortes = Corte.includes(:asistencias).order(dia: :desc).page params[:page]
+    @propinas = Corte.page(params[:page]).pluck(:dia, :propinas)
+    @cortes = Corte.includes(:asistencias).page params[:page]
   end
 
   # GET /cortes/1

@@ -36,7 +36,7 @@ class Corte < ApplicationRecord
   validates :siguiente_dia, numericality: { greater_than: 0 }, on: :update
   validates :sobre, numericality: { greater_than: 0 }, on: :update
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order(dia: :desc) }
 
   acts_as_paranoid
 
