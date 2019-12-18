@@ -16,7 +16,8 @@ class Insumo < ApplicationRecord
 
   acts_as_paranoid
 
-  enum unidad: {gramo: "gramo", mililitro: "mililitro", pieza: "pieza"}
+  enum unidad: {gramo: "gramo", mililitro: "mililitro", pieza: "pieza"}, _prefix: true
+  enum paquete: {caja: "caja", pieza: "pieza", kilo: "kilo", litro: "litro"}, _prefix: true
 
   def to_s
     nombre.titleize

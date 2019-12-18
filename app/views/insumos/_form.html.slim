@@ -5,6 +5,8 @@
     = f.input :nombre
     = f.input :cantidad_actual
     = f.input :unidad, collection: Insumo.unidades
+    = f.input :paquete, collection: Insumo.paquetes
+    = f.input :cantidad_por_paquete
 
   .form-actions
     = f.button :submit, class: "btn btn-primary"

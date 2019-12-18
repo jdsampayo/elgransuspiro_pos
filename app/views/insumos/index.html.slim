@@ -10,6 +10,8 @@ table
       th Nombre
       th Cantidad actual
       th Unidad
+      th Paquete
+      th Cantidad por paquete
       th
 
   tbody
@@ -18,6 +20,8 @@ table
         td = insumo.nombre
         td = insumo.cantidad_actual
         td = insumo.unidad
+        td = insumo.paquete
+        td = insumo.cantidad_por_paquete
         td.actions
           = link_to edit_insumo_path(insumo), class: "btn btn-info btn-sm" do
             i.fas.fa-pencil-alt

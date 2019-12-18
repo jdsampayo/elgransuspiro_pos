@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_195236) do
+ActiveRecord::Schema.define(version: 2019_12_09_225545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -172,14 +172,8 @@ ActiveRecord::Schema.define(version: 2019_12_05_195236) do
     t.index ["deleted_at"], name: "idx_19769_index_gastos_on_deleted_at"
   end
 
-  create_table "insumos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "nombre"
-    t.integer "cantidad_actual", default: 0
-    t.string "unidad"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+# Could not dump table "insumos" because of following StandardError
+#   Unknown type 'insumo_paquete' for column 'paquete'
 
   create_table "meseros", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "nombre"

@@ -33,8 +33,8 @@ class Corte < ApplicationRecord
   end
 
   validates :dia, uniqueness: true
-  validates :siguiente_dia, numericality: { greater_than: 0 }, on: :update
-  validates :sobre, numericality: { greater_than: 0 }, on: :update
+  validates :siguiente_dia, numericality: { greater_than_or_equal_to: 0 }, on: :update
+  validates :sobre, numericality: { greater_than_or_equal_to: 0 }, on: :update
 
   default_scope { order(dia: :desc) }
 
@@ -68,7 +68,9 @@ class Corte < ApplicationRecord
   def cerrar
     set_subtotals
     self.closed_at = Time.now
-    save
+
+    return false unless save
+
     reload
 
     close_asistencias
@@ -77,6 +79,8 @@ class Corte < ApplicationRecord
 
     nuevo_corte = Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
     nuevo_corte.syncronize_create
+
+    true
   end
 
   def close_asistencias
@@ -195,7 +199,9 @@ class Corte < ApplicationRecord
 
   def self.close_all_until_today
     while(Corte.actual.blank?) do
-      corte = Corte.last
+      corte = Corte.first
+      return unless corte.comandas.blank?
+
       corte.siguiente_dia = corte.inicial.to_f
       corte.cerrar
       corte.syncronize_update
