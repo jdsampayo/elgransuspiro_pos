@@ -8,8 +8,8 @@ h1=@articulo
   ul.list-group.list-group-flush
     li.list-group-item Total vendidos: #{@total.to_i}
   .card-body
-    =link_to 'Primera venta', comanda_path(@first_sale.comanda), class: 'card-link'
-    =link_to 'Última venta', comanda_path(@last_sale.comanda), class: 'card-link'
+    =link_to 'Primera venta', comanda_path(@first_sale.comanda), class: 'card-link' if @first_sale
+    =link_to 'Última venta', comanda_path(@last_sale.comanda), class: 'card-link' if @last_sale
 
 h2 Ventas por mes
 
