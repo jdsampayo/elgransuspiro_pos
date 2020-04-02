@@ -49,7 +49,7 @@ gem 'plutus', github: 'jdsampayo/plutus', branch: 'fix_rails_5_assets'
 
 # Frontend
 gem 'active_link_to'
-gem 'auto_strip_attributes', '~> 2.5'
+gem 'auto_strip_attributes', '~> 2.6'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap4-kaminari-views'
 gem 'chartkick'
