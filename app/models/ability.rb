@@ -17,6 +17,7 @@ class Ability
       can :manage, Gasto
       can :manage, Articulo
       can :manage, Desechable
+      can :manage, Mesero
     end
   end
 end

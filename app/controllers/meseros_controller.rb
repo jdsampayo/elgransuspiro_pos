@@ -38,6 +38,7 @@ class MeserosController < ApplicationController
 
     if @mesero.save
       @mesero.syncronize_create
+
       redirect_to @mesero, notice: 'Creado exitosamente.'
     else
       render :new

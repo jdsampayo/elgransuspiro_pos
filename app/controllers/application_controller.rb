@@ -23,7 +23,16 @@ class ApplicationController < ActionController::Base
 
   def current_corte
     @corte = params[:corte_id].present? ? Corte.find(params[:corte_id]) : Corte.actual
-    @corte = Corte.close_all_until_today if @corte.blank?
+
+    if @corte.blank?
+      if Corte.first.abierto?
+        redirect_to edit_corte_path(Corte.first)
+      else
+        @corte = Corte.create(dia: Time.now, inicial: Corte.first.siguiente_dia)
+        @corte.syncronize_create
+      end
+    end
+
     @corte
   end
 

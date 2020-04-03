@@ -2,8 +2,10 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :nombre
+    = f.input :nombre, as: :string
     = f.input :avatar
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, "Guardar", class: "btn btn-primary"
+    span.or o
+    = link_to 'cancelar', :back
