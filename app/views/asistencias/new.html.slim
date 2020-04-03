@@ -1,3 +1,11 @@
-h1 Registrar asistencia
+h1.float-left Registrar asistencia
+
+- unless matriz?
+  .float-right
+    = link_to new_mesero_path, class: 'btn btn-primary' do
+      = icon('fas', 'plus')
+      |  Mesero
+
+.clearfix
 
 = render 'form'

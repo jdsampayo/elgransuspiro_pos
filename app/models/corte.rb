@@ -75,10 +75,7 @@ class Corte < ApplicationRecord
 
     close_asistencias
     finalize_comandas
-    registros_contables!
-
-    nuevo_corte = Corte.create(dia: dia + 1.day, inicial: siguiente_dia)
-    nuevo_corte.syncronize_create
+    #registros_contables!
 
     true
   end
@@ -195,18 +192,5 @@ class Corte < ApplicationRecord
     Corte.where(dia: semana).pluck(:dia, campo).map do |corte|
       {I18n.localize(corte[0], format: "%a") => corte[1].to_f}
     end.reduce({}, :merge)
-  end
-
-  def self.close_all_until_today
-    while(Corte.actual.blank?) do
-      corte = Corte.first
-      return unless corte.comandas.blank?
-
-      corte.siguiente_dia = corte.inicial.to_f
-      corte.cerrar
-      corte.syncronize_update
-    end
-
-    Corte.actual
   end
 end
