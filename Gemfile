@@ -12,7 +12,7 @@ gem 'rails-erd', require: false, group: :development
 gem 'coffee-rails', '~> 5.0'
 gem 'dotenv-rails', '~> 2.7.5', require: 'dotenv/rails-now'
 gem 'http'
-gem 'jbuilder', '~> 2.9'
+gem 'jbuilder', '~> 2.10'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3'
 gem 'rails', '~> 6.0.2'
