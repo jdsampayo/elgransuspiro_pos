@@ -75,7 +75,7 @@ class Corte < ApplicationRecord
 
     close_asistencias
     finalize_comandas
-    registros_contables!
+    #registros_contables!
 
     true
   end

@@ -8,8 +8,7 @@ h1.float-left Meseros
   - @meseros.each do |mesero|
     .col-sm-3
       .card
-        - if mesero.avatar.attached?
-          =image_tag mesero.avatar, class: 'card-img-top'
+        =image_tag mesero.public_avatar_url, class: 'card-img-top'
         .card-body
           h5.card-title=mesero.nombre
           = link_to icon('fas', 'pencil-alt'), edit_mesero_path(mesero), class: 'btn btn-outline-primary mr-3'

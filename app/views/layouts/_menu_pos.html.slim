@@ -3,21 +3,30 @@
     - if current_user
       =menu_link 'Cortes', cortes_path
 
-    =menu_link 'Tablero', root_path
-    =menu_link 'Comandas', comandas_path
-    =menu_link 'Gastos', gastos_path
-    =menu_link 'Asistencias', asistencias_path
-    =menu_link 'Propinas', propinas_path
+    =menu_link "#{icon('fas', 'columns')} Tablero".html_safe, root_path
+    =menu_link "#{icon('fas', 'scroll')} Comandas".html_safe, comandas_path
+    =menu_link "#{icon('fas', 'pepper-hot')} Gastos".html_safe, gastos_path
+    =menu_link "#{icon('fas', 'coins')} Propinas".html_safe, propinas_path
 
     li.nav-item.dropdown
-      a#dropdown_inventario.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' Inventario
+      a#dropdown_inventario.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#'
+        =icon('fas', 'users')
+        |  Personas
       .dropdown-menu aria-labelledby='dropdown_inventario'
-        =submenu_link 'Artículos', articulos_path
-        =submenu_link 'Insumos', insumos_path
-        =submenu_link 'Desechables', desechables_path
+        =submenu_link "#{icon('fas', 'concierge-bell')} Meseros".html_safe, meseros_path
+        =submenu_link "#{icon('fas', 'user-check')} Asistencias".html_safe, asistencias_path
 
+    li.nav-item.dropdown
+      a#dropdown_inventario.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#'
+        =icon('fas', 'box-open')
+        |  Inventario
+      .dropdown-menu aria-labelledby='dropdown_inventario'
+        =submenu_link "#{icon('fas', 'cheese')} Artículos".html_safe, articulos_path
+        =submenu_link "#{icon('fas', 'toilet-paper')} Insumos".html_safe, insumos_path
+        =submenu_link "#{icon('fas', 'shopping-bag')} Desechables".html_safe, desechables_path
     - if current_user
       li.nav-item.dropdown
+
         a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' Contabilidad
         .dropdown-menu aria-labelledby='dropdown_contabilidad'
           =submenu_link 'Libro Mayor', contabilidad_cuentas_path
