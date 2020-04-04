@@ -25,6 +25,7 @@
         - comandas.abiertas.each do |comanda|
           = render partial: "comandas/column", locals: { comanda: comanda }
 
-      tbody.table-brand
-        - comandas.cerradas.each do |comanda|
-          = render partial: "comandas/column", locals: { comanda: comanda }
+      -unless comandas.cerradas.empty?
+        tbody.table-brand
+          - comandas.cerradas.each do |comanda|
+            = render partial: "comandas/column", locals: { comanda: comanda }
