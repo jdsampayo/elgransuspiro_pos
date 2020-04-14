@@ -67,7 +67,7 @@ gem 'timecop'
 
 # Printing
 gem 'escper'
-gem 'rmagick', '~> 4.1.1', require: false
+gem 'rmagick', '~> 4.1.2', require: false
 
 # Auth
 gem 'authlogic', '~> 6.0.0'
