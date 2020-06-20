@@ -14,7 +14,9 @@
 #
 
 class Desechable < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+
+  self.discard_column = :deleted_at
 
   def to_s
     nombre

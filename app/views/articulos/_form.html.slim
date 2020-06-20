@@ -2,11 +2,11 @@
   = f.error_notification
 
   .form-inputs
-    .row
-      .col-md-3= f.input :precio
-      .col-md-6= f.input :nombre, as: :string
-      .col-md-3= f.association :categoria
-      .col-md-3= f.association :desechables
+    = f.input :precio
+    = f.input :nombre, as: :string, input_html: { class: 'capitalized' }
+    = f.association :categoria
+    = f.association :desechables
+    = f.association :extras
 
   .form-actions
     = f.button :submit, class: "btn btn-primary"

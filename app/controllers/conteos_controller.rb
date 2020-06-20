@@ -19,7 +19,7 @@ class ConteosController < ApplicationController
   # GET /conteos
   # GET /conteos.json
   def index
-    @conteos = Conteo.all
+    @conteos = Conteo.kept
   end
 
   # GET /conteos/1
@@ -69,7 +69,7 @@ class ConteosController < ApplicationController
   # DELETE /conteos/1
   # DELETE /conteos/1.json
   def destroy
-    @conteo.destroy
+    @conteo.discard
     respond_to do |format|
       format.html { redirect_to conteos_url, notice: 'Conteo was successfully destroyed.' }
       format.json { head :no_content }

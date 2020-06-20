@@ -10,11 +10,13 @@
 #
 
 class Categoria < ApplicationRecord
+  include Discard::Model
+
   has_many :articulos
 
   default_scope { order(Arel.sql('LOWER(nombre)')) }
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   def to_s
     nombre

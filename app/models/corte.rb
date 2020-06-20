@@ -20,6 +20,8 @@
 #
 
 class Corte < ApplicationRecord
+  include Discard::Model
+
   has_many :conteos
   has_many :comandas
   has_many :gastos
@@ -38,7 +40,7 @@ class Corte < ApplicationRecord
 
   default_scope { order(dia: :desc) }
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   attr_accessor :caja, :subtotal, :propinas_con_efectivo, :propinas_con_tarjeta, :sobre_sin_propinas
 

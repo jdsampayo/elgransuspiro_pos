@@ -62,7 +62,7 @@ class DesechablesController < ApplicationController
 
   # DELETE /desechables/1
   def destroy
-    @desechable.destroy
+    @desechable.discard
     @desechable.syncronize_destroy
 
     redirect_to desechables_url, notice: 'Eliminado exitosamente.'

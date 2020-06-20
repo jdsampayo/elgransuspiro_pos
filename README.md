@@ -32,3 +32,6 @@ psql -U db_user db_name < dump_name.sql
 
 # Limpiar sidekiq
 Sidekiq.redis { |conn| conn.flushdb }
+
+# Cards
+https://mdbootstrap.com/docs/jquery/components/cards/

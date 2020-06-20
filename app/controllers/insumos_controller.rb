@@ -16,7 +16,7 @@ class InsumosController < ApplicationController
 
   # GET /insumos
   def index
-    @insumos = Insumo.all
+    @insumos = Insumo.kept
   end
 
   # GET /insumos/1
@@ -54,7 +54,7 @@ class InsumosController < ApplicationController
 
   # DELETE /insumos/1
   def destroy
-    @insumo.destroy
+    @insumo.discard
 
     redirect_to insumos_url, notice: 'El insumo se eliminó correctamente.'
   end

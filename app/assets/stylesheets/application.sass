@@ -8,6 +8,7 @@
 @import sesiones
 @import tablero
 @import asistencias
+@import forms
 
 body
   padding-top: 80px
@@ -60,34 +61,6 @@ h1
     font-size: 50%
     color: $gray-600
 
-.actions
-  a, button
-    margin: 0 10px 0 0
-    display: inline-block
-
-form.form-small
-  .form-inputs
-    .form-group
-      margin-bottom: 0
-    .control-label
-      @extend .col-form-label-sm
-      padding-bottom: 0
-      line-height: 1
-    .form-control
-      @extend .form-control-sm
-
-  .form-actions
-    padding: 1rem 0
-
-.simple_form.new_comanda
-  .form-group
-    margin-bottom: 0
-  .nested-fields hr
-    margin: 0.5rem
-
-.form-inline .form-control
-  margin-right: 1rem
-
 .container-fluid
   table
     @extend .table, .table-hover, .table-bordered, .table-striped, .table-sm
@@ -118,28 +91,10 @@ form.form-small
     &:hover
       text-decoration: underline
 
-
-span.or
-  padding: 0 10px
-
-form
-  .help-block
-    color: #a94442
-
 #navbar-admin
   form.form-inline
     a
       margin-right: 5px
-
-.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover
-  color: #ccc
-
-.input-daterange .input-group-addon
-    margin: 0 auto
-
-.input-group
-  input, .btn
-    font-size: 13px
 
 caption
   caption-side: top
@@ -165,3 +120,6 @@ tr.table-dark, .table-dark > th, .table-dark > td
 
 .item-highlight
   animation: yellowfade 1s
+
+.item-discarded
+  background: #f5c6cb!important

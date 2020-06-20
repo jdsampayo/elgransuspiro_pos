@@ -17,7 +17,7 @@ class CategoriasController < ApplicationController
   # GET /categorias
   # GET /categorias.json
   def index
-    @categorias = Categoria.all
+    @categorias = Categoria.kept
   end
 
   # GET /categorias/1
@@ -67,7 +67,7 @@ class CategoriasController < ApplicationController
   # DELETE /categorias/1
   # DELETE /categorias/1.json
   def destroy
-    @categoria.destroy
+    @categoria.discard
     respond_to do |format|
       format.html { redirect_to categorias_url, notice: 'Categoria was successfully destroyed.' }
       format.json { head :no_content }

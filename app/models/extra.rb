@@ -11,9 +11,12 @@
 #
 
 class Extra < ApplicationRecord
-  has_and_belongs_to_many :ordenes
+  include Discard::Model
 
-  acts_as_paranoid
+  has_and_belongs_to_many :ordenes
+  has_and_belongs_to_many :articulos
+
+  self.discard_column = :deleted_at
 
   def to_s
     nombre.titleize

@@ -10,12 +10,14 @@
 #
 
 class Mesero < ApplicationRecord
+  include Discard::Model
+
   has_many :comandas
   has_many :asistencias
 
   has_one_attached :avatar
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   def to_s
     nombre

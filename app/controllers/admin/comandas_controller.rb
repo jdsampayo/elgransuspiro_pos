@@ -19,7 +19,7 @@
 #  porcentaje_de_descuento :bigint(8)        default(0)
 #
 
-class ComandasController < ApplicationController
+class Admin::ComandasController < ApplicationController
   load_and_authorize_resource
 
   before_action :set_corte, only: [:index, :show, :new, :create]
@@ -29,8 +29,8 @@ class ComandasController < ApplicationController
 
   # GET /comandas
   def index
-    @comandas = @corte.comandas.kept.order(created_at: :desc)
-    @gastos = Gasto.where(corte: @corte).kept
+    @comandas = @corte.comandas.order(created_at: :desc)
+    @gastos = Gasto.where(corte: @corte)
 
     @cerradas = @comandas.cerradas
     @abiertas = @comandas.abiertas
@@ -98,6 +98,11 @@ class ComandasController < ApplicationController
   end
 
   def switch
+    @comanda.switch_payment_method!
+    @comanda.syncronize_update
+
+    message = '¡Se intercambió el método de pago!'
+    redirect_to comandas_path(id: @comanda.id), notice: message
   end
 
   def print
@@ -132,9 +137,7 @@ class ComandasController < ApplicationController
 
       redirect_to comandas_path(id: @comanda.id), notice: '¡Cerrada!'
     else
-      referer =  URI(request.referer).path.split('/').last
-      render :pay if referer == 'pay'
-      render :switch if referer == 'switch'
+      render :pay
     end
   end
 

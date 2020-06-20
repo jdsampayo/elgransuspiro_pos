@@ -100,7 +100,7 @@ class CortesController < ApplicationController
 
   # DELETE /cortes/1
   def destroy
-    @corte.destroy
+    @corte.discard
     redirect_to cortes_url, notice: 'El corte se eliminó correctamente.'
   end
 

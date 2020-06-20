@@ -26,7 +26,7 @@ class Api::MeserosController < Api::ApiController
   def destroy
     @mesero = Mesero.find(params[:id])
 
-    @mesero.destroy
+    @mesero.discard
 
     head :no_content
   end

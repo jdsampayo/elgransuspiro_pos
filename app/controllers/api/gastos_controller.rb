@@ -25,7 +25,7 @@ class Api::GastosController < Api::ApiController
   def destroy
     @gasto = Gasto.find(params[:id])
 
-    @gasto.destroy
+    @gasto.discard
 
     head :no_content
   end

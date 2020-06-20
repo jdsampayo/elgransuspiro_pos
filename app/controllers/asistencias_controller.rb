@@ -76,7 +76,7 @@ class AsistenciasController < ApplicationController
 
   # DELETE /asistencias/1
   def destroy
-    @asistencia.destroy
+    @asistencia.discard
     @asistencia.syncronize_destroy
 
     redirect_to asistencias_url, notice: 'Asistencia was successfully destroyed.'

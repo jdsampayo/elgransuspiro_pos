@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_09_225545) do
+ActiveRecord::Schema.define(version: 2020_06_16_200908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -53,6 +53,13 @@ ActiveRecord::Schema.define(version: 2019_12_09_225545) do
     t.uuid "desechable_id"
     t.index ["articulo_id", "desechable_id"], name: "idx_19836_index_articulos_desechables_on_articulo_id_and_desech"
     t.index ["desechable_id", "articulo_id"], name: "idx_19836_index_articulos_desechables_on_desechable_id_and_arti"
+  end
+
+  create_table "articulos_extras", id: false, force: :cascade do |t|
+    t.uuid "articulo_id", null: false
+    t.uuid "extra_id", null: false
+    t.index ["articulo_id", "extra_id"], name: "index_articulos_extras_on_articulo_id_and_extra_id"
+    t.index ["extra_id", "articulo_id"], name: "index_articulos_extras_on_extra_id_and_articulo_id"
   end
 
   create_table "asistencias", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

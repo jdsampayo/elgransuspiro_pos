@@ -26,7 +26,7 @@ class Api::AsistenciasController < Api::ApiController
   def destroy
     @asistencia = Asistencia.find(params[:id])
 
-    @asistencia.destroy
+    @asistencia.discard
 
     head :no_content
   end

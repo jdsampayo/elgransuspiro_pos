@@ -20,6 +20,8 @@
 #
 
 class Comanda < ApplicationRecord
+  include Discard::Model
+
   belongs_to :corte
   belongs_to :mesero
   has_many :ordenes, inverse_of: :comanda
@@ -42,7 +44,7 @@ class Comanda < ApplicationRecord
 
   accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   attr_accessor :closing
 
@@ -152,10 +154,6 @@ class Comanda < ApplicationRecord
 
   def print_ticket
     File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write to_text }
-  end
-
-  def switch_payment_method!
-    update_attribute(:es_pago_con_tarjeta, !es_pago_con_tarjeta)
   end
 
   def to_sync_json

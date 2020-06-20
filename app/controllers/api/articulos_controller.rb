@@ -26,7 +26,7 @@ class Api::ArticulosController < Api::ApiController
   def destroy
     @articulo = Articulo.find(params[:id])
 
-    @articulo.destroy
+    @articulo.discard
 
     head :no_content
   end

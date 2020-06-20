@@ -1,0 +1,47 @@
+tr class=row_class(comanda, @id)
+  td
+    = link_to comanda.mesa.titleize, comanda
+  td
+    small= comanda.mesero
+  td
+    small= comanda.comensales
+  td
+    small= comanda.created_at.strftime("%H:%M")
+  td
+    small= comanda.closed_at.strftime("%H:%M") if comanda.closed_at
+  td
+    small= Time.at(comanda.tiempo).utc.strftime("%H:%M")
+  td
+    small= comanda.deleted_at.strftime("%H:%M") if comanda.deleted_at
+  td colspan=2
+    ul
+      - comanda.ordenes.each do |orden|
+        li
+          small= orden.full_name
+  td
+    - if comanda.closed_at
+      -if comanda.pago_con_efectivo&.positive?
+        i.fas.fa-money-bill-alt
+        strong.p-2= comanda.pago_con_efectivo
+      -if comanda.pago_con_tarjeta&.positive?
+        i.fas.fa-credit-card
+        strong.p-2= comanda.pago_con_tarjeta
+    - else
+      strong= comanda.venta
+  td
+    -if comanda.closed_at
+      -if comanda.propina_con_efectivo&.positive?
+        i.fas.fa-money-bill-alt
+        strong.p-2= comanda.propina_con_efectivo
+      -if comanda.propina_con_tarjeta&.positive?
+        i.fas.fa-credit-card
+        strong.p-2= comanda.propina_con_tarjeta
+  td.actions
+    -if comanda.deleted_at?
+      button.btn.btn-outline-secondary.btn-disabled
+        i.fas.fa-lock.fa-trash data-toggle="tooltip" data-placement="left" title="Comanda eliminada"
+    -if comanda.closed_at?
+      button.btn.btn-outline-secondary.btn-disabled
+        i.fas.fa-lock.fa-fw data-toggle="tooltip" data-placement="left" title="Comanda cerrada"
+
+      

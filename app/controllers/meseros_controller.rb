@@ -58,7 +58,7 @@ class MeserosController < ApplicationController
 
   # DELETE /meseros/1
   def destroy
-    @mesero.destroy
+    @mesero.discard
     @mesero.syncronize_destroy
 
     redirect_to meseros_url, notice: 'Eliminado correctamente.'

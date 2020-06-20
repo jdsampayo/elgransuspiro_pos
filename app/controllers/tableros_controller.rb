@@ -4,7 +4,7 @@ class TablerosController < ApplicationController
   before_action :set_corte, only: [:index]
 
   def index
-    @total_de_articulos = Articulo.all.count
+    @total_de_articulos = Articulo.kept.count
 
     conteos = Conteo.de_articulos
     @conteos = Hash[
@@ -13,7 +13,7 @@ class TablerosController < ApplicationController
       end
     ]
 
-    @comandas = Comanda.all
+    @comandas = Comanda.kept
 
     @estancia_promedia = @comandas.unscoped.pluck(
       'extract(epoch from (closed_at - created_at)) as estancia_promedio'

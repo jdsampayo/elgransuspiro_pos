@@ -14,6 +14,8 @@
 #
 
 class Orden < ApplicationRecord
+  include Discard::Model
+
   belongs_to :articulo
   belongs_to :comanda
   has_many :extra_ordenes
@@ -24,7 +26,7 @@ class Orden < ApplicationRecord
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   def precio
     cantidad * precio_unitario

@@ -56,7 +56,7 @@ class Api::ComandasController < Api::ApiController
           old_extra_ordenes_ids = @orden.extra_ordenes.pluck(:id)
           new_extra_ordenes_ids = extra_ordenes_params.map { |extra_orden| extra_orden["id"] }
 
-          ExtraOrden.where(id: old_extra_ordenes_ids - new_extra_ordenes_ids).destroy_all
+          ExtraOrden.where(id: old_extra_ordenes_ids - new_extra_ordenes_ids).discard_all
 
           if @orden.update!(orden_params)
             extra_ordenes_params.each do |extra_orden_params|
@@ -72,7 +72,7 @@ class Api::ComandasController < Api::ApiController
             return
           end
         end
-        Orden.where(id: old_ordenes_ids - new_ordenes_ids).destroy_all
+        Orden.where(id: old_ordenes_ids - new_ordenes_ids).discard_all
 
         render :show, status: :ok, location: @comanda
       else
@@ -85,7 +85,7 @@ class Api::ComandasController < Api::ApiController
   def destroy
     @comanda = Comanda.find(params[:id])
 
-    @comanda.destroy
+    @comanda.discard
 
     head :no_content
   end

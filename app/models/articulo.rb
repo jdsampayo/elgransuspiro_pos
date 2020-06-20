@@ -12,15 +12,18 @@
 #
 
 class Articulo < ApplicationRecord
+  include Discard::Model
+
   has_many :comandas, through: :ordenes
   has_many :conteos
   has_many :insumos
+  has_and_belongs_to_many :extras
   has_and_belongs_to_many :desechables
   belongs_to :categoria
 
   default_scope { order(Arel.sql('LOWER(nombre)')) }
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   validates :nombre, presence: true
 

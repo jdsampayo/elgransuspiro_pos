@@ -11,10 +11,12 @@
 #
 
 class ExtraOrden < ApplicationRecord
+  include Discard::Model
+
   belongs_to :extra
   belongs_to :orden
 
-  acts_as_paranoid
+  self.discard_column = :deleted_at
 
   delegate :precio, to: :extra
   delegate :to_s, to: :extra

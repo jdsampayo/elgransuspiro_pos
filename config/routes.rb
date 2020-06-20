@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   resources :insumos
 
+  namespace :admin do
+    resources :comandas
+    
+    resources :cortes do
+      resources :comandas
+    end
+  end
+
   namespace :api do
     resources :asistencias, defaults: { format: 'json' }
     resources :desechables, defaults: { format: 'json' }
@@ -29,7 +37,7 @@ Rails.application.routes.draw do
     member do
       get :pay
       post :print
-      post :switch
+      get :switch
       patch :close
     end
   end

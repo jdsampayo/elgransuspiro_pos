@@ -1,0 +1,37 @@
+- if comandas.empty?
+  .alert.alert-primary No hay comandas registradas.
+- else
+  table
+    thead
+      tr.text-center
+        th(data-toggle='tooltip' data-placement='top' title='Mesa')=icon('fas', 'chair')
+        th(data-toggle='tooltip' data-placement='top' title='Mesero')=icon('fas', 'id-card-alt')
+        th(data-toggle='tooltip' data-placement='top' title='Comensales')=icon('fas', 'users')
+        th(data-toggle='tooltip' data-placement='top' title='Hora de Llegada' width=50)=icon('fas', 'hourglass-start')
+        th(data-toggle='tooltip' data-placement='top' title='Hora de Salida' width=50)=icon('fas', 'hourglass-end')
+        th(data-toggle='tooltip' data-placement='top' title='Tiempo' width=50)=icon('fas', 'clock')
+        th(data-toggle='tooltip' data-placement='top' title='Eliminada' width=50)=icon('fas', 'trash')
+        th(data-toggle='tooltip' data-placement='top' title='Orden' width=400 colspan=2)=icon('fas', 'shopping-cart')
+        th(data-toggle='tooltip' data-placement='top' title='Venta')=icon('fas', 'dollar-sign')
+        th(data-toggle='tooltip' data-placement='top' title='Propina')=icon('fas', 'donate')
+        th(data-toggle='tooltip' data-placement='top' title='Acciones' width=200)=icon('fas', 'cog')
+
+    -if matriz?
+      tbody
+        - comandas.each do |comanda|
+          = render partial: "admin/comandas/column", locals: { comanda: comanda }
+
+    -else
+      -if comandas.discarded
+        tbody.table-brand
+          - comandas.discarded.each do |comanda|
+            = render partial: "admin/comandas/column", locals: { comanda: comanda }
+
+      tbody
+        - comandas.kept.abiertas.each do |comanda|
+          = render partial: "admin/comandas/column", locals: { comanda: comanda }
+
+      -unless comandas.kept.cerradas.empty?
+        tbody.table-brand
+          - comandas.kept.cerradas.each do |comanda|
+            = render partial: "admin/comandas/column", locals: { comanda: comanda }

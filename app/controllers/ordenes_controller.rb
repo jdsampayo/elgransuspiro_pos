@@ -21,7 +21,7 @@ class OrdenesController < ApplicationController
   # GET /ordenes
   # GET /ordenes.json
   def index
-    @ordenes = Orden.all
+    @ordenes = Orden.kept
   end
 
   # GET /ordenes/1
@@ -71,7 +71,7 @@ class OrdenesController < ApplicationController
   # DELETE /ordenes/1
   # DELETE /ordenes/1.json
   def destroy
-    @orden.destroy
+    @orden.discard
     respond_to do |format|
       format.html { redirect_to ordenes_url, notice: 'Orden was successfully destroyed.' }
       format.json { head :no_content }

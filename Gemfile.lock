@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/jdsampayo/plutus.git
-  revision: 31dede41ac45b015c47e76fd26528d940756336c
-  branch: fix_rails_5_assets
+  revision: e5aa29bf9ea295b2c0428535b494efa2b918eddc
+  branch: ruby_2_7_1
   specs:
-    plutus (0.13)
+    plutus (0.15)
       jquery-rails (>= 3.0)
       jquery-ui-rails (>= 4.2.2)
       kaminari (~> 1.0)
@@ -124,6 +124,8 @@ GEM
     crass (1.0.6)
     data-confirm-modal (1.6.3)
       railties (>= 3.0)
+    discard (1.2.0)
+      activerecord (>= 4.2, < 7)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.7.5)
@@ -201,8 +203,6 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    paranoia (2.4.2)
-      activerecord (>= 4.0, < 6.1)
     pg (1.2.3)
     polyamorous (2.3.2)
       activerecord (>= 5.2.1)
@@ -356,6 +356,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 5.0)
   data-confirm-modal
+  discard (~> 1.2)
   dotenv-rails (~> 2.7.5)
   escper
   factory_bot_rails
@@ -367,7 +368,6 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   listen (>= 3.0.5, < 3.3)
-  paranoia (~> 2.4.2)
   pg (>= 0.18, < 2.0)
   plutus!
   pry

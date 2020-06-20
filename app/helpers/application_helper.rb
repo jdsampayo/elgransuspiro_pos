@@ -32,4 +32,12 @@ module ApplicationHelper
     active_link_to(title, path, class: 'dropdown-item')
   end
 
+  def row_class(object, id)
+    klazz = []
+    klazz << 'item-highlight' if object.id == id
+    klazz << 'item-discarded' if object.discarded?
+
+    klazz.join(' ')
+  end
+
 end

@@ -42,10 +42,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-# Backend
-gem 'paranoia', '~> 2.4.2'
+gem 'discard', '~> 1.2'
 
-gem 'plutus', github: 'jdsampayo/plutus', branch: 'fix_rails_5_assets'
+gem 'plutus', github: 'jdsampayo/plutus', branch: 'ruby_2_7_1'
 
 # Frontend
 gem 'active_link_to'

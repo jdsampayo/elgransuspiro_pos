@@ -1,4 +1,4 @@
-tr class=(comanda.id == @id ? "item-highlight" : "")
+tr class=row_class(comanda, @id)
   td
     = link_to comanda.mesa.titleize, comanda
   td
@@ -18,20 +18,20 @@ tr class=(comanda.id == @id ? "item-highlight" : "")
           small= orden.full_name
   td
     - if comanda.closed_at
-      -if comanda.pago_con_efectivo.positive?
+      -if comanda.pago_con_efectivo&.positive?
         i.fas.fa-money-bill-alt
         strong.p-2= comanda.pago_con_efectivo
-      -if comanda.pago_con_tarjeta.positive?
+      -if comanda.pago_con_tarjeta&.positive?
         i.fas.fa-credit-card
         strong.p-2= comanda.pago_con_tarjeta
     - else
       strong= comanda.venta
   td
     -if comanda.closed_at
-      -if comanda.propina_con_efectivo.positive?
+      -if comanda.propina_con_efectivo&.positive?
         i.fas.fa-money-bill-alt
         strong.p-2= comanda.propina_con_efectivo
-      -if comanda.propina_con_tarjeta.positive?
+      -if comanda.propina_con_tarjeta&.positive?
         i.fas.fa-credit-card
         strong.p-2= comanda.propina_con_tarjeta
   -if comanda.abierta?
@@ -50,5 +50,5 @@ tr class=(comanda.id == @id ? "item-highlight" : "")
       -unless matriz?
         = link_to print_comanda_path(comanda), method: :post, class: "btn btn-outline-info", data: { disable_with: "<i class='fas fa-clock'>".html_safe }, 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Reimprimir" do
           i.fas.fa-print.fa-fw
-        = link_to switch_comanda_path(comanda), method: :post, class: "btn btn-outline-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
+        = link_to switch_comanda_path(comanda), method: :get, class: "btn btn-outline-success", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Intercambiar método de pago" do
           i.fas.fa-sync.fa-fw

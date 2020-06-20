@@ -75,7 +75,7 @@ class ArticulosController < ApplicationController
 
   # DELETE /articulos/1
   def destroy
-    @articulo.destroy
+    @articulo.discard
     @articulo.syncronize_destroy
 
     redirect_to articulos_url, notice: 'Eliminado.'
@@ -89,6 +89,6 @@ class ArticulosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def articulo_params
-      params.require(:articulo).permit(:nombre, :precio, :categoria_id, desechable_ids: [])
+      params.require(:articulo).permit(:nombre, :precio, :categoria_id, desechable_ids: [], extra_ids: [])
     end
 end

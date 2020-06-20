@@ -1,0 +1,28 @@
+h1.pull-left Cambiar Método de Pago de Comanda #{@comanda.id}
+
+.clearfix
+
+.container
+  = simple_form_for(@comanda, url: close_comanda_path(@comanda)) do |f|
+    = f.error_notification
+
+    .form-inputs
+      .row
+        .col-md-3
+        .col-md-3= f.input :pago_con_efectivo
+        .col-md-3= f.input :pago_con_tarjeta
+      .row
+        .col-md-3
+        .col-md-3= f.input :propina_con_efectivo
+        .col-md-3= f.input :propina_con_tarjeta
+
+    br
+    br
+
+    .form-actions.text-center
+      = f.button :submit, "¡Cambiar!", class: "btn btn-danger"
+      span.or o
+      = link_to 'cancelar', comandas_path
+
+br
+br

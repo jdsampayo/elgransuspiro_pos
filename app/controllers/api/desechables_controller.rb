@@ -26,7 +26,7 @@ class Api::DesechablesController < Api::ApiController
   def destroy
     @desechable = Desechable.find(params[:id])
 
-    @desechable.destroy
+    @desechable.discard
 
     head :no_content
   end
