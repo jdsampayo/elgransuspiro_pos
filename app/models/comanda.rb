@@ -122,10 +122,12 @@ class Comanda < ApplicationRecord
   def to_text
     texto = []
 
+    texto << ""
+
     texto << "   #{I18n.l created_at, format: :short}"
     texto << "".ljust(32, '-')
 
-    texto << "Ticket: #{folio.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
+    texto << "Folio:  #{folio.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
     texto << "Mesa: #{mesa.ljust(11, ' ')} Mesero: #{mesero.to_s[0,5].rjust(6, ' ')}"
 
     texto << "".ljust(32, '-')
@@ -152,8 +154,18 @@ class Comanda < ApplicationRecord
      )
   end
 
+  def print_logo
+    printer = Escpos::Printer.new
+    path = Rails.root.join('app/assets/images/logo_bn.png').to_s
+    image = Escpos::Image.new( path, { processor: 'ChunkyPng' })
+    printer.write(image.to_escpos)
+
+    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write(printer.to_escpos) }
+  end
+
   def print_ticket
-    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write to_text }
+    print_logo
+    File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write(to_text) }
   end
 
   def to_sync_json

@@ -23,6 +23,7 @@ class Usuario < ActiveRecord::Base
 
   acts_as_authentic do |configuration|
     configuration.session_class = Sesion
+    configuration.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
   end
 
   validates_presence_of :email, :password, :password_confirmation

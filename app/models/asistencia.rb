@@ -71,6 +71,6 @@ class Asistencia < ApplicationRecord
 
   def self.meseros_del_dia_por_asistir
     registrados = Asistencia.where(corte: Corte.actual).pluck(:mesero_id)
-    Mesero.where.not(id: registrados)
+    Mesero.kept.where.not(id: registrados)
   end
 end

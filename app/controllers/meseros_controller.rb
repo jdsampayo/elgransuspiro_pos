@@ -16,7 +16,7 @@ class MeserosController < ApplicationController
 
   # GET /meseros
   def index
-    @meseros = Mesero.with_attached_avatar.order(:nombre)
+    @meseros = Mesero.with_attached_avatar.kept.order(:nombre)
   end
 
   # GET /meseros/1

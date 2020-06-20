@@ -65,6 +65,9 @@ gem 'slim-rails'
 gem 'timecop'
 
 # Printing
+gem 'chunky_png'
+gem 'escpos'
+gem 'escpos-image'
 gem 'escper'
 gem 'rmagick', '~> 4.1.2', require: false
 
