@@ -20,7 +20,7 @@ table
       th Precio
       th
 
-    - categoria.articulos.each do |articulo|
+    - categoria.articulos.kept.each do |articulo|
       tr
         td = link_to articulo, articulo
         td = articulo.precio

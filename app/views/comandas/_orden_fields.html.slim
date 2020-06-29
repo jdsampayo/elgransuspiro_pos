@@ -5,7 +5,7 @@
         .col-md-2
           = f.input :para_llevar, label: false
         .col-md-2= f.input :cantidad, label: false, input_html: {min: "1", step: "1"}
-        .col-md-6= f.input :articulo_id, label: false, collection: Categoria.all, as: :grouped_select, group_method: :articulos
+        .col-md-6= f.input :articulo_id, label: false, collection: Categoria.all, as: :grouped_select, group_method: :kept_articulos
         .col-md-2= link_to_remove_association icon('fas', 'trash'), f, class: "btn btn-outline-danger btn-sm"
     .col-md-4
       .extras_form

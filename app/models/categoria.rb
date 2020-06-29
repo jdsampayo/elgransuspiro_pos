@@ -21,4 +21,8 @@ class Categoria < ApplicationRecord
   def to_s
     nombre
   end
+
+  def kept_articulos
+    articulos.kept
+  end
 end
