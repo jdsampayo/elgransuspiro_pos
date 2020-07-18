@@ -36,7 +36,7 @@ group :development do
   gem 'webdack-uuid_migration'
 end
 
-gem 'bootstrap', '~> 4.4.1'
+gem 'bootstrap', '~> 4.5.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
