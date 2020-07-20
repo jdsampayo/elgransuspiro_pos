@@ -37,8 +37,6 @@ class MeserosController < ApplicationController
     @mesero = Mesero.new(mesero_params)
 
     if @mesero.save
-      @mesero.syncronize_create
-
       redirect_to @mesero, notice: 'Creado exitosamente.'
     else
       render :new
@@ -48,8 +46,6 @@ class MeserosController < ApplicationController
   # PATCH/PUT /meseros/1
   def update
     if @mesero.update(mesero_params)
-      @mesero.syncronize_update
-
       redirect_to @mesero, notice: 'Actualizado exitosamente.'
     else
       render :edit
@@ -59,8 +55,6 @@ class MeserosController < ApplicationController
   # DELETE /meseros/1
   def destroy
     @mesero.discard
-    @mesero.syncronize_destroy
-
     redirect_to meseros_url, notice: 'Eliminado correctamente.'
   end
 

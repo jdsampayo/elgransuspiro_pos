@@ -41,8 +41,6 @@ class DesechablesController < ApplicationController
     @desechable = Desechable.new(desechable_params)
 
     if @desechable.save
-      @desechable.syncronize_create
-
       redirect_to @desechable, notice: 'Creado exitosamente.'
     else
       render :new
@@ -52,8 +50,6 @@ class DesechablesController < ApplicationController
   # PATCH/PUT /desechables/1
   def update
     if @desechable.update(desechable_params)
-      @desechable.syncronize_update
-
       redirect_to @desechable, notice: 'Actualizado exitosamente.'
     else
       render :edit
@@ -63,8 +59,6 @@ class DesechablesController < ApplicationController
   # DELETE /desechables/1
   def destroy
     @desechable.discard
-    @desechable.syncronize_destroy
-
     redirect_to desechables_url, notice: 'Eliminado exitosamente.'
   end
 

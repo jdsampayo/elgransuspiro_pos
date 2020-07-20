@@ -168,10 +168,6 @@ class Comanda < ApplicationRecord
     File.open('/dev/usb/lp0', 'w:ascii-8bit') { |f| f.write(to_text) }
   end
 
-  def to_sync_json
-    to_json( include: { ordenes: { include: :extra_ordenes } } )
-  end
-
   def monto_pagado
     unless pago == venta
       errors.add(:pago_con_efectivo, "La suma de los montos de pago debe ser: #{venta} y actualmente es: #{pago}")

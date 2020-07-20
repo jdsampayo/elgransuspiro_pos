@@ -76,7 +76,6 @@ class ComandasController < ApplicationController
     @comanda.set_totales
 
     if @comanda.save
-      @comanda.syncronize_create
       message = '¡La comanda fue creada exitosamente!'
       redirect_to comandas_path(id: @comanda.id), success: message
     else
@@ -89,7 +88,6 @@ class ComandasController < ApplicationController
     if @comanda.update(comanda_params)
       @comanda.set_totales
       @comanda.save
-      @comanda.syncronize_update
       message = 'Actualizada exitosamente.'
       redirect_to comandas_path(id: @comanda.id), notice: message
     else
@@ -114,7 +112,6 @@ class ComandasController < ApplicationController
   # DELETE /comandas/1
   def destroy
     @comanda.discard
-    @comanda.syncronize_destroy
 
     redirect_to comandas_url, notice: 'Eliminada.'
   end
@@ -127,7 +124,6 @@ class ComandasController < ApplicationController
     @comanda.closed_at = Time.now
 
     if @comanda.update(close_comanda_params)
-      @comanda.syncronize_update
       @comanda.actualizar_conteos
 
       redirect_to comandas_path(id: @comanda.id), notice: '¡Cerrada!'

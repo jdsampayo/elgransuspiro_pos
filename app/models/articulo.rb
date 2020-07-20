@@ -30,10 +30,4 @@ class Articulo < ApplicationRecord
   def to_s
     nombre.titleize
   end
-
-  def to_sync_json
-    as_json.deep_merge(
-      'articulo' => { 'desechable_ids' => desechables&.pluck(:id) }
-    ).to_json
-  end
 end

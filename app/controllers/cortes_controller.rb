@@ -80,7 +80,6 @@ class CortesController < ApplicationController
     @corte = Corte.new(corte_params)
 
     if @corte.save
-      @corte.syncronize_create
       redirect_to comandas_path, notice: 'El corte se creó exitosamente.'
     else
       render :new
@@ -91,7 +90,7 @@ class CortesController < ApplicationController
   def update
     if @corte.update(corte_params)
       @corte.cerrar
-      @corte.syncronize_update
+
       redirect_to @corte, notice: 'El corte se cerró correctamente.'
     else
       render :edit
