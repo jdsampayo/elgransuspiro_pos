@@ -1,26 +1,28 @@
 $brand: #173742
 $brand-secondary: #cc8d4a
 
-.card-brand
-  > .card-heading
-    border-color: $brand
-    color: white
-    background-color: $brand
-  > a
+.cards
+  a
     color: $brand!important
-
     &:hover
       color: lighten($brand, 20)!important
+      text-decoration: none!important
 
-.card
-  margin-bottom: 1rem
+  .card-brand
+    > .card-heading
+      border-color: $brand
+      color: white
+      background-color: $brand
 
-.card-body
-  height: auto
-  overflow-y: scroll
+  .card
+    margin-bottom: 1rem
 
-.card-heading
-  padding: 1rem
+  .card-body
+    height: auto
+    overflow-y: scroll
+
+  .card-heading
+    padding: 1rem
 
 .huge
   font-size: 1.75rem

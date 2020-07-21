@@ -58,9 +58,5 @@ Rails.application.routes.draw do
   get 'login', controller: 'sesiones', action: 'new', as: 'login'
   get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
 
-  if Rails.application.config.x.sucursal == 'matriz'
-    root 'contabilidad/cuentas#index'
-  else
-    root 'tableros#index'
-  end
+  root 'tableros#index'
 end

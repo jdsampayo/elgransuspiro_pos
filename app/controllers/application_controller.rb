@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
         redirect_to edit_corte_path(Corte.first)
       else
         @corte = Corte.create(dia: Time.now, inicial: Corte.first.siguiente_dia)
-        @corte.syncronize_create
       end
     end
 

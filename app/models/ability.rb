@@ -4,11 +4,11 @@ class Ability
   def initialize(user)
     user ||= Usuario.new
 
-    if user.persisted?
+    if user.manager?
       can :manage, :all
     end
 
-    if Rails.env.development?
+    if user.waitress?
       can :manage, Sesion
       can [:show, :edit, :update, :propinas], Corte
       can :index, :tablero
