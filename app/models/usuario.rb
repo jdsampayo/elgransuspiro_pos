@@ -14,6 +14,7 @@
 class Usuario < ActiveRecord::Base
   ROLES = [
     accountant: "Contador",
+    admin: "Administrador",
     manager: "Encargado",
     waitress: "Mesero"
   ]
@@ -69,12 +70,16 @@ class Usuario < ActiveRecord::Base
     email
   end
 
-  def manager?
-    roles.include?(:manager)
-  end
-
   def accountant?
     roles.include?(:accountant)
+  end
+
+  def admin?
+    roles.include?(:admin)
+  end
+
+  def manager?
+    roles.include?(:manager)
   end
 
   def waitress?

@@ -2,12 +2,11 @@ h1.float-left
   | Comandas
   small.ml-3=l @corte.dia, format: :long
 
--unless matriz?
-  .float-right
-    -if @corte.abierto?
-      =link_to icon('fas', 'file-invoice-dollar'), edit_corte_path(@corte), class: "btn btn-primary btn-lg"
-    -else
-      button.btn.btn-primary Corte cerrado
+.float-right
+  -if @corte.abierto?
+    =link_to icon('fas', 'file-invoice-dollar'), edit_corte_path(@corte), class: "btn btn-primary btn-lg"
+  -else
+    button.btn.btn-primary Corte cerrado
 
 
 .table-responsive-sm

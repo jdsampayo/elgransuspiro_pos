@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   add_flash_types :info, :success, :warning, :danger
   protect_from_forgery with: :exception
-  helper_method :current_user, :matriz?, :current_corte
+  helper_method :current_user_session, :current_user, :current_corte
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private
@@ -12,13 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_session
-    return @current_session if @current_session
-    @current_session = Sesion.find
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = Sesion.find
   end
 
   def current_user
-    @current_user = current_session && current_session.record
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.usuario
   end
 
   def current_corte
@@ -33,10 +34,6 @@ class ApplicationController < ActionController::Base
     end
 
     @corte
-  end
-
-  def matriz?
-    Rails.application.config.x.sucursal == 'matriz'
   end
 
   rescue_from CanCan::AccessDenied do |exception|

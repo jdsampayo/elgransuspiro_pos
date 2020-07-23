@@ -15,17 +15,11 @@
         th(data-toggle='tooltip' data-placement='top' title='Propina')=icon('fas', 'donate')
         th(data-toggle='tooltip' data-placement='top' title='Acciones' width=200)=icon('fas', 'cog')
 
-    -if matriz?
-      tbody
-        - comandas.each do |comanda|
-          = render partial: "comandas/column", locals: { comanda: comanda }
+    tbody
+      - comandas.abiertas.each do |comanda|
+        = render partial: "comandas/column", locals: { comanda: comanda }
 
-    -else
-      tbody
-        - comandas.abiertas.each do |comanda|
+    -unless comandas.cerradas.empty?
+      tbody.table-brand
+        - comandas.cerradas.each do |comanda|
           = render partial: "comandas/column", locals: { comanda: comanda }
-
-      -unless comandas.cerradas.empty?
-        tbody.table-brand
-          - comandas.cerradas.each do |comanda|
-            = render partial: "comandas/column", locals: { comanda: comanda }
