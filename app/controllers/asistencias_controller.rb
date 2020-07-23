@@ -23,14 +23,7 @@ class AsistenciasController < ApplicationController
 
   # GET /asistencias
   def index
-    if matriz?
-      @q = Asistencia.includes([:corte, :mesero]).ransack(params[:q])
-      @asistencias = @q.result(distinct: true)
-    else
-      @asistencias = @corte.asistencias
-    end
-
-    @asistencias = @asistencias.order(created_at: :desc).page(params[:page])
+    @asistencias = @corte.asistencias.order(created_at: :desc).page(params[:page])
   end
 
   # GET /asistencias/1
@@ -53,8 +46,6 @@ class AsistenciasController < ApplicationController
     @asistencia.hora_entrada = Time.current
 
     if @asistencia.save
-      @asistencia.syncronize_create
-
       redirect_to asistencias_path, notice: "¡#{@asistencia.mesero}, tu asistencia quedó registrada!"
     else
       render :new
@@ -66,8 +57,6 @@ class AsistenciasController < ApplicationController
     @asistencia.hora_salida = Time.current
 
     if @asistencia.update(asistencia_params)
-      @asistencia.syncronize_update
-
       redirect_to asistencias_path, notice: "¡Que te vaya bien #{@asistencia.mesero}!"
     else
       render :edit
@@ -77,7 +66,6 @@ class AsistenciasController < ApplicationController
   # DELETE /asistencias/1
   def destroy
     @asistencia.discard
-    @asistencia.syncronize_destroy
 
     redirect_to asistencias_url, notice: 'Asistencia was successfully destroyed.'
   end

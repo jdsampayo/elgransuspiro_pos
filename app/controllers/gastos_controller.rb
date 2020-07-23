@@ -41,7 +41,6 @@ class GastosController < ApplicationController
     @gasto = Gasto.new(gasto_params)
 
     if @gasto.save
-      @gasto.syncronize_create
       redirect_to gastos_path, notice: 'Se agregó el gasto exitosamente.'
     else
       render :new
@@ -51,7 +50,6 @@ class GastosController < ApplicationController
   # PATCH/PUT /gastos/1
   def update
     if @gasto.update(gasto_params)
-      @gasto.syncronize_update
       redirect_to gastos_path, notice: 'Se actualizó exitosamente.'
     else
       render :edit
@@ -61,7 +59,6 @@ class GastosController < ApplicationController
   # DELETE /gastos/1
   def destroy
     @gasto.discard
-    @gasto.syncronize_destroy
     redirect_to gastos_url, notice: 'Eliminado.'
   end
 

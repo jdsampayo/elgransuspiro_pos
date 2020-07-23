@@ -9,16 +9,6 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :api do
-    resources :asistencias, defaults: { format: 'json' }
-    resources :desechables, defaults: { format: 'json' }
-    resources :articulos, defaults: { format: 'json' }
-    resources :gastos, defaults: { format: 'json' }
-    resources :comandas, defaults: { format: 'json' }
-    resources :cortes, defaults: { format: 'json' }
-    resources :meseros, defaults: { format: 'json' }
-  end
-
   resources :asistencias
   resources :desechables
   resources :conteos
@@ -68,9 +58,5 @@ Rails.application.routes.draw do
   get 'login', controller: 'sesiones', action: 'new', as: 'login'
   get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
 
-  if Rails.application.config.x.sucursal == 'matriz'
-    root 'contabilidad/cuentas#index'
-  else
-    root 'tableros#index'
-  end
+  root 'tableros#index'
 end

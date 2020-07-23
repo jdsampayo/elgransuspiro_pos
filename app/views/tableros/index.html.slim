@@ -1,66 +1,65 @@
 .container
   h1
     | Sucursal
-    small.ml-3 #{Rails.application.config.x.sucursal}
+    small.ml-3 (Navidad)
 
   h2 Actualmente
 
-  .row
+  .row.cards
     .col-lg-3.col-md-6
-      .card.card-brand.card-shadow-1
-        .card-heading
-          .row
-            .col-sm-3
-              i.fas.fa-users.fa-3x
-            .col-sm-9.text-right
-              .huge=@corte.asistencias.activas.count
-              div Personas trabajando
-        =link_to new_asistencia_path do
+      =link_to new_asistencia_path do
+        .card.card-brand.card-shadow-1
+          .card-heading
+            .row
+              .col-sm-3
+                i.fas.fa-users.fa-3x
+              .col-sm-9.text-right
+                .huge=@corte.asistencias.activas.count
+                div Personas trabajando
+          
           .card-footer
             span.float-left ¡Ya llegué!
             span.float-right
               i.fas.fa-arrow-circle-right
-            .clearfix
     .col-lg-3.col-md-6
-      .card.card-brand.card-shadow-1
-        .card-heading
-          .row
-            .col-sm-3
-              i.fas.fa-tasks.fa-3x
-            .col-sm-9.text-right
-              .huge=@corte.comandas.abiertas.count
-              div Comandas abiertas
-        =link_to comandas_path do
+      =link_to comandas_path do
+        .card.card-brand.card-shadow-1
+          .card-heading
+            .row
+              .col-sm-3
+                i.fas.fa-tasks.fa-3x
+              .col-sm-9.text-right
+                .huge=@corte.comandas.abiertas.count
+                div Comandas abiertas
+          .card-footer
+            span.float-left Detalle
+            span.float-right
+              i.fas.fa-arrow-circle-right
+    .col-lg-3.col-md-6
+      =link_to articulos_path do
+        .card.card-brand.card-shadow-1
+          .card-heading
+            .row
+              .col-sm-3
+                i.fas.fa-coffee.fa-3x
+              .col-sm-9.text-right
+                .huge=@total_de_articulos
+                div Artículos registrados
           .card-footer
             span.float-left Detalle
             span.float-right
               i.fas.fa-arrow-circle-right
             .clearfix
     .col-lg-3.col-md-6
-      .card.card-brand.card-shadow-1
-        .card-heading
-          .row
-            .col-sm-3
-              i.fas.fa-coffee.fa-3x
-            .col-sm-9.text-right
-              .huge=@total_de_articulos
-              div Artículos registrados
-        =link_to articulos_path do
-          .card-footer
-            span.float-left Detalle
-            span.float-right
-              i.fas.fa-arrow-circle-right
-            .clearfix
-    .col-lg-3.col-md-6
-      .card.card-brand.card-shadow-1
-        .card-heading
-          .row
-            .col-sm-3
-              i.fas.fa-shopping-cart.fa-3x
-            .col-sm-9.text-right
-              .huge 0
-              div Urgentes
-        a href="#"
+      a href="#"
+        .card.card-brand.card-shadow-1
+          .card-heading
+            .row
+              .col-sm-3
+                i.fas.fa-shopping-cart.fa-3x
+              .col-sm-9.text-right
+                .huge 0
+                div Urgentes
           .card-footer
             span.float-left Próximamente
             span.float-right

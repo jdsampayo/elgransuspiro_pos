@@ -34,4 +34,8 @@ class Mesero < ApplicationRecord
 
     @avatar_url ||= '/default.jpg'
   end
+
+  def self.por_asistir
+    Asistencia.meseros_del_dia_por_asistir
+  end
 end

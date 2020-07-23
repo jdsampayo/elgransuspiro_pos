@@ -16,24 +16,17 @@ class SesionesController < ApplicationController
   end
 
   def acceso_denegado
+    render layout: nil
   end
 
   def destroy
-    @sesion = Sesion.find
-    @sesion.destroy
-    respond_to do |format|
-      format.html { redirect_to root_path }
-    end
+    current_user_session.destroy if current_user_session
+    redirect_to login_url
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_sesion
-    @sesion = Sesion.find(params[:id])
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def sesion_params
-    params.require(:sesion).permit(:email, :password)
+    params.require(:sesion).permit(:email, :password, :remember_me)
   end
 end

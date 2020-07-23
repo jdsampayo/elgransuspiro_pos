@@ -56,7 +56,6 @@ class ArticulosController < ApplicationController
     @articulo = Articulo.new(articulo_params)
 
     if @articulo.save
-      @articulo.syncronize_create
       redirect_to @articulo, notice: 'Creado exitosamente.'
     else
       render :new
@@ -66,7 +65,6 @@ class ArticulosController < ApplicationController
   # PATCH/PUT /articulos/1
   def update
     if @articulo.update(articulo_params)
-      @articulo.syncronize_update
       redirect_to @articulo, notice: 'Actualizado exitosamente.'
     else
       render :edit
@@ -76,7 +74,6 @@ class ArticulosController < ApplicationController
   # DELETE /articulos/1
   def destroy
     @articulo.discard
-    @articulo.syncronize_destroy
 
     redirect_to articulos_url, notice: 'Eliminado.'
   end
