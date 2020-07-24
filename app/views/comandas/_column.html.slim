@@ -42,7 +42,7 @@ tr class=row_class(comanda, @id)
         =icon('fas', 'receipt')
       = link_to pay_comanda_path(comanda), class: "btn btn-outline-success", 'data-toggle' => "tooltip", 'data-placement' => "left", title: "Pagar" do
         =icon('fas', 'hand-holding-usd')
--else
+  -else
     td.actions
       button.btn.btn-outline-secondary.btn-disabled
         i.fas.fa-lock.fa-fw data-toggle="tooltip" data-placement="left" title="Comanda cerrada"

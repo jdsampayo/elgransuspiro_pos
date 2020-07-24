@@ -22,6 +22,7 @@ class Ability
       can :manage, Mesero
     end
 
+    can :branch, :tablero
     can :manage, Sesion 
   end
 end

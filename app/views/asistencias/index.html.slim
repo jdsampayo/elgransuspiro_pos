@@ -39,8 +39,7 @@ h1.float-left Asistencias
           td = asistencia.horas
           td = asistencia.retardo ? 'Si' : 'No'
           td
-            -unless matriz?
-              = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success btn-sm" if asistencia.puede_salir?
+            = link_to 'Registrar Salida', edit_asistencia_path(asistencia), class: "btn btn-success btn-sm" if asistencia.puede_salir?
 
 br
 
