@@ -29,6 +29,10 @@ class TablerosController < ApplicationController
     ).group_by_day(:created_at, time_zone: false).sum(:monto)
   end
 
+  def branch
+    cookies.permanent[:sucursal] = params[:nombre] if params[:nombre]
+  end
+
   private
     def set_corte
       @corte = current_corte

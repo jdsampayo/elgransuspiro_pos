@@ -99,7 +99,15 @@ class ComandasController < ApplicationController
   end
 
   def print
-    @comanda.print_ticket
+    if cookies[:sucursal]
+      ActionCable.server.broadcast("printer_channel:#{cookies[:sucursal]}", @comanda.to_text)
+    else
+      message = 'No está configurada la impresora en esta sucursal.'
+      redirect_to comandas_url(id: @comanda.id), flash: { error: message }
+      return
+    end
+
+    #@comanda.print_ticket
 
     redirect_to comandas_url(id: @comanda.id), notice: '¡Impresa!'
   rescue Errno::ENOENT

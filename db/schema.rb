@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_190911) do
+ActiveRecord::Schema.define(version: 2020_07_23_182129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -252,6 +252,13 @@ ActiveRecord::Schema.define(version: 2020_07_20_190911) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "roles"
+    t.integer "login_count", default: 0, null: false
+    t.integer "failed_login_count", default: 0, null: false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string "current_login_ip"
+    t.string "last_login_ip"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

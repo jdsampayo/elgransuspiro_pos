@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   resources :insumos
 
   namespace :admin do
@@ -57,6 +60,7 @@ Rails.application.routes.draw do
   get 'acceso_denegado', controller: 'sesiones', action: 'acceso_denegado', as: 'acceso_denegado'
   get 'login', controller: 'sesiones', action: 'new', as: 'login'
   get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
+  get 'sucursal', controller: 'tableros', action: 'branch', as: 'sucursal'
 
   root 'tableros#index'
 end
