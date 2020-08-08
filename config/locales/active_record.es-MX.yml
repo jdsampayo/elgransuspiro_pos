@@ -35,6 +35,11 @@ es-MX:
           attributes:
             mesero:
               required: "es requerido"
+        corte:
+          attributes:
+            sucursal:
+              required: "es requerido"
+
 
     models:
       sesion: "Sesión"

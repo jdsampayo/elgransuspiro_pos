@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   add_flash_types :info, :success, :warning, :danger
   protect_from_forgery with: :exception
-  helper_method :current_user_session, :current_user, :current_corte
+  helper_method :current_user_session, :current_user, :current_corte, :current_sucursal
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private
@@ -23,17 +23,34 @@ class ApplicationController < ActionController::Base
   end
 
   def current_corte
-    @corte = params[:corte_id].present? ? Corte.find(params[:corte_id]) : Corte.actual
+    @corte = if params[:corte_id].present?
+      if current_user.admin?
+        Corte.find(params[:corte_id])
+      else
+        raise "Forbidden"
+      end
+    else
+      Corte.actual(current_sucursal)
+    end
 
     if @corte.blank?
-      if Corte.first.abierto?
-        redirect_to edit_corte_path(Corte.first)
+      corte_sucursal = Corte.de_la_sucursal(current_sucursal).first
+      if corte_sucursal&.abierto?
+        redirect_to edit_corte_path(corte_sucursal)
       else
-        @corte = Corte.create(dia: Time.now, inicial: Corte.first.siguiente_dia)
+        @corte = Corte.create_next(current_sucursal)
       end
     end
 
     @corte
+  end
+
+  def current_sucursal
+    if cookies[:sucursal]
+      Sucursal.where(nombre: cookies[:sucursal]).take
+    else
+      raise "No current sucursal defined"
+    end
   end
 
   rescue_from CanCan::AccessDenied do |exception|

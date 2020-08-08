@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'
 
-  resources :insumos
-
+  # namespaces
   namespace :admin do
     resources :comandas
     
@@ -11,39 +10,6 @@ Rails.application.routes.draw do
       resources :comandas
     end
   end
-
-  resources :asistencias
-  resources :desechables
-  resources :conteos
-  resources :categorias
-  resources :cortes do
-    collection do
-      get :propinas
-    end
-    resources :comandas
-    resources :gastos
-    resources :asistencias
-  end
-  resources :extras
-  resources :ordenes
-  resources :comandas do
-    member do
-      get :pay
-      post :print
-      get :switch
-      patch :close
-    end
-  end
-  resources :gastos
-  resources :meseros
-  resources :articulos do
-    collection do
-      get :report
-    end
-  end
-  resources :cuentas
-  resources :insumos
-
   namespace :contabilidad do
     resources :cuentas, only: [:index, :new]
     resources :entradas, only: [:index, :new, :create, :destroy]
@@ -54,13 +20,49 @@ Rails.application.routes.draw do
     end
   end
 
+  # root resources
+  resources :articulos do
+    collection do
+      get :report
+    end
+  end
+  resources :asistencias
+  resources :categorias
+  resources :desechables
+  resources :comandas do
+    member do
+      get :pay
+      post :print
+      get :switch
+      patch :close
+    end
+  end
+  resources :conteos
+  resources :cortes do
+    collection do
+      get :propinas
+    end
+    resources :asistencias
+    resources :comandas
+    resources :gastos
+  end
+  resources :cuentas
+  resources :extras
+  resources :gastos
+  resources :insumos
+  resources :meseros
+  resources :ordenes
   resources :sesiones
+  resources :sucursales do
+    collection do
+      get :set
+    end
+  end
 
   get 'propinas', controller: 'cortes', action: 'propinas', as: 'propinas'
   get 'acceso_denegado', controller: 'sesiones', action: 'acceso_denegado', as: 'acceso_denegado'
   get 'login', controller: 'sesiones', action: 'new', as: 'login'
   get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
-  get 'sucursal', controller: 'tableros', action: 'branch', as: 'sucursal'
 
   root 'tableros#index'
 end

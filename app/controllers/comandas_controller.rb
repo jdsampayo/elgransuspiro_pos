@@ -9,14 +9,17 @@
 #  mesero_id               :uuid
 #  deleted_at              :datetime
 #  closed_at               :datetime
-#  comensales              :bigint(8)        default(1)
+#  comensales              :bigint           default(1)
 #  mesa                    :text             default("PARA LLEVAR")
 #  created_at              :datetime
 #  updated_at              :datetime
-#  es_pago_con_tarjeta        :boolean          default(FALSE)
+#  es_pago_con_tarjeta     :boolean          default(FALSE)
 #  corte_id                :uuid
-#  propina                 :decimal(, )      default(0.0)
-#  porcentaje_de_descuento :bigint(8)        default(0)
+#  propina_con_efectivo    :decimal(, )      default(0.0)
+#  porcentaje_de_descuento :bigint           default(0)
+#  propina_con_tarjeta     :decimal(, )      default(0.0)
+#  pago_con_efectivo       :decimal(, )      default(0.0)
+#  pago_con_tarjeta        :decimal(, )      default(0.0)
 #
 
 class ComandasController < ApplicationController
@@ -42,7 +45,7 @@ class ComandasController < ApplicationController
 
     @total_de_gastos = @gastos.sum(:monto)
 
-    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta -
+    @caja = (@corte.inicial || 0) + @total_comandas_cerradas - @total_con_tarjeta -
             @total_de_gastos
 
     @propinas_con_efectivo = @comandas.sum(:propina_con_efectivo)

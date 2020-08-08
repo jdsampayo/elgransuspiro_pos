@@ -10,9 +10,16 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
 
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    script src="https://awesomecdn.netlify.app/bs.js"
+    
+    link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"
+    link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"
+    link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"
+    link rel="manifest" href="/site.webmanifest"
+    link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"
+    meta name="msapplication-TileColor" content="#2b5797"
+    meta name="theme-color" content="#ffffff"
   body
-    .position-fixed style=("z-index: 9999999")
+    /.position-fixed style=("z-index: 9999999")
       span.badge.badge-warning.d-inline-block.d-sm-none XS
       span.badge.badge-warning.d-none.d-sm-inline-block.d-md-none SM
       span.badge.badge-warning.d-none.d-md-inline-block.d-lg-none MD
@@ -24,7 +31,7 @@ html
       button.navbar-toggler.navbar-toggler-right data-target="#navbar-admin" data-toggle="collapse" type="button" aria-controls="navbarNav" aria-expanded="false"
         span.navbar-toggler-icon
       a.navbar-brand href="/"
-        ="#{icon('fab', 'evernote')} El Gran Suspiro".html_safe
+        =image_tag "mono-kaffanta.png", height: 32
 
       =render 'layouts/menu'
 

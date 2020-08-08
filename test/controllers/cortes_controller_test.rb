@@ -6,7 +6,7 @@
 #  dia                :date
 #  inicial            :decimal(, )      default(0.0)
 #  ventas             :decimal(, )      default(0.0)
-#  gastos             :decimal(, )      default(0.0)
+#  sum_gastos         :decimal(, )      default(0.0)
 #  total              :decimal(, )      default(0.0)
 #  siguiente_dia      :decimal(, )      default(0.0)
 #  sobre              :decimal(, )      default(0.0)

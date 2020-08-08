@@ -5,10 +5,10 @@
 #  id           :uuid             not null, primary key
 #  mesero_id    :uuid
 #  corte_id     :uuid
-#  horas        :bigint(8)
-#  horas_extra  :bigint(8)
-#  retardo      :boolean
-#  falta        :boolean
+#  horas        :bigint
+#  horas_extra  :bigint
+#  retardo      :boolean          default(FALSE), not null
+#  falta        :boolean          default(FALSE), not null
 #  created_at   :datetime
 #  updated_at   :datetime
 #  hora_entrada :datetime
@@ -69,8 +69,8 @@ class Asistencia < ApplicationRecord
     horas.blank? && !falta
   end
 
-  def self.meseros_del_dia_por_asistir
-    registrados = Asistencia.where(corte: Corte.actual).pluck(:mesero_id)
+  def self.meseros_del_dia_por_asistir(current_sucursal)
+    registrados = Asistencia.where(corte: Corte.actual(current_sucursal)).pluck(:mesero_id)
     Mesero.kept.where.not(id: registrados)
   end
 end

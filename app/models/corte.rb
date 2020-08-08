@@ -22,6 +22,8 @@
 class Corte < ApplicationRecord
   include Discard::Model
 
+  belongs_to :sucursal
+
   has_many :conteos
   has_many :comandas
   has_many :gastos
@@ -34,11 +36,12 @@ class Corte < ApplicationRecord
     end
   end
 
-  validates :dia, uniqueness: true
+  validates :dia, uniqueness: {scope: :sucursal_id}
   validates :siguiente_dia, numericality: { greater_than_or_equal_to: 0 }, on: :update
   validates :sobre, numericality: { greater_than_or_equal_to: 0 }, on: :update
 
   default_scope { order(dia: :desc) }
+  scope :de_la_sucursal, ->(sucursal) { where(sucursal: sucursal) if sucursal }
 
   self.discard_column = :deleted_at
 
@@ -56,7 +59,7 @@ class Corte < ApplicationRecord
   end
 
   def to_s
-    dia.to_s
+    "#{sucursal}: #{dia}"
   end
 
   def cerrado?
@@ -178,9 +181,8 @@ class Corte < ApplicationRecord
     self.sobre_sin_propinas = sobre - propinas_con_tarjeta
   end
 
-  # Por si se quedan a trabajar despues de las 00:00am
-  def self.actual
-    Corte.find_by(dia: (Time.current).to_date)
+  def self.actual(sucursal)
+    Corte.find_by(dia: (Time.current).to_date, sucursal: sucursal)
   end
 
   def self.de_la_semana(inicio, campo=:ventas)
@@ -194,5 +196,13 @@ class Corte < ApplicationRecord
     Corte.where(dia: semana).pluck(:dia, campo).map do |corte|
       {I18n.localize(corte[0], format: "%a") => corte[1].to_f}
     end.reduce({}, :merge)
+  end
+
+  def self.create_next(sucursal)
+    Corte.create!(
+      dia: Time.now,
+      inicial: Corte.de_la_sucursal(sucursal).first&.siguiente_dia,
+      sucursal: sucursal
+    )
   end
 end

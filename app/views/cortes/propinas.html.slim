@@ -6,12 +6,14 @@ section
   table
     thead
       tr
+        th Sucursal
         th Día
         th Propinas
 
     tbody
       - @cortes.each do |corte|
         tr
+          td = corte.sucursal
           td = corte.dia
           td = corte.propinas
 

@@ -1,6 +1,12 @@
 = simple_form_for(@corte, html: { class: 'form-small' }) do |f|
   = f.error_notification
 
+  - unless @corte.errors&.full_messages.blank?
+    .alert.alert-danger
+      ul
+        - @corte.errors.full_messages.each do |message|
+          li=message
+
   .form-inputs
     .row
       .col-md-1
