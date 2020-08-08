@@ -90,14 +90,12 @@ class CortesController < ApplicationController
   def update
     if @corte.comandas_abiertas.present?
       redirect_to edit_corte_path(@corte), warning: 'Por favor, primero cierra las comandas abiertas'
-    else
-      if @corte.update(corte_params)
-        @corte.cerrar
+    elsif @corte.update(corte_params)
+      @corte.cerrar
 
-        redirect_to @corte, notice: 'El corte se cerró correctamente.'
-      else
-        render :edit
-      end
+      redirect_to @corte, notice: 'El corte se cerró correctamente.'
+    else
+      render :edit
     end
   end
 
