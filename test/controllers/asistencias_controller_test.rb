@@ -5,10 +5,10 @@
 #  id           :uuid             not null, primary key
 #  mesero_id    :uuid
 #  corte_id     :uuid
-#  horas        :bigint(8)
-#  horas_extra  :bigint(8)
-#  retardo      :boolean
-#  falta        :boolean
+#  horas        :bigint
+#  horas_extra  :bigint
+#  retardo      :boolean          default(FALSE), not null
+#  falta        :boolean          default(FALSE), not null
 #  created_at   :datetime
 #  updated_at   :datetime
 #  hora_entrada :datetime

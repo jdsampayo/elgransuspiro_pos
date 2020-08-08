@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_182129) do
+ActiveRecord::Schema.define(version: 2020_08_01_234027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -133,7 +133,9 @@ ActiveRecord::Schema.define(version: 2020_07_23_182129) do
     t.decimal "pagos_con_efectivo", default: "0.0"
     t.datetime "deleted_at"
     t.decimal "propinas"
+    t.uuid "sucursal_id"
     t.index ["deleted_at"], name: "idx_19796_index_cortes_on_deleted_at"
+    t.index ["sucursal_id"], name: "index_cortes_on_sucursal_id"
   end
 
   create_table "desechables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -244,6 +246,14 @@ ActiveRecord::Schema.define(version: 2020_07_23_182129) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sucursales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "nombre"
+    t.text "direccion"
+    t.string "telefono"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "usuarios", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "email"
     t.text "crypted_password"
@@ -266,6 +276,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_182129) do
   add_foreign_key "asistencias", "meseros", name: "asistencias_mesero_id_fkey"
   add_foreign_key "conteos", "articulos", name: "conteos_articulo_id_fkey"
   add_foreign_key "conteos", "cortes", name: "conteos_corte_id_fkey"
+  add_foreign_key "cortes", "sucursales"
   add_foreign_key "extra_ordenes", "extras", name: "extra_ordenes_extra_id_fkey"
   add_foreign_key "extra_ordenes", "ordenes", name: "extra_ordenes_orden_id_fkey"
   add_foreign_key "gastos", "cortes"

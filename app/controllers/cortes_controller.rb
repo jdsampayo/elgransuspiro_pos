@@ -6,7 +6,7 @@
 #  dia                :date
 #  inicial            :decimal(, )      default(0.0)
 #  ventas             :decimal(, )      default(0.0)
-#  gastos             :decimal(, )      default(0.0)
+#  sum_gastos         :decimal(, )      default(0.0)
 #  total              :decimal(, )      default(0.0)
 #  siguiente_dia      :decimal(, )      default(0.0)
 #  sobre              :decimal(, )      default(0.0)
@@ -109,6 +109,23 @@ class CortesController < ApplicationController
     end
 
     def corte_params
-      params.require(:corte).permit(:dia, :inicial, :ventas, :gastos, :total, :siguiente_dia, :sobre)
+      params.require(:corte).permit(
+        :dia,
+        :inicial,
+        :ventas,
+        :gastos,
+        :total,
+        :siguiente_dia,
+        :sobre,
+        :propinas,
+        :pagos_con_efectivo,
+        :propinas_con_efectivo,
+        :subtotal,
+        :pagos_con_tarjeta,
+        :propinas_con_tarjeta,
+        :sum_gastos,
+        :caja,
+        :sobre_sin_propinas
+      )
     end
 end

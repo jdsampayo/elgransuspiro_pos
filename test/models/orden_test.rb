@@ -5,7 +5,7 @@
 #  id              :uuid             not null, primary key
 #  articulo_id     :uuid
 #  comanda_id      :uuid
-#  cantidad        :bigint(8)
+#  cantidad        :bigint           default(1)
 #  precio_unitario :decimal(, )      default(0.0)
 #  created_at      :datetime
 #  updated_at      :datetime

@@ -5,10 +5,10 @@
 #  id           :uuid             not null, primary key
 #  mesero_id    :uuid
 #  corte_id     :uuid
-#  horas        :bigint(8)
-#  horas_extra  :bigint(8)
-#  retardo      :boolean
-#  falta        :boolean
+#  horas        :bigint
+#  horas_extra  :bigint
+#  retardo      :boolean          default(FALSE), not null
+#  falta        :boolean          default(FALSE), not null
 #  created_at   :datetime
 #  updated_at   :datetime
 #  hora_entrada :datetime
@@ -20,6 +20,7 @@ class AsistenciasController < ApplicationController
 
   before_action :set_corte, only: [:index, :show, :new, :create]
   before_action :set_asistencia, only: [:show, :edit, :update, :destroy]
+  before_action :set_meseros, only: [:new, :edit]
 
   # GET /asistencias
   def index
@@ -78,6 +79,12 @@ class AsistenciasController < ApplicationController
 
     def set_asistencia
       @asistencia = Asistencia.find(params[:id])
+    end
+
+    def set_meseros
+      @meseros = Mesero.por_asistir(current_sucursal).order(:nombre).map do |mesero|
+        [mesero.nombre, mesero.id, {data: {'img-src' => mesero.public_avatar_url}}]
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -2,13 +2,21 @@
 #
 # Table name: usuarios
 #
-#  id                :uuid             not null, primary key
-#  email             :text
-#  crypted_password  :text
-#  password_salt     :text
-#  persistence_token :text
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                 :uuid             not null, primary key
+#  email              :text
+#  crypted_password   :text
+#  password_salt      :text
+#  persistence_token  :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  roles              :string
+#  login_count        :integer          default(0), not null
+#  failed_login_count :integer          default(0), not null
+#  last_request_at    :datetime
+#  current_login_at   :datetime
+#  last_login_at      :datetime
+#  current_login_ip   :string
+#  last_login_ip      :string
 #
 
 class Usuario < ActiveRecord::Base
@@ -84,5 +92,12 @@ class Usuario < ActiveRecord::Base
 
   def waitress?
     roles.include?(:waitress)
+  end
+
+  def self.pretty_print
+    all.each do |user|
+      print user.email, user.roles, "\n"
+    end
+    nil
   end
 end

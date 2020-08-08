@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :mesero, label: 'Persona', collection: Mesero.por_asistir.order(:nombre).map{|mesero| [mesero.nombre, mesero.id, {data: {'img-src' => mesero.public_avatar_url}}]}, input_html: { class: 'image-picker' }
+    = f.association :mesero, label: 'Persona', collection: @meseros, input_html: { class: 'image-picker' }
 
     = f.input :corte_id, as: :hidden
 

@@ -1,0 +1,16 @@
+h1.float-left Sucursales
+
+table
+  thead
+    tr
+      th Nombre
+      th Dirección
+      th Teléfono
+      th
+
+  tbody
+    - @sucursales.each do |sucursal|
+      tr
+        td = sucursal.nombre
+        td = sucursal.direccion
+        td = sucursal.telefono

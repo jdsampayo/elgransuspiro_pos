@@ -4,12 +4,12 @@
 #
 #  id             :uuid             not null, primary key
 #  nombre         :text
-#  en_bodega      :bigint(8)
-#  cantidad       :bigint(8)
+#  en_bodega      :bigint
+#  cantidad       :bigint
 #  costo_unitario :decimal(, )
 #  created_at     :datetime
 #  updated_at     :datetime
-#  limite         :bigint(8)
+#  limite         :bigint
 #  deleted_at     :datetime
 #
 
