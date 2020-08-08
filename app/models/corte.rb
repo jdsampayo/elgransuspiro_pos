@@ -36,7 +36,7 @@ class Corte < ApplicationRecord
     end
   end
 
-  validates :dia, uniqueness: {scope: :sucursal_id}
+  validates :dia, uniqueness: { scope: :sucursal_id }
   validates :siguiente_dia, numericality: { greater_than_or_equal_to: 0 }, on: :update
   validates :sobre, numericality: { greater_than_or_equal_to: 0 }, on: :update
 
@@ -182,7 +182,7 @@ class Corte < ApplicationRecord
   end
 
   def self.actual(sucursal)
-    Corte.find_by(dia: (Time.current).to_date, sucursal: sucursal)
+    Corte.find_by(dia: Time.current.to_date, sucursal: sucursal)
   end
 
   def self.de_la_semana(inicio, campo=:ventas)

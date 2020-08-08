@@ -95,7 +95,7 @@ class Usuario < ActiveRecord::Base
   end
 
   def self.pretty_print
-    self.all.each do |user|
+    all.each do |user|
       print user.email, user.roles, "\n"
     end
     nil
