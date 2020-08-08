@@ -45,7 +45,9 @@ class ComandasController < ApplicationController
 
     @total_de_gastos = @gastos.sum(:monto)
 
-    @caja = (@corte.inicial || 0) + @total_comandas_cerradas - @total_con_tarjeta -
+    @corte.inicial ||= 0
+
+    @caja = @corte.inicial + @total_comandas_cerradas - @total_con_tarjeta -
             @total_de_gastos
 
     @propinas_con_efectivo = @comandas.sum(:propina_con_efectivo)

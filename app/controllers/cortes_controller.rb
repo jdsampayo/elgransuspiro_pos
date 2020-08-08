@@ -88,12 +88,16 @@ class CortesController < ApplicationController
 
   # PATCH/PUT /cortes/1
   def update
-    if @corte.update(corte_params)
-      @corte.cerrar
-
-      redirect_to @corte, notice: 'El corte se cerró correctamente.'
+    if @corte.comandas_abiertas.present?
+      redirect_to edit_corte_path(@corte), warning: 'Por favor, primero cierra las comandas abiertas'
     else
-      render :edit
+      if @corte.update(corte_params)
+        @corte.cerrar
+
+        redirect_to @corte, notice: 'El corte se cerró correctamente.'
+      else
+        render :edit
+      end
     end
   end
 
