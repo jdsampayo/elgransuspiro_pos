@@ -26,6 +26,7 @@ class Corte < ApplicationRecord
 
   has_many :conteos
   has_many :comandas
+  has_many :comandas_abiertas, -> { abiertas }, class_name: 'Comanda'
   has_many :gastos
   has_many :ordenes, through: :comandas
   has_many :asistencias
@@ -101,7 +102,7 @@ class Corte < ApplicationRecord
   end
 
   def finalize_comandas
-    Comanda.del_dia(dia).update_all(closed_at: Time.now)
+    comandas.update_all(closed_at: Time.now)
   end
 
   def registros_contables!
@@ -163,6 +164,8 @@ class Corte < ApplicationRecord
   end
 
   def set_subtotals
+    self.inicial ||= 0
+
     comandas_del_dia = comandas
 
     self.ventas = comandas_del_dia.sum(:total)
