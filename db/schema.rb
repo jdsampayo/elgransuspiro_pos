@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_234027) do
+ActiveRecord::Schema.define(version: 2020_08_08_201843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_234027) do
     t.decimal "propina_con_tarjeta", default: "0.0"
     t.decimal "pago_con_efectivo", default: "0.0"
     t.decimal "pago_con_tarjeta", default: "0.0"
+    t.integer "folio"
     t.index ["closed_at"], name: "idx_19779_index_comandas_on_closed_at"
     t.index ["deleted_at"], name: "idx_19779_index_comandas_on_deleted_at"
     t.index ["mesero_id"], name: "idx_19779_index_comandas_on_mesero_id"

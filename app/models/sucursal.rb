@@ -11,6 +11,7 @@
 #
 class Sucursal < ApplicationRecord
   has_many :cortes
+  has_many :comandas, through: :cortes
 
   validates :nombre, uniqueness: true
 

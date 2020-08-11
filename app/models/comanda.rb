@@ -25,13 +25,16 @@
 class Comanda < ApplicationRecord
   include Discard::Model
 
+  before_create :set_folio
+
   belongs_to :corte
   belongs_to :mesero
+
+  has_one :sucursal, through: :corte
   has_many :ordenes, inverse_of: :comanda
   has_many :articulos, through: :ordenes
 
   validates :mesa, :mesero, presence: true
-
   validates :descuento, :total, :venta, numericality: {
     greater_than_or_equal_to: 0
   }
@@ -99,7 +102,7 @@ class Comanda < ApplicationRecord
   end
 
   def to_s
-    id
+    folio
   end
 
   def tiempo
@@ -118,10 +121,6 @@ class Comanda < ApplicationRecord
     closed_at.blank?
   end
 
-  def folio
-    id.first(8)
-  end
-
   def to_text
     texto = []
 
@@ -130,8 +129,8 @@ class Comanda < ApplicationRecord
     texto << "   #{I18n.l created_at, format: :short}"
     texto << "".ljust(32, '-')
 
-    texto << "Folio:  #{folio.to_s.ljust(9, ' ')} Comensales: #{comensales.to_s.rjust(2, ' ')}"
-    texto << "Mesa: #{mesa.ljust(11, ' ')} Mesero: #{mesero.to_s[0,5].rjust(6, ' ')}"
+    texto << "Folio:  #{folio.to_s.rjust(6, ' ')} Sucursal: #{sucursal.to_s.ljust(7, ' ')}"
+    texto << "Mesero: #{mesero.to_s[0,5].rjust(6, ' ')} Comensales: #{comensales.to_s.rjust(5, ' ')}"
 
     texto << "".ljust(32, '-')
 
@@ -175,5 +174,10 @@ class Comanda < ApplicationRecord
     unless pago == venta
       errors.add(:pago_con_efectivo, "La suma de los montos de pago debe ser: #{venta} y actualmente es: #{pago}")
     end
+  end
+
+  def set_folio
+    max_folio = sucursal.comandas.maximum(:folio)
+    self.folio = max_folio.to_i + 1
   end
 end

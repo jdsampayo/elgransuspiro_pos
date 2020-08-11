@@ -20,4 +20,14 @@ namespace :one_time do
     #Asistencia.all.each do |obj| obj.uuid = SecureRandom.uuid; obj.save; end
   end
 
+  desc "Generate all Folios for comandas"
+  task generate_folios: :environment do
+    Sucursal.all.each do |sucursal|
+      sucursal.comandas.all.order(:created_at).each do |comanda|
+        comanda.set_folio
+        comanda.save
+      end
+    end
+  end
+
 end
