@@ -20,4 +20,7 @@
 #
 
 module CortesHelper
+  def describe_corte(corte)
+    "#{corte.sucursal} - #{l(corte.dia, format: :long)}"
+  end
 end

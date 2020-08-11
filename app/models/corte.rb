@@ -60,7 +60,7 @@ class Corte < ApplicationRecord
   end
 
   def to_s
-    "#{sucursal}: #{dia}"
+    "#{sucursal} - #{dia}"
   end
 
   def cerrado?

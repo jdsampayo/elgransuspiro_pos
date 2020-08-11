@@ -1,6 +1,6 @@
 h1.float-left
   | Comandas
-  small.ml-3=l @corte.dia, format: :long
+  small.ml-3=describe_corte(@corte)
 
 .float-right
   -if @corte.abierto?
