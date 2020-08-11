@@ -25,14 +25,12 @@ class Mesero < ApplicationRecord
 
   def public_avatar_url
     if self.avatar&.attachment
-      if Rails.env.development?
-        @avatar_url = Rails.application.routes.url_helpers.rails_blob_url(self.avatar, only_path: true)
-      else
-        @avatar_url = self.avatar&.service_url&.split("?")&.first
-      end
+      @avatar_url = Rails.application.routes.url_helpers.rails_blob_url(self.avatar, only_path: true)
     end
 
     @avatar_url ||= '/default.jpg'
+  rescue
+    @avatar_url = '/default.jpg'
   end
 
   def self.por_asistir(current_sucursal)
