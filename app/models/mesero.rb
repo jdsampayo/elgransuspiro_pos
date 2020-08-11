@@ -19,6 +19,8 @@ class Mesero < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  DEFAULT_AVATAR = '/default-avatar.png'.freeze
+
   def to_s
     nombre
   end
@@ -28,9 +30,9 @@ class Mesero < ApplicationRecord
       @avatar_url = Rails.application.routes.url_helpers.rails_blob_url(self.avatar, only_path: true)
     end
 
-    @avatar_url ||= '/default.jpg'
+    @avatar_url ||= DEFAULT_AVATAR
   rescue
-    @avatar_url = '/default.jpg'
+    @avatar_url = DEFAULT_AVATAR
   end
 
   def self.por_asistir(current_sucursal)
