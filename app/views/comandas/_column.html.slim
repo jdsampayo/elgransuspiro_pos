@@ -1,6 +1,8 @@
 tr class=row_class(comanda, @id)
   td
-    = link_to comanda.mesa.titleize, comanda
+    = link_to comanda.folio, comanda
+  td
+    small= comanda.mesa.titleize
   td
     small= comanda.mesero
   td

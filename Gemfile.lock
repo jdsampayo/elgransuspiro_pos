@@ -81,6 +81,9 @@ GEM
       activerecord (>= 5.2, < 6.1)
       activesupport (>= 5.2, < 6.1)
       request_store (~> 1.0)
+    auto_increment (1.5.1)
+      activerecord (>= 4.0, < 6.1)
+      activesupport (>= 4.0, < 6.1)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     autoprefixer-rails (9.8.5)
@@ -336,6 +339,7 @@ DEPENDENCIES
   active_link_to
   annotate
   authlogic (~> 6.1.0)
+  auto_increment
   auto_strip_attributes (~> 2.6)
   bcrypt (~> 3.1.15)
   bootstrap (~> 4.5.0)
