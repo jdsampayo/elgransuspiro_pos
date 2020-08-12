@@ -88,7 +88,7 @@ class CortesController < ApplicationController
 
   # PATCH/PUT /cortes/1
   def update
-    if @corte.comandas_abiertas.present?
+    if @corte.comandas_abiertas.kept.present?
       redirect_to edit_corte_path(@corte), warning: 'Por favor, primero cierra las comandas abiertas'
     elsif @corte.update(corte_params)
       @corte.cerrar

@@ -52,11 +52,11 @@ class Corte < ApplicationRecord
   GASTOS_LIMITE = 100
 
   def propinas_con_efectivo
-    comandas.sum(:propina_con_efectivo)
+    comandas.kept.sum(:propina_con_efectivo)
   end
 
   def propinas_con_tarjeta
-    comandas.sum(:propina_con_tarjeta)
+    comandas.kept.sum(:propina_con_tarjeta)
   end
 
   def to_s
@@ -166,7 +166,7 @@ class Corte < ApplicationRecord
   def set_subtotals
     self.inicial ||= 0
 
-    comandas_del_dia = comandas
+    comandas_del_dia = comandas.kept
 
     self.ventas = comandas_del_dia.sum(:total)
     self.pagos_con_tarjeta = comandas_del_dia.sum(:pago_con_tarjeta)
@@ -174,7 +174,7 @@ class Corte < ApplicationRecord
 
     self.subtotal = inicial + pagos_con_efectivo
 
-    self.sum_gastos = gastos.sum(:monto)
+    self.sum_gastos = gastos.kept.sum(:monto)
     self.total = inicial + pagos_con_efectivo - sum_gastos
     self.sobre = total - siguiente_dia
 
