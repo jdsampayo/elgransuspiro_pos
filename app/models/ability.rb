@@ -2,10 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    alias_action :new, :create, :edit, :update, :destroy, to: :pos
+
     user ||= Usuario.new
 
     if user.admin?
       can :manage, :all
+      cannot :pos, Comanda
+      cannot :pos, Gasto
+      cannot :pos, Corte
+      cannot :pos, Asistencia
     end
 
     if user.waitress?
@@ -14,6 +20,7 @@ class Ability
       can :manage, Asistencia
       can :manage, Comanda
       can :manage, Gasto
+      can [:index, :set], Sucursal
     end
 
     if user.manager?
@@ -22,7 +29,6 @@ class Ability
       can :manage, Mesero
     end
 
-    can :branch, :tablero
     can :manage, Sesion 
   end
 end

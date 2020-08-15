@@ -39,6 +39,7 @@
           =submenu_link 'Hoja de Balance', contabilidad_reportes_balance_sheet_path
           =submenu_link 'Estado de Resultados', contabilidad_reportes_income_statement_path
 
-  = link_to icon('fas', 'plus') + " Comanda", new_comanda_path, class: 'btn btn-outline-success mr-3'
+  - if current_user.waitress?
+    = link_to icon('fas', 'plus') + " Comanda", new_comanda_path, class: 'btn btn-outline-success mr-3'
 
   = link_to "#{icon('fas', 'sign-out-alt')} Salir".html_safe, logout_path, class: 'btn btn-outline-light'
