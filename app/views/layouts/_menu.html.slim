@@ -16,8 +16,10 @@
         =icon('fas', 'users')
         |  Personas
       .dropdown-menu aria-labelledby='dropdown_inventario'
-        =submenu_link "#{icon('fas', 'concierge-bell')} Meseros".html_safe, meseros_path
-        =submenu_link "#{icon('fas', 'user-check')} Asistencias".html_safe, asistencias_path
+        - if current_user.admin?
+          =submenu_link "#{icon('fas', 'concierge-bell')} Meseros".html_safe, meseros_path
+        - if current_user.waitress?
+          =submenu_link "#{icon('fas', 'user-check')} Asistencias".html_safe, asistencias_path
 
     - if current_user.manager?
       li.nav-item.dropdown
