@@ -27,7 +27,7 @@ html
       span.badge.badge-warning.d-none.d-xl-inline-block XL
 
 
-    nav.navbar.navbar-expand-lg.navbar-dark.fixed-top
+    nav.navbar.navbar-expand-lg.fixed-top class=(current_user.admin? ? 'navbar-dark bg-danger' : 'navbar-dark')
       button.navbar-toggler.navbar-toggler-right data-target="#navbar-admin" data-toggle="collapse" type="button" aria-controls="navbarNav" aria-expanded="false"
         span.navbar-toggler-icon
       a.navbar-brand href="/"

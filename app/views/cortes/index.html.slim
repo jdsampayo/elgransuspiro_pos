@@ -15,34 +15,26 @@ section
     table
       thead
         tr
+          th Sucursal
           th Día
           th Inicial
-          th
-            | (+) Ventas
-          th
-            | (-) Con Tarjeta
-          th
-            | (-) Gastos
-          th
-            | (=) Caja Chica
-          th
-            | (-) Siguiente Día
-          th
-            | (=) Caja Fuerte
+          th Ventas
+          th Gastos
+          th Banco
+          th Caja Fuerte
           th Propinas
 
       tbody
         - @cortes.each do |corte|
           tr
+            td = corte.sucursal
             td = link_to corte.dia, corte
             td = corte.inicial
             td class=(corte.ventas > Corte::VENTAS_LIMITE ? 'table-success' : '')
               = corte.ventas
-            td= corte.pagos_con_tarjeta
             td class=(corte.sum_gastos > Corte::GASTOS_LIMITE ? 'table-danger' : '')
               = corte.sum_gastos
-            td = corte.caja_chica
-            td = corte.siguiente_dia
+            td = corte.pagos_con_tarjeta
             td = corte.sobre
             td = corte.propinas
 
