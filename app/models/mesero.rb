@@ -19,7 +19,7 @@ class Mesero < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  DEFAULT_AVATAR = '/default-avatar.png'.freeze
+  DEFAULT_AVATAR = '/default-avatar.png?v=2'.freeze
 
   def to_s
     nombre
