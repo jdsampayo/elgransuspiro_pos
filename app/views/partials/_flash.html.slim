@@ -1,8 +1,10 @@
 div class="toast #{bootstrap_class_for(type)}" data-delay="3000" role="alert"
   .toast-header
+    svg.bd-placeholder-img.rounded.mr-2 focusable="false" height="20" preserveaspectratio=("xMidYMid slice") role="img" width="20" xmlns="http://www.w3.org/2000/svg" 
+      rect fill="#007aff" height="100%" width="100%" 
     strong.mr-auto.text-primary Mensaje
     small.text-muted justo ahora
     button.ml-2.mb-1.close aria-label="Close" data-dismiss="toast" type="button"
-      span aria-hidden="true"  ×
+      span aria-hidden="true" ×
   .toast-body
     = content

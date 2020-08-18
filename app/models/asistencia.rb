@@ -32,6 +32,10 @@ class Asistencia < ApplicationRecord
     intermedio: 19
   }.freeze
 
+  def to_s
+    "#{mesero} (#{hora_entrada&.strftime('%R')} - #{hora_salida&.strftime('%R')})"
+  end
+
   def calcular_horas
     self.horas = ((hora_salida - hora_entrada) / 1.hour).to_i if hora_salida
   end

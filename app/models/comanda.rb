@@ -94,7 +94,7 @@ class Comanda < ApplicationRecord
   end
 
   def set_totales
-    ordenes.map(&:guardar_precios_historicos)
+    ordenes.reject { |orden| orden.articulo.nil? }.map(&:set_precios_historicos)
 
     self.venta = ordenes.map(&:precio).sum
     self.descuento = self.venta * self.porcentaje_de_descuento / 100
