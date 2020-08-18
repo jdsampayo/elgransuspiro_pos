@@ -24,7 +24,7 @@ class Orden < ApplicationRecord
 
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
-  before_create :set_precios_historicos
+  before_save :set_precios_historicos
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
@@ -39,7 +39,7 @@ class Orden < ApplicationRecord
   end
 
   def set_precios_historicos
-    self.precio_unitario ||= articulo.precio + precio_extras 
+    self.precio_unitario = articulo.precio + precio_extras 
   end
 
   def descontar_desechables
