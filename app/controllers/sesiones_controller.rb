@@ -8,7 +8,7 @@ class SesionesController < ApplicationController
 
     respond_to do |format|
       if @sesion.save
-        format.html { redirect_to root_path, notice: '¡Ha iniciado sesión!' }
+        format.html { redirect_to root_path, notice: 'Ha iniciado sesión satisfactoriamente.' }
       else
         format.html { render :new }
       end

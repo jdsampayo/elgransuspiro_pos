@@ -3,11 +3,11 @@ h1.float-left
   small.ml-3=describe_corte(@corte)
 
 .float-right
-  -if @corte.abierto?
-    =link_to icon('fas', 'file-invoice-dollar'), edit_corte_path(@corte), class: "btn btn-primary btn-lg"
-  -else
-    button.btn.btn-primary Corte cerrado
-
+  -if current_user.waitress?
+    -if @corte.abierto?
+      =link_to icon('fas', 'file-invoice-dollar'), edit_corte_path(@corte), class: "btn btn-primary btn-lg"
+    -else
+      button.btn.btn-primary Corte cerrado
 
 .table-responsive-sm
   =render partial: "table", locals: { comandas: @comandas }

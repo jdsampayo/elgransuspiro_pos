@@ -4,7 +4,7 @@
     =menu_link "#{icon('fas', 'columns')} Tablero".html_safe, root_path
 
     - if current_user.admin?
-      =menu_link 'Cortes', cortes_path
+      =menu_link "#{icon('fas', 'money-check-alt')} Cortes".html_safe, cortes_path
 
     - if current_user.waitress?
       =menu_link "#{icon('fas', 'scroll')} Comandas".html_safe, comandas_path
@@ -31,7 +31,7 @@
           =submenu_link "#{icon('fas', 'toilet-paper')} Insumos".html_safe, insumos_path
           =submenu_link "#{icon('fas', 'shopping-bag')} Desechables".html_safe, desechables_path
 
-      li.nav-item.dropdown
+      /li.nav-item.dropdown
         a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' Contabilidad
         .dropdown-menu aria-labelledby='dropdown_contabilidad'
           =submenu_link 'Libro Mayor', contabilidad_cuentas_path

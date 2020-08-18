@@ -5,6 +5,7 @@
 @import font-awesome
 @import selectize-bootstrap
 @import image-picker
+
 @import sesiones
 @import tablero
 @import asistencias
@@ -18,33 +19,8 @@ body
   line-height: 1.5
   color: #495057
 
-nav.navbar.navbar-dark
-  min-height: 4rem
-  background-color: $brand
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1)
-
-  .dropdown-menu
-    background-color: $brand
-    border-top: none
-
-    .dropdown-item
-      color: rgba(255, 255, 255, 0.5)
-      &:hover, &.active
-        color: white
-        background-color: rgba(255,255,255,.05)
-
-  .nav-link.active
-    font-weight: 500
-
 .toast-container
   z-index: -1
-
-.toast
-  background: $brand
-  color: white
-
-  .text-primary
-    color: $brand!important
 
 .front-100
   z-index: 100!important
@@ -79,7 +55,7 @@ h1
 
     tbody.table-brand
       tr
-        background-color: lighten($brand, 75)
+        background-color: lighten(red, 75)
 
       &::before
         content: ''
@@ -113,7 +89,7 @@ tr.table-dark, .table-dark > th, .table-dark > td
 
 @keyframes yellowfade
   from
-    background: $brand-secondary
+    background: yellow
 
   to
     background: transparent

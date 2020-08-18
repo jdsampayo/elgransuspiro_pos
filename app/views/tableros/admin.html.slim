@@ -1,4 +1,17 @@
 .container
   h1 Admin
 
-  h2 Actualmente
+  h2 Situación Actual
+
+  .card-group
+    - Sucursal.all.each do |sucursal|
+      .card
+        .card-header=sucursal
+        .card-body
+          h5.card-title Ventas
+          h6.card-subtitle.mb-2.text-muted #{sucursal.last_corte.ventas}
+        ul.list-group.list-group-flush
+          - sucursal.last_corte.asistencias.each do |asistencia|
+            li.list-group-item=asistencia
+        .card-body
+          =link_to 'Detalle', corte_comandas_path(sucursal.last_corte), class: 'card-link'

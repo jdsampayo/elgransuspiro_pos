@@ -4,23 +4,24 @@ h1.float-md-left
 
 .float-md-right
   .actions
-    - if @comanda.abierta?
-      = link_to edit_comanda_path(@comanda), class: "btn btn-primary btn" do
-        =icon('fas', 'pencil-alt')
-      = link_to print_comanda_path(@comanda), method: :post, class: "btn btn-info", data: { disable_with: "Imprimiendo..." } do
-        =icon('fas', 'receipt')
-      = link_to pay_comanda_path(@comanda), class: "btn btn-success" do
-        =icon('fas', 'hand-holding-usd')
-      = link_to @comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
-        =icon('fas', 'trash')
+    - if current_user.waitress?
+      - if @comanda.abierta?
+        = link_to edit_comanda_path(@comanda), class: "btn btn-primary btn" do
+          =icon('fas', 'pencil-alt')
+        = link_to print_comanda_path(@comanda), method: :post, class: "btn btn-info", data: { disable_with: "Imprimiendo..." } do
+          =icon('fas', 'receipt')
+        = link_to pay_comanda_path(@comanda), class: "btn btn-success" do
+          =icon('fas', 'hand-holding-usd')
+        = link_to @comanda, data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger" do
+          =icon('fas', 'trash')
 
-    - else
-      button.btn.btn-secondary Comanda cerrada
+      - else
+        button.btn.btn-secondary Comanda cerrada
 
 .clearfix
 
 = render @comanda
 
-= link_to 'Regresar', comandas_path, class: "btn btn-primary"
+= link_to 'Regresar', :back, class: "btn btn-primary"
 br
 br

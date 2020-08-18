@@ -20,9 +20,11 @@ class Orden < ApplicationRecord
   belongs_to :comanda
   has_many :extra_ordenes
 
+  validates :articulo_id, presence: true
+
   accepts_nested_attributes_for :extra_ordenes, reject_if: :all_blank, allow_destroy: true
 
-  before_save :guardar_precios_historicos
+  before_create :set_precios_historicos
 
   scope :ordered, -> { includes(:articulo).order('articulos.nombre') }
 
@@ -36,8 +38,8 @@ class Orden < ApplicationRecord
     extra_ordenes.map(&:precio).sum
   end
 
-  def guardar_precios_historicos
-    self.precio_unitario = articulo.precio + precio_extras
+  def set_precios_historicos
+    self.precio_unitario ||= articulo.precio + precio_extras 
   end
 
   def descontar_desechables

@@ -18,4 +18,8 @@ class Sucursal < ApplicationRecord
   def to_s
     nombre.capitalize
   end
+
+  def last_corte
+    cortes.first
+  end
 end

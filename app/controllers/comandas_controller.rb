@@ -25,7 +25,7 @@
 class ComandasController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_corte, only: [:index, :show, :new, :create]
+  before_action :set_corte, only: [:index, :new, :create]
   before_action :check_corte, only: [:new, :create]
   before_action :set_comanda, only: [:show, :edit, :update, :destroy, :pay, :close, :print]
   before_action :check_comanda, only: [:edit, :update, :destroy]
@@ -60,6 +60,7 @@ class ComandasController < ApplicationController
 
   # GET /comandas/1
   def show
+    @corte = @comanda.corte
   end
 
   # GET /comandas/new

@@ -2,6 +2,12 @@ h1
   | Corte
   small.text-muted<=l @corte.dia, format: :long
 
+  .float-md-right
+    .actions
+      = link_to "Comandas", corte_comandas_path(@corte), class: "btn btn-primary btn"
+
+  .clearfix
+
 .row
   .col-md-1
   .col-md-3
