@@ -9,7 +9,7 @@
         .card-header=sucursal
         .card-body
           h5.card-title Ventas
-          h6.card-subtitle.mb-2.text-muted #{sucursal.last_corte.ventas}
+          h6.card-subtitle.mb-2.text-muted #{sucursal&.last_corte&.calculate_ventas}
         ul.list-group.list-group-flush
           - sucursal.last_corte.asistencias.each do |asistencia|
             li.list-group-item=asistencia

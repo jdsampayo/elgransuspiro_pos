@@ -168,7 +168,7 @@ class Corte < ApplicationRecord
 
     comandas_del_dia = comandas.kept
 
-    self.ventas = comandas_del_dia.sum(:total)
+    self.ventas = calculate_ventas
     self.pagos_con_tarjeta = comandas_del_dia.sum(:pago_con_tarjeta)
     self.pagos_con_efectivo = comandas_del_dia.sum(:pago_con_efectivo)
 
@@ -207,5 +207,9 @@ class Corte < ApplicationRecord
       inicial: Corte.de_la_sucursal(sucursal).first&.siguiente_dia,
       sucursal: sucursal
     )
+  end
+
+  def calculate_ventas
+    comandas.kept.sum(:total)
   end
 end
