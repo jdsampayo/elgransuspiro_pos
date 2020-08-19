@@ -33,7 +33,7 @@ class Asistencia < ApplicationRecord
   }.freeze
 
   def to_s
-    "#{mesero} (#{hora_entrada&.strftime('%R')} - #{hora_salida&.strftime('%R')})"
+    "#{mesero} registró asistencia: #{hora_entrada&.strftime('%R')} - #{hora_salida&.strftime('%R')}"
   end
 
   def calcular_horas

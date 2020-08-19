@@ -184,6 +184,18 @@ class Corte < ApplicationRecord
     self.sobre_sin_propinas = sobre - propinas_con_tarjeta
   end
 
+  def calculate_ventas
+    comandas.kept.sum(:total)
+  end
+
+  def producto_mas_vendido
+    count_products.max{ |a,b| a.cantidad <=> b.cantidad }
+  end
+
+  def count_products
+    ordenes.select('articulo_id, sum("cantidad") as cantidad').group('articulo_id')
+  end
+
   def self.actual(sucursal)
     Corte.find_by(dia: Time.current.to_date, sucursal: sucursal)
   end
@@ -207,9 +219,5 @@ class Corte < ApplicationRecord
       inicial: Corte.de_la_sucursal(sucursal).first&.siguiente_dia,
       sucursal: sucursal
     )
-  end
-
-  def calculate_ventas
-    comandas.kept.sum(:total)
   end
 end

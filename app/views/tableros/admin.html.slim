@@ -5,13 +5,14 @@
 
   .card-group
     - Sucursal.all.each do |sucursal|
+      - corte = sucursal&.last_corte
       .card
         .card-header=sucursal
         .card-body
-          h5.card-title Ventas
-          h6.card-subtitle.mb-2.text-muted #{sucursal&.last_corte&.calculate_ventas}
+          h5.card-title Ventas: #{number_to_currency(corte.calculate_ventas)}
+          h6.card-subtitle.mb-2.text-muted Lo más vendido hoy es #{Articulo.find(corte.producto_mas_vendido.articulo_id)}: #{corte.producto_mas_vendido.cantidad}
         ul.list-group.list-group-flush
-          - sucursal.last_corte.asistencias.each do |asistencia|
+          - corte.asistencias.each do |asistencia|
             li.list-group-item=asistencia
-        .card-body
-          =link_to 'Detalle', corte_comandas_path(sucursal.last_corte), class: 'card-link'
+        .card-footer
+          =link_to 'Detalle', corte_comandas_path(corte), class: 'card-link'
