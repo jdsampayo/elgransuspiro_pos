@@ -10,7 +10,8 @@
         .card-header=sucursal
         .card-body
           h5.card-title Ventas: #{number_to_currency(corte.calculate_ventas)}
-          h6.card-subtitle.mb-2.text-muted Lo más vendido hoy es #{Articulo.find(corte.producto_mas_vendido.articulo_id)}: #{corte.producto_mas_vendido.cantidad}
+          - if corte.producto_mas_vendido.present?
+            h6.card-subtitle.mb-2.text-muted Lo más vendido hoy es #{Articulo.find(corte.producto_mas_vendido.articulo_id)}: #{corte.producto_mas_vendido.cantidad}
         ul.list-group.list-group-flush
           - corte.asistencias.each do |asistencia|
             li.list-group-item=asistencia
