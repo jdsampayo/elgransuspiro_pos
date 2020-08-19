@@ -3,6 +3,8 @@ class TablerosController < ApplicationController
 
   def index
     if current_user.admin?
+      @to_date = to_date(params)
+
       render 'admin'
     else
       @corte = current_corte
@@ -30,5 +32,13 @@ class TablerosController < ApplicationController
         created_at: 3.months.ago..1.day.ago
       ).group_by_day(:created_at, time_zone: false).sum(:monto)
     end
+  end
+
+  private
+
+  def to_date(params)
+    return Date.parse(params[:date]) if params[:date]
+
+    Date.today
   end
 end

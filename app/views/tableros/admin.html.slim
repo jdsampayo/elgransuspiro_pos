@@ -1,19 +1,30 @@
 .container
   h1 Admin
 
-  h2 Situación Actual
+  = form_tag({action: 'index'}, {method: :get, class: 'form-inline'}) do
+    .form-group
+      = label_tag :date, nil, class: 'sr-only'
+      = text_field_tag :date, @to_date.to_s, class: 'datepicker form-control mx-sm-3', autocomplete: "off"
+      button.btn.btn-primary.mx-sm-3 type="submit" Ir al día
+
+  br
 
   .card-group
     - Sucursal.all.each do |sucursal|
-      - corte = sucursal&.last_corte
+      - corte = sucursal.cortes.where(dia: @to_date).take
+
       .card
         .card-header=sucursal
-        .card-body
-          h5.card-title Ventas: #{number_to_currency(corte.calculate_ventas)}
-          - if corte.producto_mas_vendido.present?
-            h6.card-subtitle.mb-2.text-muted Lo más vendido hoy es #{Articulo.find(corte.producto_mas_vendido.articulo_id)}: #{corte.producto_mas_vendido.cantidad}
-        ul.list-group.list-group-flush
-          - corte.asistencias.each do |asistencia|
-            li.list-group-item=asistencia
-        .card-footer
-          =link_to 'Detalle', corte_comandas_path(corte), class: 'card-link'
+        - if corte 
+          .card-body
+            h5.card-title Ventas: #{number_to_currency(corte.calculate_ventas)}
+            - if corte.producto_mas_vendido.present?
+              h6.card-subtitle.mb-2.text-muted El producto más vendido hoy es #{corte.producto_mas_vendido.cantidad} #{Articulo.find(corte.producto_mas_vendido.articulo_id)}
+          ul.list-group.list-group-flush
+            - corte.asistencias.each do |asistencia|
+              li.list-group-item=asistencia
+          .card-footer
+            =link_to 'Detalle', corte_comandas_path(corte), class: 'card-link'
+        - else
+          .card-body
+            h6.card-subtitle.mb-2.text-muted No hay un corte para ese día
