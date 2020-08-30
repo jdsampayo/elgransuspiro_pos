@@ -44,7 +44,7 @@ class TablerosController < ApplicationController
 
     comandas = Comanda.where(corte: cortes).kept
 
-    if cortes.first.cerrado?
+    if @to_date != Date.today
       @ventas = cortes.sum(:ventas)
       @gastos = cortes.sum(:sum_gastos)
       @efectivo = cortes.sum(:pagos_con_efectivo)
