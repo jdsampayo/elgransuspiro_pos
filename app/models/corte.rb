@@ -196,6 +196,10 @@ class Corte < ApplicationRecord
     ordenes.select('articulo_id, sum("cantidad") as cantidad').group('articulo_id')
   end
 
+  def ventas_por_hora
+    comandas.group_by_hour(:created_at, format: "%l %P").sum(:venta)
+  end
+
   def self.actual(sucursal)
     Corte.find_by(dia: Time.current.to_date, sucursal: sucursal)
   end

@@ -22,8 +22,8 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require cocoon
-//= require Chart.bundle
 //= require chartkick
+//= require Chart.bundle
 //= require data-confirm-modal
 //= require image-picker
 //= require_tree .
