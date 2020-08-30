@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   get 'acceso_denegado', controller: 'sesiones', action: 'acceso_denegado', as: 'acceso_denegado'
   get 'login', controller: 'sesiones', action: 'new', as: 'login'
   get 'logout', controller: 'sesiones', action: 'destroy', as: 'logout'
+  get 'admin', controller: 'tableros', action: 'admin', as: 'admin'
 
   root 'tableros#index'
 end
