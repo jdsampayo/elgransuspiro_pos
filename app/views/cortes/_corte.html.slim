@@ -1,0 +1,49 @@
+.card-deck
+  .card.border-dark.mb-3 
+    .card-body.text-dark
+      h5.card-title
+        .small Ventas
+        = money(@corte.ventas)
+      h5.card-title.text-success
+        .small Efectivo
+        = money(@corte.pagos_con_efectivo)
+      h5.card-title.text-info
+        .small Tarjeta
+        = money(@corte.pagos_con_tarjeta)
+      h5.card-title.text-danger
+        .small Gastos
+        = money(@corte.sum_gastos)
+
+  .card.border-dark.mb-3 
+    .card-body.text-dark
+      h5.card-title.text-success
+        .small Inicial
+        = money(@corte.inicial)
+      h5.card-title.text-success
+        .small Propinas con Efectivo
+        = money(@corte.propinas_con_efectivo)
+      h5.card-title.text-info
+        .small Propinas con Tarjeta
+        = money(@corte.propinas_con_tarjeta)
+
+  .card.border-dark.mb-3 
+    .card-body.text-dark
+      h5.card-title.text-danger
+        .small Siguiente Día
+        -if @corte.cerrado?
+          = money(@corte.siguiente_dia)
+        -else
+          = f.input :siguiente_dia, label: false, input_html: { class: 'is-invalid input-danger' }
+      h5.card-title.caja data-value=@corte.dinero_en_caja
+        .small
+          | Caja (
+          span.text-success entradas
+          span.text-danger< - retiros
+          | )
+        = money(@corte.dinero_en_caja)
+      h5.card-title.text-primary.propinas-a-entregar data-value=@corte.propinas_a_entregar
+        .small Propinas a Entregar
+        = money(@corte.propinas_a_entregar)
+      h5.card-title.text-primary.dinero-a-entregar data-value=@corte.dinero_a_entregar
+        .small Dinero a Entregar
+        = money(@corte.dinero_a_entregar)

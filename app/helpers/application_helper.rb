@@ -40,4 +40,11 @@ module ApplicationHelper
     klazz.join(' ')
   end
 
+  def money(value)
+    return "$" unless value
+    formatted_value = number_with_precision(value, precision: 2, delimiter: ',')
+    puts formatted_value
+    render partial: 'partials/money', locals: { value: formatted_value }
+  end
+
 end

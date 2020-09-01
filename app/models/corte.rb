@@ -200,6 +200,18 @@ class Corte < ApplicationRecord
     comandas.group_by_hour(:created_at, format: "%l %P").sum(:venta)
   end
 
+  def dinero_en_caja
+    inicial + pagos_con_efectivo + propinas_con_efectivo - sum_gastos - siguiente_dia
+  end
+
+  def propinas_a_entregar
+    propinas_con_efectivo + propinas_con_tarjeta
+  end
+
+  def dinero_a_entregar
+    dinero_en_caja - propinas_a_entregar
+  end
+
   def self.actual(sucursal)
     Corte.find_by(dia: Time.current.to_date, sucursal: sucursal)
   end

@@ -14,31 +14,31 @@
       .card-body.text-dark
         h5.card-title
           .small Ventas
-          = render partial: 'money', locals: { value: @ventas }
+          = money(@ventas)
         h5.card-title.text-success
           .small Efectivo
-          = render partial: 'money', locals: { value: @efectivo }
+          = money(@efectivo)
         h5.card-title.text-info
           .small Tarjeta
-          = render partial: 'money', locals: { value: @tarjeta }
+          = money(@tarjeta)
         h5.card-title.text-danger
           .small Gastos
-          = render partial: 'money', locals: { value: @gastos }
+          = money(@gastos)
 
     .card.border-dark.mb-3 
       .card-body.text-dark
         h5.card-title.text-success
           .small Inicial
-          = render partial: 'money', locals: { value: @inicial }
+          = money(@inicial)
         h5.card-title.text-danger
           .small Siguiente Día
-          = render partial: 'money', locals: { value: @siguiente_dia }
+          = money(@siguiente_dia)
         h5.card-title.text-success
           .small Propinas con Efectivo
-          = render partial: 'money', locals: { value: @propinas_con_efectivo }
+          = money(@propinas_con_efectivo)
         h5.card-title.text-info
           .small Propinas con Tarjeta
-          = render partial: 'money', locals: { value: @propinas_con_tarjeta }
+          = money(@propinas_con_tarjeta)
 
     .card.border-dark.mb-3 
       .card-body.text-dark
@@ -48,13 +48,13 @@
             span.text-success verdes
             span.text-danger< - rojos
             | )
-          = render partial: 'money', locals: { value: @dinero_en_caja}
+          = money(@dinero_en_caja)
         h5.card-title.text-primary
           .small Propinas a Entregar
-          = render partial: 'money', locals: { value: @propinas_con_efectivo + @propinas_con_tarjeta }
+          = money(@propinas_con_efectivo + @propinas_con_tarjeta)
         h5.card-title.text-primary
           .small Dinero a Entregar
-          = render partial: 'money', locals: { value: @dinero_a_entregar }
+          = money(@dinero_a_entregar)
 
   h3 Distribución de Ventas - Hora
   = column_chart @series, stacked: true

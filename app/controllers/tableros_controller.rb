@@ -2,7 +2,10 @@ class TablerosController < ApplicationController
   load_and_authorize_resource class: false
 
   def index
-    redirect_to admin_path if current_user.admin?
+    if current_user.admin?
+      redirect_to admin_path
+      return
+    end
 
     @corte = current_corte
     @total_de_articulos = Articulo.kept.count
