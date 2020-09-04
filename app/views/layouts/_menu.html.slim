@@ -31,8 +31,11 @@
           =submenu_link "#{icon('fas', 'toilet-paper')} Insumos".html_safe, insumos_path
           =submenu_link "#{icon('fas', 'shopping-bag')} Desechables".html_safe, desechables_path
 
-      /li.nav-item.dropdown
-        a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' Contabilidad
+    - if current_user.admin?
+      li.nav-item.dropdown
+        a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#'
+          =icon('fas', 'file-invoice')
+          |  Contabilidad
         .dropdown-menu aria-labelledby='dropdown_contabilidad'
           =submenu_link 'Libro Mayor', contabilidad_cuentas_path
           =submenu_link 'Libro Diario', contabilidad_entradas_path

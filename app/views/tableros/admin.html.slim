@@ -9,55 +9,13 @@
 
   br
 
-  .card-deck
-    .card.border-dark.mb-3 
-      .card-body.text-dark
-        h5.card-title
-          .small Ventas
-          = money(@ventas)
-        h5.card-title.text-success
-          .small Efectivo
-          = money(@efectivo)
-        h5.card-title.text-info
-          .small Tarjeta
-          = money(@tarjeta)
-        h5.card-title.text-danger
-          .small Gastos
-          = money(@gastos)
-
-    .card.border-dark.mb-3 
-      .card-body.text-dark
-        h5.card-title.text-success
-          .small Inicial
-          = money(@inicial)
-        h5.card-title.text-danger
-          .small Siguiente Día
-          = money(@siguiente_dia)
-        h5.card-title.text-success
-          .small Propinas con Efectivo
-          = money(@propinas_con_efectivo)
-        h5.card-title.text-info
-          .small Propinas con Tarjeta
-          = money(@propinas_con_tarjeta)
-
-    .card.border-dark.mb-3 
-      .card-body.text-dark
-        h5.card-title
-          .small
-            | Caja Actual (
-            span.text-success verdes
-            span.text-danger< - rojos
-            | )
-          = money(@dinero_en_caja)
-        h5.card-title.text-primary
-          .small Propinas a Entregar
-          = money(@propinas_con_efectivo + @propinas_con_tarjeta)
-        h5.card-title.text-primary
-          .small Dinero a Entregar
-          = money(@dinero_a_entregar)
+  h2 Corte Grupal
+  = render @corte_grupal
 
   h3 Distribución de Ventas - Hora
   = column_chart @series, stacked: true
+
+  hr
 
   h2 Detalle por Sucursal
 

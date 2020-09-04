@@ -47,27 +47,18 @@ class TablerosController < ApplicationController
 
     comandas = Comanda.where(corte: cortes).kept
 
-    if @to_date != Date.today
-      @ventas = cortes.sum(:ventas)
-      @gastos = cortes.sum(:sum_gastos)
-      @efectivo = cortes.sum(:pagos_con_efectivo)
-      @tarjeta = cortes.sum(:pagos_con_tarjeta)
-    else
-      @ventas = comandas.sum(:total)
-      @gastos = Gasto.where(corte: cortes).kept.sum(:monto)
-      @efectivo = comandas.sum(:pago_con_efectivo)
-      @tarjeta = comandas.sum(:pago_con_tarjeta)
-      @propinas_con_efectivo = comandas.sum(:propina_con_efectivo)
-      @propinas_con_tarjeta = comandas.sum(:propina_con_tarjeta)
-    end
-
-    @inicial = cortes.sum(:inicial)
-    @siguiente_dia = cortes.sum(:siguiente_dia)
-    @propinas_con_efectivo = comandas.sum(:propina_con_efectivo)
-    @propinas_con_tarjeta = comandas.sum(:propina_con_tarjeta)
-
-    @dinero_en_caja = @inicial + @efectivo + @propinas_con_efectivo - @gastos - @siguiente_dia
-    @dinero_a_entregar = @dinero_en_caja - @propinas_con_efectivo - @propinas_con_tarjeta
+    @corte_grupal = Corte.new(
+      dia: @to_date,
+      inicial: cortes.sum(:inicial),
+      siguiente_dia: cortes.sum(:siguiente_dia),
+      ventas: cortes.sum(:ventas),
+      sum_gastos: cortes.sum(:sum_gastos),
+      pagos_con_efectivo: cortes.sum(:pagos_con_efectivo),
+      pagos_con_tarjeta: cortes.sum(:pagos_con_tarjeta),
+      propinas_con_efectivo: comandas.sum(:propina_con_efectivo),
+      propinas_con_tarjeta: comandas.sum(:propina_con_tarjeta),
+      closed_at: @to_date
+    )
   end
 
   private
