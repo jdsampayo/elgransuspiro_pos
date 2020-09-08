@@ -146,11 +146,6 @@ class Entrada
       credits: credits
     )
 
-    if entry.save
-      return true
-    else
-      @errors = entry.errors
-      return false
-    end
+    entry.save
   end
 end
