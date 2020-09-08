@@ -14,13 +14,16 @@ br
 table
   thead
     tr
+      th width=35
       th Nombre
       th Tipo
       th Contra
       th
   tbody
     - @cuentas.each do |cuenta|
-      tr class=plutus_to_tr(cuenta.type)
+      tr
+        td align="center"
+          span class="#{plutus_to_badge(cuenta.type)}" &nbsp;
         td
           = cuenta.name
         td

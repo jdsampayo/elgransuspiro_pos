@@ -50,7 +50,11 @@ table.table-sm
   - @entries.each_with_index do |entry, index|
     tr data-toggle='collapse' id="entry_#{entry.id.last(8)}" data-target=".entry_#{entry.id.last(8)}collapsed" style=(index % 2 == 0 ? 'background-color: rgba(0, 0, 0, 0.05)' : 'background-color: rgba(0, 0, 0, 0)')
       td =l entry.date
-      td=entry.description
+      td
+        -if entry.commercial_document
+          =link_to entry.description, entry.commercial_document
+        -else
+          =entry.description
       td colspan=2
         .text-center
           =number_with_precision(entry.debit_amounts.map(&:amount).sum, precision: 2)
@@ -59,8 +63,9 @@ table.table-sm
           i.fas.fa-trash
 
       - entry.debit_amounts.each do |debit_amount|
-        tr class="#{plutus_to_tr(debit_amount&.account&.type)} collapse out entry_#{entry.id.last(8)}collapsed"
+        tr class="collapse out entry_#{entry.id.last(8)}collapsed"
           td
+            span class="#{plutus_to_badge(debit_amount&.account&.type)}" &nbsp;
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;
             =debit_amount&.account&.name || "Desconocido"
@@ -68,8 +73,9 @@ table.table-sm
           td
           td
       - entry.credit_amounts.each do |credit_amount|
-        tr class="#{plutus_to_tr(credit_amount&.account&.type)} collapse out entry_#{entry.id.last(8)}collapsed"
+        tr class="collapse out entry_#{entry.id.last(8)}collapsed"
           td
+            span class="#{plutus_to_badge(credit_amount&.account&.type)}" &nbsp;
           td
             | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             =credit_amount&.account&.name || "Desconocido"

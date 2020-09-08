@@ -1,3 +1,8 @@
-h1 Nueva entrada
+h1.float-left Nueva Entrada
+
+.float-right
+  =image_tag @entrada.image, class: 'logo-tienda' if @entrada.image
+
+.clearfix
 
 = render 'form'

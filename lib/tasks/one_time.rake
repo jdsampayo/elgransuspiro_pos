@@ -30,4 +30,18 @@ namespace :one_time do
     end
   end
 
+  desc "Generate all Registros Contables for cortes"
+  task generate_accounting: :environment do
+    Corte.all.each do |corte|
+      unless Plutus::Entry.find_by(commercial_document_id: corte.id)
+        next if corte.abierto?
+        puts "Generating for #{corte.id}"
+
+        corte.set_subtotals
+        corte.save
+        corte.registros_contables!
+      end
+    end
+  end
+
 end

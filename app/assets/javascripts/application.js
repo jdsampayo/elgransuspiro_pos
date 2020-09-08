@@ -26,4 +26,5 @@
 //= require Chart.bundle
 //= require data-confirm-modal
 //= require image-picker
+//= require fontawesome
 //= require_tree .

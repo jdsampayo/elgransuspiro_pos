@@ -32,23 +32,46 @@ module Contabilidad
     end
 
     def new
+      shortcut = params[:shortcut]&.to_sym || :plain
+
       @entrada = Entrada.new
       @entrada.date = Date.today.to_s
-      @entrada.description = "Movimientos del día #{Date.today.to_s}"
+
+      initial = Entrada::SHORTCUTS[shortcut]
+      @entrada.description = initial[:description]
+      @entrada.image = initial[:image]
+      @entrada.debits_attributes = initial[:debits].each_with_index.map do |account, index|
+        [ Time.now.to_i.to_s + '0' + index.to_s, { account_id: account } ]
+      end.to_h
+      @entrada.credits_attributes = initial[:credits].each_with_index.map do |account, index|
+        [ Time.now.to_i.to_s + '1' + index.to_s, { account_id: account } ]
+      end.to_h
+
+      puts @entrada.debits_attributes
     end
 
     def create
       @entrada = Entrada.new(entrada_params)
-      if @entrada.valid?
-        status, mensajes = @entrada.registro_contable
+      @entrada.debits_attributes&.delete_if { |id, entry| entry[:amount].to_i.zero? }
+      @entrada.credits_attributes&.delete_if { |id, entry| entry[:amount].to_i.zero? }
 
-        if status
-          redirect_to contabilidad_entradas_path, notice: 'Creada exitosamente.'
-        else
-          @entrada.errors.add(:base, mensajes)
-          render :new
-        end
+      if @entrada.save
+        redirect_to contabilidad_entradas_path, notice: 'Creada exitosamente.'
       else
+        initial = Entrada::SHORTCUTS[:plain]
+
+        unless @entrada.debits_attributes&.present?
+          @entrada.debits_attributes = initial[:debits].each_with_index.map do |account, index|
+            [ Time.now.to_i.to_s + '0' + index.to_s, { account_id: account } ]
+          end.to_h
+        end
+
+        unless @entrada.credits_attributes&.present?
+          @entrada.credits_attributes = initial[:credits].each_with_index.map do |account, index|
+            [ Time.now.to_i.to_s + '1' + index.to_s, { account_id: account } ]
+          end.to_h
+        end
+
         render :new
       end
     end

@@ -20,6 +20,7 @@ class Cuenta
   }.freeze
 
   ACCOUNTS = {
+    'Agua' => :expense,
     'Banco' => :asset,
     'Café en Verde' => :expense,
     'Caja Chica' => :asset,
@@ -36,6 +37,7 @@ class Cuenta
     'Gastos de Operación' => :expense,
     'Ingreso sin Categorizar' => :revenue,
     'Loza y Utensilios' => :asset,
+    'Mantenimiento' => :expense,
     'Maquinaria y Equipo' => :asset,
     'Panadería' => :expense,
     'Préstamos' => :liability,
@@ -43,7 +45,8 @@ class Cuenta
     'Renta' => :expense,
     'Reparaciones y Mantenimiento' => :expense,
     'Sueldos' => :expense,
-    'Tarjeta Crédito Cotsco' => :liability,
+    'Tarjeta Crédito' => :liability,
+    'Té y Tisana' => :expense,
     'Teléfono e Internet' => :expense,
     'Transportación' => :expense,
     'Tueste' => :expense,
@@ -59,7 +62,7 @@ class Cuenta
     'Jorge Inversión / Retiros' => 'Capital Jorge',
     'Machinery, equipment, furniture & fixtures' => 'Maquinaria y Equipo',
     'Renta de Local' => 'Renta',
-    'Accounts Payable' => 'Tarjeta Crédito Cotsco',
+    'Accounts Payable' => 'Tarjeta Crédito',
     'Nómina - Salarios y Sueldos' => 'Sueldos',
     'Utensilios de cocina y loza' => 'Loza y Utensilios',
     'Cursos y Capacitación' => 'Cursos',
@@ -85,7 +88,7 @@ class Cuenta
     'Printing and Reproduction' => 'Publicidad',
     'Fumigador' => 'Reparaciones y Mantenimiento',
     'Caja Fuerte' => 'Caja Fuerte',
-    'Tarjeta Cotsco' => 'Tarjeta Crédito Cotsco'
+    'Tarjeta Cotsco' => 'Tarjeta Crédito'
   }
 
   attr_accessor(
