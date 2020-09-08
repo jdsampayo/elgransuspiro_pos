@@ -1,23 +1,22 @@
 table.table.table-sm
   tr
     th Día
-    th Corte
+    th Efectivo
     th Banco
     th Gasto Contable
   - (from_date).upto(to_date) do |date|
-    - corte = Corte.where(dia: date).take
+    - cortes = Corte.where(dia: date)
     tr
-      td=date.day
-      td=corte&.sobre
-      td=corte&.pagos_con_tarjeta
-      td=link_to(Plutus::Expense.all.balance(from_date: date, to_date: date), contabilidad_reportes_income_statement_path(from_date: date, to_date: date))
+      td=link_to(date.day, contabilidad_entradas_path(start: date, end: date))
+      td=cortes.sum(:sobre)
+      td=cortes.sum(:pagos_con_tarjeta)
+      td=Plutus::Expense.balance(from_date: date, to_date: date)
   tr.table-dark
     - cortes = Corte.where(dia: from_date..to_date)
     - sobre = cortes.sum(:sobre)
     - banco = cortes.sum(:pagos_con_tarjeta)
-    - gastos = Plutus::Expense.all.balance(from_date: from_date, to_date: to_date)
+    - gastos = Plutus::Expense.balance(from_date: from_date, to_date: to_date)
     td.bg-success=sobre + banco - gastos
     td.bg-info=sobre
     td.bg-info=banco
     td.bg-danger=gastos
-

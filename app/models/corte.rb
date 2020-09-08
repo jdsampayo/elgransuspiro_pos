@@ -46,7 +46,7 @@ class Corte < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  attr_accessor :caja, :subtotal, :propinas_con_efectivo, :propinas_con_tarjeta, :sobre_sin_propinas
+  attr_accessor :propinas_con_efectivo, :propinas_con_tarjeta
 
   VENTAS_LIMITE = 2000
   GASTOS_LIMITE = 100
@@ -80,8 +80,7 @@ class Corte < ApplicationRecord
     reload
 
     close_asistencias
-    finalize_comandas
-    #registros_contables!
+    registros_contables!
 
     true
   end
@@ -101,66 +100,94 @@ class Corte < ApplicationRecord
     end
   end
 
-  def finalize_comandas
-    comandas.update_all(closed_at: Time.now)
-  end
-
   def registros_contables!
+    return if Plutus::Entry.where(commercial_document: self)
+
     debits = []
     credits = []
 
-    # Los gastos de operacion salen de la caja chica
-    debits << {
-      account_name: 'Caja Chica',
-      amount: pagos_con_efectivo - sum_gastos
-    }
     credits << {
       account_name: 'Ventas',
-      amount: ventas
-    }
+      amount: ventas.to_f
+    } if ventas.positive?
+    debits << {
+      account_name: 'Caja Chica',
+      amount: pagos_con_efectivo.to_f
+    } if pagos_con_efectivo.positive?
+    debits << {
+      account_name: 'Banco',
+      amount: pagos_con_tarjeta.to_f
+    } if pagos_con_tarjeta.positive?
 
-    if pagos_con_tarjeta.positive?
+    if propinas_con_tarjeta.positive?
       debits << {
         account_name: 'Banco',
-        amount: pagos_con_tarjeta
+        amount: propinas_con_tarjeta.to_f 
+      }
+      credits << {
+        account_name: 'Caja Chica',
+        amount: propinas_con_tarjeta.to_f
       }
     end
+    
     if sum_gastos.positive?
       debits << {
         account_name: 'Gastos de Operación',
-        amount: sum_gastos
+        amount: sum_gastos.to_f
+      }
+      credits << {
+        account_name: 'Caja Chica',
+        amount: sum_gastos.to_f
       }
     end
 
     entry = Plutus::Entry.new(
-      description: "Corte del día #{dia}",
+      description: "#{sucursal}: Corte del día #{dia}",
       date: dia,
       debits: debits,
       credits: credits,
       commercial_document: self
     )
 
-    raise "Registro contable erróneo: #{dia}" unless entry.save
+    unless entry.save
+      puts "Debits: "
+      puts debits
+      puts "Credits: "
+      puts credits
+
+      pretty_print
+
+      #raise "Registro contable erróneo: #{dia}" 
+    end
 
     credits = []
     debits = []
 
     credits << {
-      account_name: 'Caja Chica', amount: sobre
+      account_name: 'Caja Chica', amount: sobre.to_f
     }
     debits << {
-      account_name: 'Caja Fuerte', amount: sobre
+      account_name: 'Caja Fuerte', amount: sobre.to_f
     }
 
     entry = Plutus::Entry.new(
-      description: "Retiro del día #{dia}",
+      description: "#{sucursal}: Retiro del día #{dia}",
       date: dia,
       debits: debits,
       credits: credits,
       commercial_document: self
     )
 
-    raise "Registro contable erróneo: #{dia}" unless entry.save
+    unless entry.save
+      puts "Debits: "
+      puts debits
+      puts "Credits: "
+      puts credits
+
+      pretty_print
+
+      #raise "Registro contable erróneo: #{dia}" 
+    end
   end
 
   def set_subtotals
@@ -169,23 +196,26 @@ class Corte < ApplicationRecord
     comandas_del_dia = comandas.kept
 
     self.ventas = calculate_ventas
-    self.pagos_con_tarjeta = comandas_del_dia.sum(:pago_con_tarjeta)
-    self.pagos_con_efectivo = comandas_del_dia.sum(:pago_con_efectivo)
-
-    self.subtotal = inicial + pagos_con_efectivo
-
+    self.pagos_con_tarjeta = calculate_tarjeta
+    self.pagos_con_efectivo = calculate_efectivo
     self.sum_gastos = gastos.kept.sum(:monto)
-    self.total = inicial + pagos_con_efectivo - sum_gastos
+
+    self.total = inicial + pagos_con_efectivo - sum_gastos - propinas_con_tarjeta
     self.sobre = total - siguiente_dia
 
     self.propinas = propinas_con_efectivo + propinas_con_tarjeta
-
-    self.caja = total + propinas_con_efectivo
-    self.sobre_sin_propinas = sobre - propinas_con_tarjeta
   end
 
   def calculate_ventas
     comandas.kept.sum(:total)
+  end
+
+  def calculate_tarjeta
+    comandas.kept.sum(:pago_con_tarjeta)
+  end
+
+  def calculate_efectivo
+    comandas.kept.sum(:pago_con_efectivo)
   end
 
   def producto_mas_vendido
@@ -210,6 +240,39 @@ class Corte < ApplicationRecord
 
   def dinero_a_entregar
     dinero_en_caja - propinas_a_entregar
+  end
+  
+  def pretty_print
+    puts id
+    puts dia
+    puts "Inicial"
+    puts inicial.to_f
+    puts "Ventas"
+    puts ventas.to_f
+    puts "Tarjeta"
+    puts pagos_con_tarjeta.to_f
+    puts "Efectivo"
+    puts pagos_con_efectivo.to_f
+    puts "Gastos"
+    puts sum_gastos.to_f
+
+    puts "Total"
+    puts total.to_f
+
+    puts "Siguiente Dia"
+    puts siguiente_dia.to_f
+
+    puts "Propinas"
+    puts propinas.to_f
+
+    puts "Sobre"
+    puts sobre.to_f
+
+    puts created_at
+    puts closed_at
+    puts updated_at
+    puts deleted_at
+
   end
 
   def self.actual(sucursal)

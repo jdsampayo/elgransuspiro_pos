@@ -37,10 +37,30 @@
           =icon('fas', 'file-invoice')
           |  Contabilidad
         .dropdown-menu aria-labelledby='dropdown_contabilidad'
-          =submenu_link 'Libro Mayor', contabilidad_cuentas_path
-          =submenu_link 'Libro Diario', contabilidad_entradas_path
-          =submenu_link 'Hoja de Balance', contabilidad_reportes_balance_sheet_path
-          =submenu_link 'Estado de Resultados', contabilidad_reportes_income_statement_path
+          =submenu_link "#{icon('fas', 'search-dollar')} Libro Mayor".html_safe, contabilidad_cuentas_path
+          =submenu_link "#{icon('fas', 'funnel-dollar')} Libro Diario".html_safe, contabilidad_entradas_path 
+          =submenu_link "#{icon('fas', 'balance-scale')} Hoja de Balance".html_safe, contabilidad_reportes_balance_sheet_path
+          =submenu_link "#{icon('fas', 'file-invoice-dollar')} Estado de Resultados".html_safe, contabilidad_reportes_income_statement_path
+          =submenu_link "#{icon('fas', 'calendar-week')} Reporte Mensual".html_safe, contabilidad_reportes_monthly_path
+
+      li.nav-item.dropdown
+        a#dropdown_gastos.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#'
+          =icon('fas', 'hand-holding-usd')
+          |  Compras y Gastos
+        .dropdown-menu aria-labelledby='dropdown_gastos'
+          =submenu_link "#{icon('fas', 'people-carry')} En General".html_safe, new_contabilidad_entrada_path(shortcut: :plain), { shortcut: :plain }
+          .dropdown-divider
+          =submenu_link "#{icon('fas', 'shopping-cart')} Costco/Sams/Walmart".html_safe, new_contabilidad_entrada_path(shortcut: :costco), { shortcut: :costco }
+          =submenu_link "#{icon('fas', 'sack')} Café/Tueste".html_safe, new_contabilidad_entrada_path(shortcut: :coffee), { shortcut: :coffee }
+          =submenu_link "#{icon('fas', 'leaf')} Etrusca/Té y Tisana".html_safe, new_contabilidad_entrada_path(shortcut: :etrusca), { shortcut: :etrusca }
+          .dropdown-divider
+          =submenu_link "#{icon('fas', 'users')} Sueldos".html_safe, new_contabilidad_entrada_path(shortcut: :payroll), { shortcut: :payroll }
+          .dropdown-divider
+          =submenu_link "#{icon('fas', 'home')} Renta".html_safe, new_contabilidad_entrada_path(shortcut: :rent), { shortcut: :rent }
+          =submenu_link "#{icon('fas', 'outlet')} Electricidad".html_safe, new_contabilidad_entrada_path(shortcut: :electricity), { shortcut: :electricity }
+          =submenu_link "#{icon('fas', 'wifi')} Teléfono e Internet".html_safe, new_contabilidad_entrada_path(shortcut: :internet), { shortcut: :internet }
+          =submenu_link "#{icon('fas', 'faucet')} Agua".html_safe, new_contabilidad_entrada_path(shortcut: :water), { shortcut: :water }
+          =submenu_link "#{icon('fas', 'paint-roller')} Mantenimiento".html_safe, new_contabilidad_entrada_path(shortcut: :maintenance), { shortcut: :maintenance }
 
   - if current_user.waitress?
     = link_to icon('fas', 'plus') + " Comanda", new_comanda_path, class: 'btn btn-outline-success mr-3'

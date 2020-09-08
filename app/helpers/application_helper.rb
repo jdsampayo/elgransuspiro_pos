@@ -13,7 +13,11 @@ module ApplicationHelper
   end
 
   def plutus_to_tr(account_type)
-    "table-#{Cuenta::COLORS[account_type]}"
+    "table-border-#{Cuenta::COLORS[account_type]}"
+  end
+
+  def plutus_to_badge(account_type)
+    "badge badge-pill badge-#{Cuenta::COLORS[account_type]}"
   end
 
   def trash_icon
@@ -28,8 +32,8 @@ module ApplicationHelper
     active_link_to(title, path, class: 'nav-item nav-link')
   end
 
-  def submenu_link(title, path)
-    active_link_to(title, path, class: 'dropdown-item')
+  def submenu_link(title, path, params=:exclusive)
+    active_link_to(title, path, class: 'dropdown-item', active: params)
   end
 
   def row_class(object, id)

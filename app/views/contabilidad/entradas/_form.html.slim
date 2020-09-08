@@ -1,8 +1,6 @@
 = simple_form_for([:contabilidad, @entrada]) do |f|
-  = f.error_notification
-
-  - @entrada.errors.messages.each do |key, message|
-    p=message
+  - if @entrada.errors.present?
+    .alert.alert-danger Las cuentas no se equilibran, por favor revisa los montos:
 
   .form-inputs
     .row
@@ -15,9 +13,9 @@
     .col-md-6
       h3
         | Cargo
-        small.text-muted
-          | (debe o debit)
-      p.text-muted Representa un aumento en las cuentas de activo y gasto y una disminución en las cuentas de pasivo, capital e ingreso.
+        small.text-muted<
+          | debe
+      /p.text-muted Representa un aumento en las cuentas de activo y gasto y una disminución en las cuentas de pasivo, capital e ingreso.
       #debits
         .row
           .col-md-6
@@ -25,15 +23,17 @@
           .col-md-4
             strong Monto
         hr
-        =render partial: "contabilidad/entradas/account_fields", locals: {type: "debits"}
+        - @entrada.debits_attributes.each do |id, debit|
+          - puts "aqui"
+          - puts id, debit
+          =render partial: "contabilidad/entradas/account_fields", locals: {type: "debits", entry: debit, add_delete_action: true, id: id}
 
     .col-md-6
       h3
         | Abono
-        small.text-muted
-          | (haber o credit)
-      p.text-muted
-        | Representa una disminución en las cuentas de activo y gasto y un aumento en las cuentas de pasivo, capital e ingreso.
+        small.text-muted<
+          | haber
+      /p.text-muted Representa una disminución en las cuentas de activo y gasto y un aumento en las cuentas de pasivo, capital e ingreso.
 
       #credits
         .row
@@ -42,15 +42,18 @@
           .col-md-4
             strong Monto
         hr
-        =render partial: "contabilidad/entradas/account_fields", locals: {type: "credits"}
+        - @entrada.credits_attributes.each do |id, credit|
+          =render partial: "contabilidad/entradas/account_fields", locals: {type: "credits", entry: credit, add_delete_action: true, id: id}
 
   .row
     .col-md-6
       .links
-        = link_to "Nuevo movimiento", new_contabilidad_cuenta_path(type: "debits"), remote: true
+        = link_to "Agregar cuenta", new_contabilidad_cuenta_path(type: "debits"), remote: true
     .col-md-6
       .links
-        = link_to "Nuevo movimiento", new_contabilidad_cuenta_path(type: "credits"), remote: true
+        = link_to "Agregar cuenta", new_contabilidad_cuenta_path(type: "credits"), remote: true
+
+  br
 
   .form-actions
     = f.button :submit, class: "btn btn-primary"

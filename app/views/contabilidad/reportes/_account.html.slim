@@ -3,6 +3,7 @@ table
     strong=name
   thead
     tr
+      th width=35
       th Cuenta
       th width=130 Monto
       th width=130 Subtotal
@@ -14,12 +15,15 @@ table
         - balance = account.balance(from_date: @from_date, to_date: @to_date)
         - if balance > 0
           tr
+            td align="center"
             td=account.name
             td=balance.round(2)
             - running_total += balance
             td=running_total.round(2)
 
-      tr class=plutus_to_tr(account_type)
+      tr
+        td align="center"
+          span class="#{plutus_to_badge(account_type)}" &nbsp;
         td Gran Total
         td=number_to_currency(running_total.round(2))
         td

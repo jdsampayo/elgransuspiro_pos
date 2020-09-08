@@ -1,9 +1,11 @@
-- generated_id = Time.now.to_i
-.row.mb-2 id=generated_id
+- id ||= Time.now.to_i
+- entry ||= {}
+
+.row.mb-2 id=id
   .col-md-4
-    =select_tag "entrada[#{type}_attributes][#{generated_id}][account_id]", grouped_options_for_select(Cuenta.options_for_select), class: 'form-control mx-sm-3'
+    =select_tag "entrada[#{type}_attributes][#{id}][account_id]", grouped_options_for_select(Cuenta.options_for_select, entry[:account_id]), class: 'form-control mx-sm-3'
   .col-md-4
-    =number_field_tag "entrada[#{type}_attributes][#{generated_id}][amount]", 0.0, class: 'form-control mx-sm-3', min: '0.0', step: '0.50'
+    =number_field_tag "entrada[#{type}_attributes][#{id}][amount]", entry[:amount] || 0.0, class: 'form-control mx-sm-3', min: '0.0', step: '0.50'
   .col-md-2
     - if defined? add_delete_action
-      a.eliminar href="javascript:void(0)" data-id=generated_id Eliminar
+      a.eliminar href="javascript:void(0)" data-id=id Eliminar
