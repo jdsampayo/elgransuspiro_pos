@@ -16,6 +16,9 @@ class Entrada
 
   def self.plutus_id(name)
     Plutus::Account.find_by(name: name).id
+  rescue
+    puts "Can't find account #{name}"
+    nil
   end
 
   SHORTCUTS = {
@@ -114,7 +117,6 @@ class Entrada
         plutus_id('Caja Fuerte')
       ]
     }
-
   }
 
   def plutus_name(account_id)
