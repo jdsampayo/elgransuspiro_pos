@@ -101,7 +101,7 @@ class Corte < ApplicationRecord
   end
 
   def registros_contables!
-    return if Plutus::Entry.where(commercial_document: self)
+    return if Plutus::Entry.where(commercial_document: self).any?
 
     debits = []
     credits = []
@@ -272,7 +272,6 @@ class Corte < ApplicationRecord
     puts closed_at
     puts updated_at
     puts deleted_at
-
   end
 
   def self.actual(sucursal)
