@@ -76,7 +76,7 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    authlogic (6.1.0)
+    authlogic (6.2.0)
       activemodel (>= 5.2, < 6.1)
       activerecord (>= 5.2, < 6.1)
       activesupport (>= 5.2, < 6.1)
@@ -196,7 +196,7 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.1)
+    minitest (5.14.2)
     nio4r (2.5.3)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -335,7 +335,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   annotate
-  authlogic (~> 6.1.0)
+  authlogic (~> 6.2.0)
   auto_strip_attributes (~> 2.6)
   bcrypt (~> 3.1.16)
   bootstrap (~> 4.5.2)
