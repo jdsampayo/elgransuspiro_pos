@@ -1,9 +1,10 @@
 table.table.table-sm
   tr
-    th Día
+    th width=35 Día
     th Efectivo
     th Banco
-    th Gasto Contable
+    th Gasto
+    th Deuda
   - (from_date).upto(to_date) do |date|
     - cortes = Corte.where(dia: date)
     tr
@@ -11,12 +12,21 @@ table.table.table-sm
       td=cortes.sum(:sobre)
       td=cortes.sum(:pagos_con_tarjeta)
       td=Plutus::Expense.balance(from_date: date, to_date: date)
-  tr.table-dark
+      td=Plutus::Liability.balance(from_date: date, to_date: date)
+  tr
     - cortes = Corte.where(dia: from_date..to_date)
     - sobre = cortes.sum(:sobre)
     - banco = cortes.sum(:pagos_con_tarjeta)
-    - gastos = Plutus::Expense.balance(from_date: from_date, to_date: to_date)
-    td.bg-success=sobre + banco - gastos
-    td.bg-info=sobre
-    td.bg-info=banco
-    td.bg-danger=gastos
+    - gasto = Plutus::Expense.balance(from_date: from_date, to_date: to_date)
+    - deuda = Plutus::Liability.balance(from_date: from_date, to_date: to_date)
+    td
+    td.table-success=sobre
+    td.table-info=banco
+    td.table-warning=gasto
+    td.table-danger=deuda
+
+.alert.alert-secondary
+  | Efectivo + Banco - Gasto: #{number_to_currency(sobre + banco - gasto)}
+
+.alert.alert-primary
+  | Ganancia al pagar deudas: #{number_to_currency(sobre + banco - gasto - deuda)}
