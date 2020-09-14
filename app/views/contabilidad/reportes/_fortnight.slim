@@ -28,7 +28,7 @@ table.table.table-sm
     td.table-danger=deuda
 
 .alert.alert-secondary
-  | Efectivo + Banco - Gasto: #{number_to_currency(sobre + banco - gasto + deuda)}
+  | Efectivo - Gasto: #{number_to_currency(sobre - gasto + deuda)}
 
 .alert.alert-primary
-  | Ganancia al pagar deudas: #{number_to_currency(sobre + banco - gasto)}
+  | Ganancia total al pagar deudas: #{number_to_currency(sobre + banco - gasto)}
