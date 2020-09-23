@@ -13,7 +13,7 @@ table
 
       - accounts.each do |account|
         - balance = account.balance(from_date: @from_date, to_date: @to_date)
-        - if balance > 0
+        - if balance != 0
           tr
             td align="center"
             td=account.name
