@@ -11,5 +11,5 @@ h1.pull-left Reporte Mensual
 br
 
 .row
-  .col-md-6= render 'fortnight', from_date: @from_date, to_date: @to_date
-  .col-md-6= render 'fortnight', from_date: @second_from_date, to_date: @second_to_date
+  .col-md-6= render 'fortnight', from_date: @from_date, to_date: @to_date, initial_cash: @initial_cash, initial_bank: @initial_bank
+  .col-md-6= render 'fortnight', from_date: @second_from_date, to_date: @second_to_date, initial_cash: @second_cash, initial_bank: @second_bank

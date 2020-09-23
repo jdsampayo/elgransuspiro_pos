@@ -15,6 +15,7 @@ income per day
 
 # Dump de DB
 `pg_dump elgransuspiro_pos_development > elgransuspiro.bak`
+`pg_dump -Uelgransuspiro elgransuspiro_pos_production > elgransuspiro_setp22.bak`
 
 # Subir dump
 `scp elgransuspiro.bak linode:~/.`
@@ -24,6 +25,9 @@ income per day
 `RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create`
 `psql -Uelgransuspiro  elgransuspiro_pos_production < elgransuspiro.bak`
 
+psql elgransuspiro_pos_development < elgransuspiro_setp22.bak
+
+pg_dump elgransuspiro_pos_production > elgransuspiro_setp22.bak
 
 sudo -u postgres createuser --superuser pepito
 ALTER USER pepito WITH PASSWORD 'eldeloscuentos123';

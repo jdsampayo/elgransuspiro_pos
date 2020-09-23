@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     namespace :reportes do
       get :balance_sheet
       get :income_statement
+      get :cash_flow
       get :monthly
     end
   end

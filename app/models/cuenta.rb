@@ -3,6 +3,8 @@ require 'csv'
 class Cuenta
   include ActiveModel::Model
 
+  EPOCH = "2010-01-01".freeze
+
   TIPOS = {
     asset: 'Activo',
     liability: 'Pasivo',
@@ -108,6 +110,18 @@ class Cuenta
 
   def self.plutus_a_tipo(plutus_type)
     TIPOS[plutus_type.split(":").last.downcase.to_sym]
+  end
+
+  def self.caja_chica
+    Plutus::Account.where(name: 'Caja Chica').take
+  end
+
+  def self.caja_fuerte
+    Plutus::Account.where(name: 'Caja Fuerte').take
+  end
+
+  def self.banco
+    Plutus::Account.where(name: 'Banco').take
   end
 
   def create
