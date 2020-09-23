@@ -10,12 +10,12 @@ module Contabilidad
       @from_date = from_date(params, true)
       @to_date = to_date(params)
 
-      @entries = @entries.includes(:accounts).
-        with_account(params[:account_id]).
-        where(date: @from_date..@to_date).
-        where("description like ?", "%#{params[:description]}%").
-        page(params[:page]).
-        per(params[:limit]).
+      @entries = @entries.includes(:accounts)
+        .with_account(params[:account_id])
+        .where(date: @from_date..@to_date)
+        .where("description like ?", "%#{params[:description]}%")
+        .page(params[:page])
+        .per(params[:limit])
         order("date #{order}")
 
       respond_to do |format|
