@@ -42,11 +42,6 @@ group :development do
   gem 'webdack-uuid_migration'
 end
 
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-tether', '>= 1.3.3'
-end
-
 # Frontend
 gem 'active_link_to'
 gem 'auto_strip_attributes', '~> 2.6'

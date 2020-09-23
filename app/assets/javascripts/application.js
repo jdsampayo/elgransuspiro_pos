@@ -12,7 +12,6 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require tether
 //= require jquery3
 //= require sifter
 //= require microplugin
