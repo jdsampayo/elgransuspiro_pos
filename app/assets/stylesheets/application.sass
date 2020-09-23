@@ -48,6 +48,9 @@ h1
     tr.table-dark, tr.table-dark:hover
       background-color: rgba(0, 0, 0, 0.600)!important
 
+    .thead-dark a
+      color: white
+
     tr
       td
         border: 1px solid #c8ced3
@@ -61,10 +64,17 @@ h1
         display: block
         height: 2em
 
-  a:not(.btn)
-    color: #007bff
-    &:hover
-      text-decoration: underline
+    tbody.tfoot, tfoot
+      border-top: 2px solid black
+
+    a:not(.btn)
+      color: #007bff
+      &:hover
+        text-decoration: underline
+
+    &.cash-flow
+      a:not(.btn)
+        color: gray
 
 #navbar-admin
   form.form-inline

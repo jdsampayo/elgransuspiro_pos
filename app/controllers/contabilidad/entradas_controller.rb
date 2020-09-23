@@ -10,18 +10,12 @@ module Contabilidad
       @from_date = from_date(params, true)
       @to_date = to_date(params)
 
-      unless params[:debit_account_id].blank?
-        @entries = @entries.joins(:debit_accounts).
-          where("plutus_accounts.id = '#{params[:debit_account_id]}'").distinct
-      end
-
-      unless params[:credit_account_id].blank?
-        @entries = @entries.joins(:credit_accounts).
-          where("plutus_accounts.id = '#{params[:credit_account_id]}'").distinct
-      end
-
-      @entries = @entries.where("description like ?", "%#{params[:description]}%").
-        page(params[:page]).per(params[:limit]).where(date: @from_date..@to_date).
+      @entries = @entries.includes(:accounts).
+        with_account(params[:account_id]).
+        where(date: @from_date..@to_date).
+        where("description like ?", "%#{params[:description]}%").
+        page(params[:page]).
+        per(params[:limit]).
         order("date #{order}")
 
       respond_to do |format|

@@ -30,6 +30,7 @@ module Contabilidad
     def cash_flow
       @from_date = params[:date] ? Date.parse(params[:date] + "-01-01") : Date.today.beginning_of_year
 
+      @initials = [Cuenta.caja_chica, Cuenta.caja_fuerte, Cuenta.banco]
       @revenues = Plutus::Revenue.all
       @expenses = Plutus::Expense.all
       @liabilities = Plutus::Liability.all
