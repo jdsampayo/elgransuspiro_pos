@@ -1,32 +1,21 @@
-h1.float-left Libro Diario
-.float-right= link_to 'Nueva Entrada', new_contabilidad_entrada_path, class: "btn btn-primary"
-
-.clearfix
+h1 Libro Diario
 
 = form_tag( { action: 'index' }, { method: :get } ) do
   .form-row
-    .form-group.col-6
-      label for='description' Descripción contiene
-      = text_field_tag :description, params[:description], class: 'form-control'
-    .form-group.col-3
-      label for='debit_account_id' Cargo (debit)
-      = select_tag :debit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:debit_account_id]), include_blank: true, class: 'form-control'
-    .form-group.col-3
-      label for='credit_account_id' Abono (credit)
-      = select_tag :credit_account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:credit_account_id]), include_blank: true, class: 'form-control'
-  .form-row.align-items-end
-    .col-sm-3.my-1
-      label for='limit' Por página
-      = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), class: 'form-control'
-    .col-sm-3.my-1
-      label for='order' Orden
-      = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), class: 'form-control'
-    .col-sm-3.my-1
+    .form-group.col-2
       .input-daterange.input-group#datepicker
         = text_field_tag :start, @from_date, class: 'form-control'
         span.input-group-addon< a
         = text_field_tag :end, @to_date, class: 'form-control'
-    .col-auto.my-1
+    .form-group.col-3
+      = text_field_tag :description, params[:description], class: 'form-control', placeholder: 'Descripción contiene'
+    .form-group.col-2
+      = select_tag :account_id, options_for_select(Plutus::Account.pluck(:name, :id), selected: params[:account_id]), include_blank: 'Cuenta', class: 'form-control'
+    .form-group.col-1
+      = select_tag :limit, options_for_select([25, 100, 200, 300], selected: params[:limit]), include_blank: 'Cantidad por Página', class: 'form-control'
+    .form-group.col-1
+      = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), include_blank: 'Orden', class: 'form-control'
+    .form-group.col-1
       button.btn.btn-primary type="submit" Buscar
 
 br

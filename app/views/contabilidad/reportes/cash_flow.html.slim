@@ -20,118 +20,137 @@ br
 - liabilities = []
 - equities = []
 
-table
+table.cash-flow
   thead.thead-dark
     tr.text-center
       th scope="col"=@from_date.to_s.first(4)
       - date_months.each do |monthly|
-        th scope="col"=I18n.t('date.month_names')[monthly.month]
+        th scope="col"
+          =link_to I18n.t('date.month_names')[monthly.month], contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month)
 
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
-      | Saldo Inicial (Caja + Banco)
-    - date_months.each do |monthly|
-      - initials << Cuenta.caja_chica.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day) + Cuenta.caja_fuerte.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day) + Cuenta.banco.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day)
-      td
-        strong=initials.last
-  
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Revenue')}" &nbsp;
-      | Ingresos
-  
-  - @revenues.each do |account|   
+  tbody
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
+        | Saldo Inicial del Periodo
+
+    - @initials.each do |account|   
+      tr
+        td
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day)
+          td
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
+
+    tr
+      th.text-right scope="row" Total de Saldo Inicial
+      - date_months.each do |monthly|
+        - initials << Cuenta.caja_chica.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day) + Cuenta.caja_fuerte.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day) + Cuenta.banco.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day)
+        td
+          strong=initials.last
+    
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Revenue')}" &nbsp;
+        | Ingresos
+    
+    - @revenues.each do |account|   
+      tr
+        td
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+          td
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
+
+    tr
+      th.text-right scope="row" Total de Ingresos
+      - date_months.each do |monthly|
+        - revenues << Plutus::Revenue.balance(from_date: monthly, to_date: monthly.end_of_month)
+        td
+          strong=revenues.last
+
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Expense')}" &nbsp;
+        | Egresos
+
+    - @expenses.each do |account|   
+      tr
+        td
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+          td
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, debit_account_id: account.id)
+
+    tr
+      th.text-right scope="row" Total de Egresos
+      - date_months.each do |monthly|
+        - expenses << Plutus::Expense.balance(from_date: monthly, to_date: monthly.end_of_month)
+        td
+          strong=expenses.last
+
+  tbody.tfoot
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
+        | Resultado de la Actividad
+      - date_months.each_with_index do |monthly, index|
+        td
+          strong=initials[index] + revenues[index] - expenses[index]
     tr
       td
-        em=account.name
-      - date_months.each do |monthly|
-        - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
-        td
-          em=balance.round(2)
 
-  tr
-    th.text-right scope="row" Total de Ingresos
-    - date_months.each do |monthly|
-      - revenues << Plutus::Revenue.balance(from_date: monthly, to_date: monthly.end_of_month)
-      td
-        strong=revenues.last
-
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Expense')}" &nbsp;
-      | Egresos
-
-  - @expenses.each do |account|   
+  tbody
     tr
-      td
-        em=account.name
-      - date_months.each do |monthly|
-        - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Liability')}" &nbsp;
+        | Financiamiento
+
+    - @liabilities.each do |account|   
+      tr
         td
-          em=balance.round(2)
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+          td
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
 
-  tr
-    th.text-right scope="row" Total de Egresos
-    - date_months.each do |monthly|
-      - expenses << Plutus::Expense.balance(from_date: monthly, to_date: monthly.end_of_month)
-      td
-        strong=expenses.last
-
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
-      | Resultado de la Actividad
-    - date_months.each_with_index do |monthly, index|
-      td
-        strong=initials[index] + revenues[index] - expenses[index]
-
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Liability')}" &nbsp;
-      | Financiamiento
-
-  - @liabilities.each do |account|   
     tr
-      td
-        em=account.name
+      th.text-right scope="row" Total de Financiamiento
       - date_months.each do |monthly|
-        - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+        - liabilities << Plutus::Liability.balance(from_date: monthly, to_date: monthly.end_of_month)
         td
-          em=balance.round(2)
+          strong=liabilities.last
 
-  tr
-    th.text-right scope="row" Total de Financiamiento
-    - date_months.each do |monthly|
-      - liabilities << Plutus::Liability.balance(from_date: monthly, to_date: monthly.end_of_month)
-      td
-        strong=liabilities.last
-
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Equity')}" &nbsp;
-      | Aportaciones
-
-  - @equities.each do |account|   
     tr
-      td
-        em=account.name
-      - date_months.each do |monthly|
-        - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Equity')}" &nbsp;
+        | Aportaciones
+
+    - @equities.each do |account|   
+      tr
         td
-          em=balance.round(2)
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+          td
+            em=balance.round(2)
 
-  tr
-    th.text-right scope="row" Total de Aportaciones
-    - date_months.each do |monthly|
-      - equities << Plutus::Equity.balance(from_date: monthly, to_date: monthly.end_of_month)
-      td
-        strong=equities.last
+    tr
+      th.text-right scope="row" Total de Aportaciones
+      - date_months.each do |monthly|
+        - equities << Plutus::Equity.balance(from_date: monthly, to_date: monthly.end_of_month)
+        td
+          strong=equities.last
 
-  tr
-    th scope="row"
-      span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
-      | Total Flujo de Caja Financiero 
-    - date_months.each_with_index do |monthly, index|
-      td
-        strong=initials[index] + revenues[index] + equities[index] - expenses[index] + liabilities[index]
+  tfoot
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
+        | Total Flujo de Caja Financiero 
+      - date_months.each_with_index do |monthly, index|
+        td
+          strong=initials[index] + revenues[index] + equities[index] - expenses[index] + liabilities[index]
