@@ -1,6 +1,13 @@
+.alert.alert-success
+  | Efectivo al dia #{from_date - 1.day}: #{number_to_currency(initial_cash)}
+.alert.alert-info
+  | Banco al dia #{from_date - 1.day}: #{number_to_currency(initial_bank)}
+
+
 table.table.table-sm
   tr
     th width=35 Día
+    th Balance Efectivo
     th Efectivo
     th Banco
     th Gasto
@@ -10,19 +17,22 @@ table.table.table-sm
     tr
       - gastos_del_dia = Plutus::Expense.balance(from_date: date, to_date: date)
       - deudas_del_dia = Plutus::Liability.balance(from_date: date, to_date: date)
+      - banco_del_dia = Cuenta.banco.balance(from_date: date, to_date: date)
       td=link_to(date.day, contabilidad_entradas_path(start: date, end: date))
+      td=Cuenta.caja_fuerte.balance(from_date: from_date, to_date: date)
       td=cortes.sum(:sobre)
-      td=cortes.sum(:pagos_con_tarjeta)
+      td=banco_del_dia
       td=gastos_del_dia - deudas_del_dia
       td=deudas_del_dia
   tr
     - cortes = Corte.where(dia: from_date..to_date)
+    - efectivo = Cuenta.caja_fuerte.balance(from_date: from_date, to_date: to_date)
     - sobre = cortes.sum(:sobre)
     - banco = cortes.sum(:pagos_con_tarjeta)
     - gasto = Plutus::Expense.balance(from_date: from_date, to_date: to_date)
     - deuda = Plutus::Liability.balance(from_date: from_date, to_date: to_date)
     td
-    td.table-success=sobre
+    td.table-success=efectivo
     td.table-info=banco
     td.table-warning=gasto - deuda
     td.table-danger=deuda
