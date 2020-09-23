@@ -16,7 +16,7 @@ module Contabilidad
         .where("description like ?", "%#{params[:description]}%")
         .page(params[:page])
         .per(params[:limit])
-        order("date #{order}")
+        .order("date #{order}")
 
       respond_to do |format|
         format.html # index.html.erb
