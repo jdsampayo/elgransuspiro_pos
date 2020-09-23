@@ -116,6 +116,15 @@ class Entrada
       credits: [
         plutus_id('Caja Fuerte')
       ]
+    },
+    gas: {
+      description: 'Transporte y Gasolina',
+      debits: [
+        plutus_id('Transporte y Gasolina')
+      ],
+      credits: [
+        plutus_id('Caja Fuerte')
+      ]
     }
   }
 

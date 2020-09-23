@@ -2,7 +2,7 @@ class CuentasController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @cuentas = Plutus::Account.all
+    @cuentas = Plutus::Account.order(:name)
   end
 
   def new

@@ -16,7 +16,7 @@ table
     tr
       th width=35
       th Nombre
-      th Tipo
+      th Id
       th Contra
       th
   tbody
@@ -24,7 +24,6 @@ table
       tr
         td align="center"
           span class="#{plutus_to_badge(cuenta.type)}" &nbsp;
-        td
-          = cuenta.name
-        td
-          = cuenta.contra ? 'Sí' : 'No'
+        td= cuenta.name
+        td= cuenta.id
+        td= cuenta.contra ? 'Sí' : 'No'

@@ -50,7 +50,7 @@ class Cuenta
     'Tarjeta Crédito' => :liability,
     'Té y Tisana' => :expense,
     'Teléfono e Internet' => :expense,
-    'Transportación' => :expense,
+    'Transporte y Gasolina' => :expense,
     'Tueste' => :expense,
     'Uniformes' => :expense,
     'Venta a Granel' => :revenue,
