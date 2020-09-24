@@ -42,5 +42,4 @@ namespace :one_time do
       corte.registros_contables!
     end
   end
-
 end

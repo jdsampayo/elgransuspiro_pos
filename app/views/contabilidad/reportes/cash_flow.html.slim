@@ -41,7 +41,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day)
           td
-            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, account_id: account.id)
 
     tr
       th.text-right scope="row" Total de Saldo Inicial
@@ -62,7 +62,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, account_id: account.id)
 
     tr
       th.text-right scope="row" Total de Ingresos
@@ -83,7 +83,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, debit_account_id: account.id)
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, account_id: account.id)
 
     tr
       th.text-right scope="row" Total de Egresos
@@ -116,7 +116,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, credit_account_id: account.id)
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, account_id: account.id)
 
     tr
       th.text-right scope="row" Total de Financiamiento

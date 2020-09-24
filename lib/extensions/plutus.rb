@@ -12,6 +12,9 @@ module Extensions
       scope :with_account, ->(account) {
         where('plutus_accounts.id' => account) if account.present?
       }
+      scope :with_description, ->(description) {
+        where("description like ?", "%#{description}%") if description.present?
+      }
     end
   end
 end

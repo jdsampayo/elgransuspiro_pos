@@ -80,7 +80,7 @@ class Corte < ApplicationRecord
     reload
 
     close_asistencias
-    registros_contables!
+    registros_contables
 
     true
   end
@@ -100,8 +100,13 @@ class Corte < ApplicationRecord
     end
   end
 
-  def registros_contables!
-    return if Plutus::Entry.where(commercial_document: self).any?
+  def registros_contables
+    corte_contable
+    retiro_contable
+  end
+
+  def corte_contable
+    return if Plutus::Entry.where(commercial_document: self).with_description('Corte').any?
 
     debits = []
     credits = []
@@ -150,15 +155,14 @@ class Corte < ApplicationRecord
     )
 
     unless entry.save
-      puts "Debits: "
       puts debits
-      puts "Credits: "
       puts credits
-
-      pretty_print
-
-      #raise "Registro contable erróneo: #{dia}" 
+      return entry
     end
+  end
+
+  def retiro_contable
+    return if Plutus::Entry.where(commercial_document: self).with_description('Retiro').any?
 
     credits = []
     debits = []
@@ -179,14 +183,7 @@ class Corte < ApplicationRecord
     )
 
     unless entry.save
-      puts "Debits: "
-      puts debits
-      puts "Credits: "
-      puts credits
-
-      pretty_print
-
-      #raise "Registro contable erróneo: #{dia}" 
+      return entry
     end
   end
 

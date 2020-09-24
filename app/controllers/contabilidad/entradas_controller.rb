@@ -13,7 +13,7 @@ module Contabilidad
       @entries = @entries.includes(:accounts)
         .with_account(params[:account_id])
         .where(date: @from_date..@to_date)
-        .where("description like ?", "%#{params[:description]}%")
+        .with_description(params[:description])
         .page(params[:page])
         .per(params[:limit])
         .order("date #{order}")
