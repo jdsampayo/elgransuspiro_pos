@@ -32,9 +32,10 @@ module Contabilidad
 
       @initials = [Cuenta.caja_chica, Cuenta.caja_fuerte, Cuenta.banco]
       @revenues = Plutus::Revenue.all
-      @expenses = Plutus::Expense.all
+      @expenses = Plutus::Expense.order(:name)
       @liabilities = Plutus::Liability.all
       @equities = Plutus::Equity.all
+      @assets = Plutus::Asset.all.order(:name) - @initials
     end
 
     def monthly

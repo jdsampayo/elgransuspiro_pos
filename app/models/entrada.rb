@@ -125,6 +125,25 @@ class Entrada
       credits: [
         plutus_id('Caja Fuerte')
       ]
+    },
+    disposable: {
+      description: 'Desechables',
+      debits: [
+        plutus_id('Desechables')
+      ],
+      credits: [
+        plutus_id('Tarjeta de Crédito')
+      ]
+    },
+    crockery: {
+      description: 'Loza y Utensilios',
+      debits: [
+        plutus_id('Loza y Utensilios')
+      ],
+      credits: [
+        plutus_id('Tarjeta de Crédito'),
+        plutus_id('Caja Fuerte')
+      ]
     }
   }
 
