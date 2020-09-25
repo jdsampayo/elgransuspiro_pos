@@ -19,6 +19,7 @@ br
 - expenses = []
 - liabilities = []
 - equities = []
+- assets = []
 
 table.cash-flow
   thead.thead-dark
@@ -92,6 +93,28 @@ table.cash-flow
         td
           strong=expenses.last
 
+  tbody
+    tr
+      th scope="row"
+        span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
+        | Inversiones
+
+    - @assets.each do |account|   
+      tr
+        td
+          em=account.name
+        - date_months.each do |monthly|
+          - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
+          td
+            em=link_to balance.round(2), contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month, account_id: account.id)
+
+    tr
+      th.text-right scope="row" Total de Inversiones
+      - date_months.each do |monthly|
+        - assets << Plutus::Asset.balance(from_date: monthly, to_date: monthly.end_of_month) - @initials.map { |initial| initial.balance(from_date: monthly, to_date: monthly.end_of_month) }.sum
+        td
+          strong=assets.last
+
   tbody.tfoot
     tr
       th scope="row"
@@ -99,7 +122,7 @@ table.cash-flow
         | Resultado de la Actividad
       - date_months.each_with_index do |monthly, index|
         td
-          strong=initials[index] + revenues[index] - expenses[index]
+          strong=initials[index] + revenues[index] - expenses[index] - assets[index]
     tr
       td
 
@@ -153,4 +176,4 @@ table.cash-flow
         | Total Flujo de Caja Financiero 
       - date_months.each_with_index do |monthly, index|
         td
-          strong=initials[index] + revenues[index] + equities[index] - expenses[index] + liabilities[index]
+          strong=initials[index] + revenues[index] + equities[index] - expenses[index] - assets[index] + liabilities[index]

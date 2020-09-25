@@ -63,6 +63,9 @@
           =submenu_link "#{icon('fas', 'paint-roller')} Mantenimiento".html_safe, new_contabilidad_entrada_path(shortcut: :maintenance), { shortcut: :maintenance }
           .dropdown-divider
           =submenu_link "#{icon('fas', 'gas-pump')} Transporte y Gasolina".html_safe, new_contabilidad_entrada_path(shortcut: :gas), { shortcut: :gas }
+          .dropdown-divider
+          =submenu_link "#{icon('fas', 'coffee-togo')} Desechables".html_safe, new_contabilidad_entrada_path(shortcut: :disposable), { shortcut: :disposable }
+          =submenu_link "#{icon('fas', 'coffee')} Loza y Utensilios".html_safe, new_contabilidad_entrada_path(shortcut: :crockery), { shortcut: :crockery }
 
   - if current_user.waitress?
     = link_to icon('fas', 'plus') + " Comanda", new_comanda_path, class: 'btn btn-outline-success mr-3'
