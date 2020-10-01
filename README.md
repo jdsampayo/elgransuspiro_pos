@@ -1,5 +1,10 @@
 # README
 
+### Tlapoaloni: adder, calculator
+### pouani: administrador m, contador m, contralor m
+### pouki: contador m, contralor m
+
+
 Calculates the amount owed by the customer, indicates that amount, prepare an invoice for the customer (which may be printed), and indicates the options to make payment.
 
 
