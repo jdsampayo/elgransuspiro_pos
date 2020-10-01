@@ -42,7 +42,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: Cuenta::EPOCH, to_date: monthly - 1.day)
           td
-            em=link_to_balance balance, monthly - 1.month, account
+            em=link_to_account balance, monthly - 1.month, account
 
     tr
       th.text-right scope="row" Total de Saldo Inicial
@@ -63,7 +63,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to_balance balance, monthly, account
+            em=link_to_account balance, monthly, account
 
     tr
       th.text-right scope="row" Total de Ingresos
@@ -84,7 +84,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to_balance balance, monthly, account
+            em=link_to_account balance, monthly, account
 
     tr
       th.text-right scope="row" Total de Egresos
@@ -106,7 +106,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to_balance balance, monthly, account
+            em=link_to_account balance, monthly, account
 
     tr
       th.text-right scope="row" Total de Inversiones
@@ -139,7 +139,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to_balance balance, monthly, account
+            em=link_to_account balance, monthly, account
 
     tr
       th.text-right scope="row" Total de Financiamiento
@@ -160,7 +160,7 @@ table.cash-flow
         - date_months.each do |monthly|
           - balance = account.balance(from_date: monthly, to_date: monthly.end_of_month)
           td
-            em=link_to_balance balance, monthly, account
+            em=link_to_account balance, monthly, account
 
     tr
       th.text-right scope="row" Total de Aportaciones
