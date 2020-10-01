@@ -25,5 +25,5 @@ table
         td align="center"
           span class="#{plutus_to_badge(cuenta.type)}" &nbsp;
         td= cuenta.name
-        td= cuenta.id
+        td= link_to(cuenta.id, contabilidad_cuenta_path(cuenta))
         td= cuenta.contra ? 'Sí' : 'No'

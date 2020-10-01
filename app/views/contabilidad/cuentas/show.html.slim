@@ -1,0 +1,68 @@
+h1.float-md-left
+  =@account.name
+  small.ml-3 #{@from_date} - #{@to_date}
+
+.float-right
+  =link_to_balance "#{icon('fas', 'book-alt')} Ver en Libro", @from_date, @account, class: "btn btn-primary btn-lg"
+
+.clearfix
+
+.row
+  .col-sm
+    table.table-t
+      thead
+        tr
+          th
+          th.text-right width=100 Debe
+      tbody
+        -@debits.each do |amount|
+          tr
+            td.text-right=amount[:date]
+            td.text-right=amount[:amount]
+
+  .col-sm
+    table.table-t
+      thead
+        tr
+          th width=100 Haber
+          th
+      tbody
+        -@credits.each do |amount|
+          tr
+            td=amount[:amount]
+            td=amount[:date]
+
+.row
+  .col-sm
+    table.table-t
+      tfoot
+        tr
+          td.text-right
+            strong Total
+          td.text-right width=100
+            =@debits_sum 
+        - if @balance.positive?
+          tr
+            td.text-right
+              strong Balance
+            td.text-right width=100
+              =@balance
+  .col-sm
+    table.table-t
+      tfoot
+        tr
+          td width=100
+            =@credits_sum
+          td
+            strong Total
+        - if @balance.negative?
+          tr
+            td width=100
+              =-@balance
+            td
+              strong Balance
+
+
+= link_to 'Regresar', :back, class: "btn btn-primary"
+br
+br
