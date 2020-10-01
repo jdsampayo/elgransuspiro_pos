@@ -7,60 +7,61 @@ h1.float-md-left
 
 .clearfix
 
-.row
-  .col-sm
-    table.table-t
-      thead
-        tr
-          th
-          th.text-right width=100 Debe
-      tbody
-        -@debits.each do |amount|
+.container-fluid
+  .row
+    .col-6
+      table.table-t
+        thead
           tr
-            td.text-right=amount[:date]
-            td.text-right=amount[:amount]
+            th
+            th.text-right width=100 Debe
+        tbody
+          -@debits.each do |amount|
+            tr
+              td.text-right=amount[:date]
+              td.text-right=amount[:amount]
 
-  .col-sm
-    table.table-t
-      thead
-        tr
-          th width=100 Haber
-          th
-      tbody
-        -@credits.each do |amount|
+    .col-6
+      table.table-t
+        thead
           tr
-            td=amount[:amount]
-            td=amount[:date]
+            th width=100 Haber
+            th
+        tbody
+          -@credits.each do |amount|
+            tr
+              td=amount[:amount]
+              td=amount[:date]
 
-.row
-  .col-sm
-    table.table-t
-      tfoot
-        tr
-          td.text-right
-            strong Total
-          td.text-right width=100
-            =@debits_sum 
-        - if @balance.positive?
+  .row
+    .col-6
+      table.table-t
+        tfoot
           tr
             td.text-right
-              strong Balance
+              strong Total
             td.text-right width=100
-              =@balance
-  .col-sm
-    table.table-t
-      tfoot
-        tr
-          td width=100
-            =@credits_sum
-          td
-            strong Total
-        - if @balance.negative?
+              =@debits_sum 
+          - if @balance.positive?
+            tr
+              td.text-right
+                strong Balance
+              td.text-right width=100
+                =@balance
+    .col-6
+      table.table-t
+        tfoot
           tr
             td width=100
-              =-@balance
+              =@credits_sum
             td
-              strong Balance
+              strong Total
+          - if @balance.negative?
+            tr
+              td width=100
+                =-@balance
+              td
+                strong Balance
 
 
 = link_to 'Regresar', :back, class: "btn btn-primary"
