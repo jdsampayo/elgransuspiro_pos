@@ -7,11 +7,14 @@ class Entrada
   validates :credits_attributes, presence: true
 
   attr_accessor(
+    :id,
     :description,
     :image,
     :date,
     :debits_attributes,
-    :credits_attributes
+    :credits_attributes,
+    :persisted,
+    :errored
   )
 
   def self.plutus_id(name)
@@ -19,6 +22,10 @@ class Entrada
   rescue
     puts "Can't find account #{name}"
     nil
+  end
+
+  def persisted?
+    persisted
   end
 
   SHORTCUTS = {
@@ -123,7 +130,8 @@ class Entrada
         plutus_id('Transporte y Gasolina')
       ],
       credits: [
-        plutus_id('Caja Fuerte')
+        plutus_id('Caja Fuerte'),
+        plutus_id('Tarjeta de Crédito')
       ]
     },
     disposable: {
@@ -156,6 +164,38 @@ class Entrada
       account_name: plutus_name(movement[:account_id]),
       amount: movement[:amount].to_f
     }
+  end
+
+  def self.find(id)
+    plutus_entry = Plutus::Entry.find(id)
+
+    entrada = Entrada.new
+    entrada.description = plutus_entry.description
+    entrada.date = plutus_entry.date
+    entrada.id = plutus_entry.id
+    entrada.persisted = true
+
+    entrada
+  end
+
+  def update(params)
+    plutus_entry = Plutus::Entry.find(id)
+
+    return unless plutus_entry
+
+    plutus_entry.description = params[:description]
+    plutus_entry.date = params[:date]
+
+    plutus_entry.save
+  end
+
+  def delete
+    plutus_entry = Plutus::Entry.find(id)
+
+    return unless plutus_entry
+
+    plutus_entry.delete
+    Plutus::Amount.where(entry_id: id).delete_all
   end
 
   def save

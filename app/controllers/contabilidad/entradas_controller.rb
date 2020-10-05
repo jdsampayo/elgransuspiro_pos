@@ -7,7 +7,7 @@ module Contabilidad
 
       @entries = Plutus::Entry
 
-      @from_date = from_date(params, true)
+      @from_date = from_date(params)
       @to_date = to_date(params)
 
       @entries = @entries.includes(:accounts)
@@ -52,6 +52,8 @@ module Contabilidad
       if @entrada.save
         redirect_to contabilidad_entradas_path, notice: 'Creada exitosamente.'
       else
+        @entrada.errored = true
+
         initial = Entrada::SHORTCUTS[:plain]
 
         unless @entrada.debits_attributes&.present?
@@ -70,24 +72,33 @@ module Contabilidad
       end
     end
 
-    def destroy
+    def edit
+      @entrada = Entrada.find(params[:id])
       @entry = Plutus::Entry.find(params[:id])
+    end
 
-      if @entry
-        @entry.delete
-        Plutus::Amount.where(entry_id: params[:id]).delete_all
+    def update
+      @entrada = Entrada.find(params[:id])
 
-        redirect_to contabilidad_entradas_url, notice: 'Eliminada.'
+      if @entrada.update(entrada_params)
+        redirect_to contabilidad_entradas_url, notice: 'Actualizadas.'
       else
-        redirect_to contabilidad_entradas_url, notice: 'El registro no existe.'
+        redirect_to contabilidad_entradas_url, notice: 'Imposible Editar.'
       end
     end
 
+    def destroy
+      @entrada = Entrada.find(params[:id])
+      @entrada.delete
+
+      redirect_to contabilidad_entradas_url, notice: 'Eliminada.'
+    end
+
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
     def entrada_params
       params.require(:entrada).permit(:date, :description, debits_attributes: [:account_id, :amount], credits_attributes: [:account_id, :amount])
     end
-
-    private
 
     def from_date(params, yearly=false)
       return Date.parse(params[:start]) if params[:start]
