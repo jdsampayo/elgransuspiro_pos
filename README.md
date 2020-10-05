@@ -20,7 +20,7 @@ income per day
 
 # Dump de DB
 `pg_dump elgransuspiro_pos_development > elgransuspiro.bak`
-`pg_dump -Uelgransuspiro elgransuspiro_pos_production > elgransuspiro_setp22.bak`
+`pg_dump -Uelgransuspiro elgransuspiro_pos_production > elgransuspiro_oct2.bak`
 
 # Subir dump
 `scp elgransuspiro.bak linode:~/.`

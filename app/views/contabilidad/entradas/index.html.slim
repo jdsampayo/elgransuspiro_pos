@@ -34,7 +34,7 @@ table.table-sm
       th Descripción
       th width=100 Cargo
       th width=100 Abono
-      th width=30
+      th width=100
 
   - @entries.each_with_index do |entry, index|
     tr data-toggle='collapse' id="entry_#{entry.id.last(8)}" data-target=".entry_#{entry.id.last(8)}collapsed" style=(index % 2 == 0 ? 'background-color: rgba(0, 0, 0, 0.05)' : 'background-color: rgba(0, 0, 0, 0)')
@@ -48,6 +48,8 @@ table.table-sm
         .text-center
           =number_with_precision(entry.debit_amounts.map(&:amount).sum, precision: 2)
       td.actions
+        = link_to edit_contabilidad_entrada_path(entry.id), class: "btn btn-primary btn-sm" do
+          i.fas.fa-pencil
         = link_to contabilidad_entrada_path(entry.id), data: { confirm: '¿Estás seguro?' }, method: :delete, class: "btn btn-danger btn-sm" do
           i.fas.fa-trash
 

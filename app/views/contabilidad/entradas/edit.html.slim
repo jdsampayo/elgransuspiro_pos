@@ -1,0 +1,33 @@
+h1 Editar Entrada
+
+= simple_form_for([:contabilidad, @entrada]) do |f|
+  .form-inputs
+    .row
+      .col-md-2= f.input :date, input_html: { class: "datepicker" }, label: "Fecha"
+      .col-md-10= f.input :description, label: "Descripción"
+
+  hr
+
+  table
+    - @entry.debit_amounts.each do |debit_amount|
+      tr
+        td
+          span class="#{plutus_to_badge(debit_amount&.account&.type)}" &nbsp;
+        td
+          | &nbsp;&nbsp;&nbsp;&nbsp;
+          =debit_amount&.account&.name || "Desconocido"
+        td=number_with_precision(debit_amount&.amount, precision: 2)
+        td
+    - @entry.credit_amounts.each do |credit_amount|
+      tr
+        td
+          span class="#{plutus_to_badge(credit_amount&.account&.type)}" &nbsp;
+        td
+          | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          =credit_amount&.account&.name || "Desconocido"
+        td
+        td=number_with_precision(credit_amount&.amount, precision: 2)
+
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"

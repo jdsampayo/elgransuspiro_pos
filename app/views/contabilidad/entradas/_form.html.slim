@@ -1,5 +1,5 @@
 = simple_form_for([:contabilidad, @entrada]) do |f|
-  - if @entrada.errors.present?
+  - if @entrada.errored
     .alert.alert-danger Las cuentas no se equilibran, por favor revisa los montos:
 
   .form-inputs
@@ -24,8 +24,6 @@
             strong Monto
         hr
         - @entrada.debits_attributes.each do |id, debit|
-          - puts "aqui"
-          - puts id, debit
           =render partial: "contabilidad/entradas/account_fields", locals: {type: "debits", entry: debit, add_delete_action: true, id: id}
 
     .col-md-6
