@@ -16,10 +16,6 @@ module ApplicationHelper
     "table-border-#{Cuenta::COLORS[account_type]}"
   end
 
-  def plutus_to_badge(account_type)
-    "badge badge-pill badge-#{Cuenta::COLORS[account_type]}"
-  end
-
   def trash_icon
     "<i class='fas fa-trash'></i>".html_safe
   end

@@ -124,6 +124,10 @@ class Cuenta
     Plutus::Account.where(name: 'Banco').take
   end
 
+  def self.cash
+      [caja_chica, caja_fuerte, banco]
+  end
+
   def create
     if valid?
       plutus = "Plutus::#{tipo.titleize}".constantize.new(name: nombre, contra: contra)

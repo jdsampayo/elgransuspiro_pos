@@ -30,12 +30,15 @@ module Contabilidad
     def cash_flow
       @from_date = params[:date] ? Date.parse(params[:date] + "-01-01") : Date.today.beginning_of_year
 
-      @initials = [Cuenta.caja_chica, Cuenta.caja_fuerte, Cuenta.banco]
-      @revenues = Plutus::Revenue.all
-      @expenses = Plutus::Expense.order(:name)
-      @liabilities = Plutus::Liability.all
-      @equities = Plutus::Equity.all
-      @assets = Plutus::Asset.all.order(:name) - @initials
+      date_range = @from_date..@from_date.end_of_year
+      @date_months = date_range.map { |d| Date.new(d.year, d.month, 1) }.uniq
+
+      @initials = cash_flow_data(Cuenta.cash, true)
+      @assets = cash_flow_data(Plutus::Asset.all.order(:name) - Cuenta.cash)
+      @revenues = cash_flow_data(Plutus::Revenue.all)
+      @expenses = cash_flow_data(Plutus::Expense.order(:name))
+      @liabilities = cash_flow_data(Plutus::Liability.all)
+      @equities = cash_flow_data(Plutus::Equity.all)
     end
 
     def monthly
@@ -62,6 +65,40 @@ module Contabilidad
     end
 
     private
+    def cash_flow_data(query, epoch=false)
+      data = {}
+
+      data[:class] = query.first.class.to_s
+      data[:epoch] = epoch
+      data[:accounts] = query.map do |account|
+        {   
+          id: account.id,
+          name: account.name,
+          periods: balances(account, epoch)
+        }
+      end
+      data[:totals] = totals(data[:accounts])
+
+      data
+    end
+
+    def totals(accounts)
+      @date_months.map.with_index do |_, index|
+        accounts.inject(0) {|sum, hash| sum + hash[:periods][index][:balance]}
+      end
+    end
+
+    def balances(account, epoch)
+      @date_months.map do |month|
+        {
+          month: month,
+          balance: account.balance(
+            from_date: epoch ? Cuenta::EPOCH : month,
+            to_date: epoch ? month - 1.day : month.end_of_month
+          ) 
+        }
+      end
+    end
 
     def from_date(params, yearly=false)
       return Date.parse(params[:start]) if params[:start]
