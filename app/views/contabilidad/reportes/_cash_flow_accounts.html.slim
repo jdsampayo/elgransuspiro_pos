@@ -1,0 +1,16 @@
+tr
+  th scope="row"
+    span> class="#{plutus_to_badge(data[:class])}" &nbsp;
+    =name
+- data[:accounts].each do |account|   
+  tr
+    td
+      em=account[:name]
+    - account[:periods].each do |period|
+      td
+        em=link_to_account( period[:balance], data[:epoch] ? (period[:month] - 1.day).beginning_of_month : period[:month], account[:id] )
+tr
+  th.text-right scope="row" Total de #{name}
+  - data[:totals].each do |balance|
+    td
+      strong=balance
