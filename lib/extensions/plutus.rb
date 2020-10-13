@@ -56,11 +56,8 @@ module Extensions
           accounts = self.all
           accounts.each do |account|
             if account.contra
-              puts "Contra"
-              puts account.balance_by_month(year)
               accounts_balance.merge!(account.balance_by_month(year)) { |_, a, b| a - b }
             else
-              puts account.balance_by_month(year)
               accounts_balance.merge!(account.balance_by_month(year)) { |_, a, b| a + b }
             end
           end
