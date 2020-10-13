@@ -83,20 +83,25 @@ module Contabilidad
     end
 
     def totals(accounts)
-      @date_months.map.with_index do |_, index|
-        accounts.inject(0) {|sum, hash| sum + hash[:periods][index][:balance]}
+      @date_months.map do |month|
+        accounts.inject(0) {|sum, hash| sum + hash[:periods][month]}
       end
     end
 
     def balances(account, epoch)
-      @date_months.map do |month|
-        {
-          month: month,
-          balance: account.balance(
-            from_date: epoch ? Cuenta::EPOCH : month,
-            to_date: epoch ? month - 1.day : month.end_of_month
-          ) 
-        }
+      if epoch
+        initial = account.balance(from_date: Cuenta::EPOCH, to_date: @from_date - 1.day)
+
+        balances = account.balance_by_month(@from_date)
+        balances.each_with_object([]) do |(k, v), accu|
+          previous = accu.last || 0
+          balances[k] = initial + previous
+
+          accu << previous += v
+        end
+        balances
+      else
+        account.balance_by_month(@from_date)
       end
     end
 
