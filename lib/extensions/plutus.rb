@@ -1,4 +1,3 @@
-# lib/extensions/gutentag.rb
 # frozen_string_literal: true
 
 module Extensions
@@ -20,13 +19,51 @@ module Extensions
 
   module PlutusAmount
     extend ActiveSupport::Concern
+
+    class_methods do
+      def balance_by_month_and_account(year)
+        accounts = Plutus::Account.all
+
+        data = includes(:entry, :account).group(:account_id, :type, :contra).group_by_month(
+          :date,
+          range: year.beginning_of_year..year.end_of_year,
+          time_zone: 'UTC'
+        ).sum(:amount)
+
+        data.inject({}) do |balances, (k, v)|
+          balances[k[0]] ||= {}
+          balances[k[0]][k[3]] ||= 0
+
+          contra_value = k[2] ? -v : v
+
+          credit_balance = accounts.find { |a| a.id == k[0] }.normal_credit_balance
+          if credit_balance ^ k[2]
+            if k[1] == 'Plutus::CreditAmount'
+              balances[k[0]][k[3]] += v
+            else
+              balances[k[0]][k[3]] -= v
+            end
+          elsif k[1] == 'Plutus::DebitAmount'
+            balances[k[0]][k[3]] += v
+          else
+            balances[k[0]][k[3]] -= v
+          end
+
+          balances
+        end
+      end
+    end
+  end
+
+  module PlutusDebitCreditAmount
+    extend ActiveSupport::Concern
     
     class_methods do
       def balance_by_month(year)
         includes(:entry).group_by_month(
           :date,
           range: year.beginning_of_year..year.end_of_year,
-          time_zone: "UTC"
+          time_zone: 'UTC'
         ).sum(:amount)
       end
     end
