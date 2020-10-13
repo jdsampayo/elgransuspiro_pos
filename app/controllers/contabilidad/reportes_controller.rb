@@ -34,7 +34,7 @@ module Contabilidad
       @date_months = date_range.map { |d| Date.new(d.year, d.month, 1) }.uniq
 
       @balances = Plutus::Amount.balance_by_month_and_account(@from_date)
-      @zeroed = Hash[@date_months.collect{ |month| [month, 0] }]
+      @zeroed = Hash[@date_months.collect { |month| [month, 0] }]
 
       @initials = cash_flow_data(Cuenta.cash, true)
       @assets = cash_flow_data(Plutus::Asset.all.order(:name) - Cuenta.cash)
