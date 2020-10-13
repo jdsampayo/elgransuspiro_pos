@@ -38,17 +38,15 @@ module Extensions
 
           credit_balance = accounts.find { |a| a.id == k[0] }.normal_credit_balance
           if credit_balance ^ k[2]
-            if k[1] == "Plutus::CreditAmount"
+            if k[1] == 'Plutus::CreditAmount'
               balances[k[0]][k[3]] += v
             else
               balances[k[0]][k[3]] -= v
             end
+          elsif k[1] == 'Plutus::DebitAmount'
+            balances[k[0]][k[3]] += v
           else
-            if k[1] == "Plutus::DebitAmount"
-              balances[k[0]][k[3]] += v
-            else
-              balances[k[0]][k[3]] -= v
-            end
+            balances[k[0]][k[3]] -= v
           end
 
           balances
