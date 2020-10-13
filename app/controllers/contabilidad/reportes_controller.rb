@@ -33,6 +33,9 @@ module Contabilidad
       date_range = @from_date..@from_date.end_of_year
       @date_months = date_range.map { |d| Date.new(d.year, d.month, 1) }.uniq
 
+      @balances = Plutus::Amount.balance_by_month_and_account(@from_date)
+      @zeroed = Hash[@date_months.collect { |month| [month, 0] } ]
+
       @initials = cash_flow_data(Cuenta.cash, true)
       @assets = cash_flow_data(Plutus::Asset.all.order(:name) - Cuenta.cash)
       @revenues = cash_flow_data(Plutus::Revenue.all)
@@ -92,7 +95,7 @@ module Contabilidad
       if epoch
         initial = account.balance(from_date: Cuenta::EPOCH, to_date: @from_date - 1.day)
 
-        balances = account.balance_by_month(@from_date)
+        balances = @balances[account.id]
         balances.each_with_object([]) do |(k, v), accu|
           previous = accu.last || 0
           balances[k] = initial + previous
@@ -101,7 +104,9 @@ module Contabilidad
         end
         balances
       else
-        account.balance_by_month(@from_date)
+        return @zeroed unless @balances[account.id]
+
+        @balances[account.id]
       end
     end
 
