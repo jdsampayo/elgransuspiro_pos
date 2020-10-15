@@ -4,13 +4,13 @@
 
   .form-inputs
     .row
-      .col-md-2= f.input :date, input_html: { class: "datepicker" }, label: "Fecha"
-      .col-md-10= f.input :description, label: "Descripción"
+      .col-sm-2= f.input :date, input_html: { class: "datepicker" }, label: "Fecha"
+      .col-sm-10= f.input :description, label: "Descripción"
 
   hr
 
   .row
-    .col-md-6
+    .col-6
       h3
         | Cargo
         small.text-muted<
@@ -18,15 +18,15 @@
       /p.text-muted Representa un aumento en las cuentas de activo y gasto y una disminución en las cuentas de pasivo, capital e ingreso.
       #debits
         .row
-          .col-md-6
+          .col-6
             strong Cuenta
-          .col-md-4
+          .col-4
             strong Monto
         hr
         - @entrada.debits_attributes.each do |id, debit|
           =render partial: "contabilidad/entradas/account_fields", locals: {type: "debits", entry: debit, add_delete_action: true, id: id}
 
-    .col-md-6
+    .col-6
       h3
         | Abono
         small.text-muted<
@@ -35,19 +35,19 @@
 
       #credits
         .row
-          .col-md-6
+          .col-6
             strong Cuenta
-          .col-md-4
+          .col-4
             strong Monto
         hr
         - @entrada.credits_attributes.each do |id, credit|
           =render partial: "contabilidad/entradas/account_fields", locals: {type: "credits", entry: credit, add_delete_action: true, id: id}
 
   .row
-    .col-md-6
+    .col-6
       .links
         = link_to "Agregar cuenta", new_contabilidad_cuenta_path(type: "debits"), remote: true
-    .col-md-6
+    .col-6
       .links
         = link_to "Agregar cuenta", new_contabilidad_cuenta_path(type: "credits"), remote: true
 
