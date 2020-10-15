@@ -7,10 +7,10 @@ tr
     td
       em=account[:name]
     - account[:periods].each do |month, balance|
-      td
+      td class=(month.month.in?(visible_sm_months) ? '' : 'd-none d-sm-table-cell')
         em=link_to_account( balance, data[:epoch] ? (month - 1.day).beginning_of_month : month, account[:id] )
 tr
   th.text-right scope="row" Total de #{name}
-  - data[:totals].each do |balance|
-    td
+  - data[:totals].each_with_index do |balance, index|
+    td class=((index+1).in?(visible_sm_months) ? '' : 'd-none d-sm-table-cell')
       strong=balance

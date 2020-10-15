@@ -42,6 +42,15 @@ module Contabilidad
       @expenses = cash_flow_data(Plutus::Expense.order(:name))
       @liabilities = cash_flow_data(Plutus::Liability.all)
       @equities = cash_flow_data(Plutus::Equity.all)
+
+      current_month = Time.current.month
+      current_month = 11 if current_month > 11
+      current_month = 2 if current_month < 2
+      @visible_sm_months = [
+        current_month-1,
+        current_month,
+        current_month+1
+      ]
     end
 
     def monthly
