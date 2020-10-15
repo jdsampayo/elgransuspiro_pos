@@ -16,14 +16,14 @@ table.cash-flow
     tr.text-center
       th scope="col"=@from_date.to_s.first(4)
       - @date_months.each do |monthly|
-        th scope="col"
+        th scope="col" class=(monthly.month.in?(@visible_sm_months) ? '' : 'd-none d-sm-table-cell')
           =link_to I18n.t('date.month_names')[monthly.month], contabilidad_entradas_path(limit: 300, order: 'descendente', start: monthly, end: monthly.end_of_month)
 
   tbody
-    =render partial: 'cash_flow_accounts', locals: { name: 'Saldo Inicial', data: @initials }
-    =render partial: 'cash_flow_accounts', locals: { name: 'Ingresos', data: @revenues }
-    =render partial: 'cash_flow_accounts', locals: { name: 'Egresos', data: @expenses }
-    =render partial: 'cash_flow_accounts', locals: { name: 'Activos', data: @assets }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Saldo Inicial', data: @initials, visible_sm_months: @visible_sm_months }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Ingresos', data: @revenues, visible_sm_months: @visible_sm_months }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Egresos', data: @expenses, visible_sm_months: @visible_sm_months }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Activos', data: @assets, visible_sm_months: @visible_sm_months }
 
   tbody.tfoot
     tr
@@ -31,14 +31,14 @@ table.cash-flow
         span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
         | Resultado de la Actividad
       - @date_months.each_with_index do |monthly, index|
-        td
+        td class=(monthly.month.in?(@visible_sm_months) ? '' : 'd-none d-sm-table-cell')
           strong=@initials[:totals][index] + @revenues[:totals][index] - @expenses[:totals][index] - @assets[:totals][index]
     tr
       td
 
   tbody
-    =render partial: 'cash_flow_accounts', locals: { name: 'Financiamiento', data: @liabilities }
-    =render partial: 'cash_flow_accounts', locals: { name: 'Aportaciones', data: @equities }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Financiamiento', data: @liabilities, visible_sm_months: @visible_sm_months }
+    =render partial: 'cash_flow_accounts', locals: { name: 'Aportaciones', data: @equities, visible_sm_months: @visible_sm_months }
 
   tfoot
     tr
@@ -46,5 +46,5 @@ table.cash-flow
         span> class="#{plutus_to_badge('Plutus::Asset')}" &nbsp;
         | Total Flujo de Caja Financiero 
       - @date_months.each_with_index do |monthly, index|
-        td
+        td class=(monthly.month.in?(@visible_sm_months) ? '' : 'd-none d-sm-table-cell')
           strong=@initials[:totals][index] + @revenues[:totals][index] + @equities[:totals][index] - @expenses[:totals][index] - @assets[:totals][index] + @liabilities[:totals][index]
