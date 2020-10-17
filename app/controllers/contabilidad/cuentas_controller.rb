@@ -31,18 +31,27 @@ module Contabilidad
 
       @debits = []
       @credits = []
-
       entries.each do |entry|
         entry.debit_amounts.each do |amount|
-          @debits << { amount: amount.amount, date: entry.date } if amount.account == @account
+          next unless amount.account == @account
+          @debits << {
+            amount: amount.amount,
+            date: entry.date,
+            description: entry.description
+          }
         end
         entry.credit_amounts.each do |amount|
-          @credits << { amount: amount.amount, date: entry.date } if amount.account == @account
+          next unless amount.account == @account
+          @credits << {
+            amount: amount.amount,
+            date: entry.date,
+            description: entry.description
+          }
         end
       end
 
-      @debits_sum = @debits.sum {|h| h[:amount] }
-      @credits_sum = @credits.sum {|h| h[:amount] }
+      @debits_sum = @debits.sum { |h| h[:amount] }
+      @credits_sum = @credits.sum { |h| h[:amount] }
       @balance = @debits_sum - @credits_sum
 
       respond_to do |format|

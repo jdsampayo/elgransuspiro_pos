@@ -21,7 +21,8 @@ table
     tr
       td align="center"
         span class="#{plutus_to_badge(account.type)}" &nbsp;
-      td= account.name
+
+      td= link_to account.name, contabilidad_entradas_path(start: Cuenta::EPOCH, end: Time.current.to_date, account_id: account)
       td= number_with_precision(account.debits_balance, precision: 2)
       td= number_with_precision(account.credits_balance, precision: 2)
       td class=plutus_to_tr(account.type)
