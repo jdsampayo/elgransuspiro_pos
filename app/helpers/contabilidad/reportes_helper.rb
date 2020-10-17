@@ -19,7 +19,7 @@ module Contabilidad
         balance.round(2),
         contabilidad_cuenta_path(
           account,
-          start: month ,
+          start: month,
           end: month.end_of_month
         )
       )

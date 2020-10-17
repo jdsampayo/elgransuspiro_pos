@@ -3,7 +3,7 @@ h1.float-md-left
   small.ml-3 #{@from_date} - #{@to_date}
 
 .float-right
-  =link_to_balance "#{icon('fas', 'book-alt')} Ver en Libro", @from_date, @account, class: "btn btn-primary btn-lg"
+  =link_to_balance "#{icon('fas', 'book-alt')} Ver en Libro", @from_date, @account, class: 'btn btn-primary'
 
 .clearfix
 
@@ -14,10 +14,13 @@ h1.float-md-left
         thead
           tr
             th
+            th width=100
             th.text-right width=100 Debe
         tbody
           -@debits.each do |amount|
             tr
+              td.text-right
+                small.text-muted=amount[:description]
               td.text-right=amount[:date]
               td.text-right=amount[:amount]
 
@@ -26,25 +29,30 @@ h1.float-md-left
         thead
           tr
             th width=100 Haber
+            th width=100
             th
         tbody
           -@credits.each do |amount|
             tr
               td=amount[:amount]
               td=amount[:date]
+              td
+                small.text-muted=amount[:description]
 
   .row
     .col-6
       table.table-t
         tfoot
           tr
-            td.text-right
+            td
+            td.text-right width=100
               strong Total
             td.text-right width=100
               =@debits_sum 
           - if @balance.positive?
             tr
-              td.text-right
+              td
+              td.text-right width=100
                 strong Balance
               td.text-right width=100
                 =@balance
@@ -54,14 +62,16 @@ h1.float-md-left
           tr
             td width=100
               =@credits_sum
-            td
+            td width=100
               strong Total
+            td
           - if @balance.negative?
             tr
               td width=100
                 =-@balance
-              td
+              td width=100
                 strong Balance
+              td
 
 
 = link_to 'Regresar', :back, class: "btn btn-primary"
