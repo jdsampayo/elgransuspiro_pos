@@ -15,6 +15,7 @@ class Articulo < ApplicationRecord
   include Discard::Model
 
   has_many :comandas, through: :ordenes
+  has_many :ordenes
   has_many :conteos
   has_many :insumos
   has_and_belongs_to_many :extras
@@ -29,5 +30,17 @@ class Articulo < ApplicationRecord
 
   def to_s
     nombre.titleize
+  end
+
+  def last_sale
+    ordenes.last
+  end
+
+  def first_sale
+    ordenes.first
+  end
+
+  def total
+    ordenes.sum(:cantidad)
   end
 end
