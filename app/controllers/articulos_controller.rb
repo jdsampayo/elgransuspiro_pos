@@ -18,17 +18,17 @@ class ArticulosController < ApplicationController
 
   # GET /articulos
   def index
-    @articulos = Articulo.unscope(:order).kept.
-      left_outer_joins(:ordenes, :categoria).
-      distinct.select('articulos.id,
+    @articulos = Articulo.unscope(:order).kept
+      .left_outer_joins(:ordenes, :categoria)
+      .distinct.select('articulos.id,
         articulos.nombre,
         articulos.precio,
         categorias.nombre as nombre_categoria,
         SUM(ordenes.cantidad) as total_cantidades,
         MIN(ordenes.created_at) as primera_venta,
-        MAX(ordenes.created_at) as ultima_venta').
-      group('articulos.id,categorias.nombre').
-      order(total_cantidades: :desc)
+        MAX(ordenes.created_at) as ultima_venta')
+      .group('articulos.id,categorias.nombre')
+      .order(total_cantidades: :desc)
   end
 
   def report
