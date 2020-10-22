@@ -18,6 +18,12 @@ $(document).on "turbolinks:load", ->
 
   $('form.simple_form select').not('.image-picker').selectize()
 
+  dataConfirmModal.setDefaults(
+    title: '¿Estás seguro?',
+    commit: 'Aceptar',
+    cancel: 'Cancelar'
+  )
+
   checkbox_selector = "#ordenes .nested-fields input.boolean"
 
   $('#comanda_para_llevar').on 'click', ->

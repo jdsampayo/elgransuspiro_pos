@@ -12,5 +12,5 @@ h1.float-left Meseros
         .card-body
           h5.card-title=mesero.nombre
           = link_to icon('fas', 'pencil-alt'), edit_mesero_path(mesero), class: 'btn btn-outline-primary mr-3'
-          = link_to icon('fas', 'trash'), mesero, data: { confirm: '¿Estás seguro?' }, method: :delete, class: 'btn btn-outline-danger'
+          = link_to icon('fas', 'trash'), mesero, data: { confirm: 'La acción no podrá deshacerse.' }, method: :delete, class: 'btn btn-outline-danger'
 
