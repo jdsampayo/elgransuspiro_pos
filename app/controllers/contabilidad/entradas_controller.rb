@@ -50,12 +50,14 @@ module Contabilidad
       @entrada.credits_attributes&.delete_if { |id, entry| entry[:amount].to_i.zero? }
 
       if @entrada.save
-        redirect_to( contabilidad_entradas_path(
-          start: @entrada.date,
-          end: @entrada.date,
-          description: @entrada.description
+        redirect_to(
+          contabilidad_entradas_path(
+            start: @entrada.date,
+            end: @entrada.date,
+            description: @entrada.description
           ),
-        notice: 'Creada exitosamente' )
+          notice: 'Creada exitosamente'
+        )
       else
         @entrada.errored = true
 
