@@ -1,11 +1,18 @@
-h1.float-md-left
-  =@account.name
-  small.ml-3 #{@from_date} - #{@to_date}
+h1.float-md-left=@account.name
 
 .float-right
   =link_to_balance "#{icon('fas', 'book-alt')} Ver en Libro", @from_date, @account, class: 'btn btn-primary'
 
 .clearfix
+
+= form_tag(contabilidad_cuenta_path(@account.id), {method: :get, class: 'form-inline'}) do
+  .input-daterange.input-group#datepicker
+    = text_field_tag :start, @from_date, class: 'form-control'
+    span.input-group-addon< a
+    = text_field_tag :end, @to_date, class: 'form-control'
+  button.btn.btn-primary.mx-sm-3 type="submit" Obtener Reporte
+
+br
 
 .container-fluid
   .row
