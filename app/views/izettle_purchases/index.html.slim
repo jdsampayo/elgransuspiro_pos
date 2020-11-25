@@ -1,0 +1,11 @@
+h1.float-left Compras de iZettle
+
+.float-right
+  = link_to sync_izettle_purchases_path, class: 'btn btn-primary', method: :post do
+    =icon('fas', 'sync')
+    |  Sincronizar
+
+.clearfix
+
+.table-responsive-sm= render "table"
+= paginate @izettle_purchases, theme: 'twitter-bootstrap-4'

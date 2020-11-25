@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_201843) do
+ActiveRecord::Schema.define(version: 2020_11_14_153954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -185,6 +185,29 @@ ActiveRecord::Schema.define(version: 2020_08_08_201843) do
 # Could not dump table "insumos" because of following StandardError
 #   Unknown type 'insumo_paquete' for column 'paquete'
 
+  create_table "izettle_purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.decimal "amount"
+    t.datetime "purchased_at"
+    t.string "cc_masked_number"
+    t.string "cc_brand"
+    t.uuid "payment_id"
+    t.uuid "comanda_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["comanda_id"], name: "index_izettle_purchases_on_comanda_id"
+  end
+
+  create_table "izettle_transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "transacted_at"
+    t.decimal "amount"
+    t.integer "transaction_type"
+    t.uuid "payment_id"
+    t.uuid "izettle_purchase_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["izettle_purchase_id"], name: "index_izettle_transactions_on_izettle_purchase_id"
+  end
+
   create_table "meseros", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "nombre"
     t.datetime "created_at"
@@ -281,4 +304,6 @@ ActiveRecord::Schema.define(version: 2020_08_08_201843) do
   add_foreign_key "extra_ordenes", "extras", name: "extra_ordenes_extra_id_fkey"
   add_foreign_key "extra_ordenes", "ordenes", name: "extra_ordenes_orden_id_fkey"
   add_foreign_key "gastos", "cortes"
+  add_foreign_key "izettle_purchases", "comandas"
+  add_foreign_key "izettle_transactions", "izettle_purchases"
 end

@@ -1,0 +1,16 @@
+table
+  thead
+    tr
+      th Recibido en
+      th Monto
+      th Tipo
+      th Compra
+
+
+  tbody
+    - @izettle_transactions.each do |izettle_transaction|
+      tr
+        td = izettle_transaction.transacted_at
+        td = izettle_transaction.amount
+        td = izettle_transaction.transaction_type
+        td = izettle_transaction.izettle_purchase&.id

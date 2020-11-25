@@ -1,0 +1,16 @@
+table
+  thead
+    tr
+      th Fecha
+      th Monto
+      th Número de Tarjeta
+      th Marca
+      th Comanda
+  tbody
+    - @izettle_purchases.each do |izettle_purchase|
+      tr
+        td = link_to(izettle_purchase.purchased_at, izettle_purchase)
+        td = izettle_purchase.amount
+        td = izettle_purchase.cc_masked_number
+        td = izettle_purchase.cc_brand
+        td = izettle_purchase.comanda ? link_to(izettle_purchase.comanda.folio, corte_comandas_path(izettle_purchase.comanda&.corte)) : nil

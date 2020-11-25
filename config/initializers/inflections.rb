@@ -24,6 +24,11 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular('credit', 'credits')
   inflect.irregular('debit', 'debits')
 
+  # iZettle
+  inflect.irregular('payment', 'payments')
+  inflect.irregular('purchase', 'purchases')
+  inflect.irregular('transaction', 'transactions')
+
   # Se agregan inflectores para todos los casos de detalle_ y detalles_
   # Ejs.:
   # detalle_pendiente_aprobacion -> detalles_pediente_aprobacion

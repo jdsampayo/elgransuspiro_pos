@@ -1,0 +1,2 @@
+module IzettlePurchasesHelper
+end

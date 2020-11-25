@@ -30,6 +30,7 @@ class Comanda < ApplicationRecord
   belongs_to :corte
   belongs_to :mesero
 
+  has_one :izettle_purchase
   has_one :sucursal, through: :corte
   has_many :ordenes, inverse_of: :comanda
   has_many :articulos, through: :ordenes
