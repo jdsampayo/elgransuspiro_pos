@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IzettlePurchase < ApplicationRecord
   belongs_to :comanda, optional: true
 
@@ -5,7 +7,7 @@ class IzettlePurchase < ApplicationRecord
     'MASTERCARD' => 'fab fa-cc-mastercard',
     'VISA' => 'fab fa-cc-visa',
     'VISA_ELECTRON' => 'fab fa-cc-visa'
-  }
+  }.freeze
 
   def cc_icon
     CC_BRANDS[cc_brand] || 'fas fa-credit-card'
