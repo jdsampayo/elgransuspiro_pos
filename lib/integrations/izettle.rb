@@ -37,10 +37,7 @@ class Izettle
     call(request, uri)
   end
 
-  def transactions(date_start=nil, date_end=nil, type='LIQUID')
-    date_start ||= Time.now.beginning_of_month
-    date_end ||= Time.now.end_of_month
-
+  def transactions(date_start, date_end, type='LIQUID')
     uri = URI.parse("https://finance.izettle.com/organizations/us/accounts/#{type}/transactions?start=#{date_start.iso8601}&end=#{date_end.iso8601}")
 
     request = Net::HTTP::Get.new(uri)
@@ -49,10 +46,7 @@ class Izettle
     call(request, uri)['data']
   end
 
-  def purchases(date_start=nil, date_end=nil)
-    date_start ||= Time.now.beginning_of_month
-    date_end ||= Time.now.end_of_month
-
+  def purchases(date_start, date_end)
     uri = URI.parse("https://purchase.izettle.com/purchases/v2?startDate=#{date_start.iso8601}&endDate=#{date_end.iso8601}")
 
     request = Net::HTTP::Get.new(uri)

@@ -56,13 +56,16 @@ class Comanda < ApplicationRecord
   attr_accessor :closing
 
   scope :del_dia, ->(dia) {
-    where(created_at: dia.beginning_of_day..dia.end_of_day) if dia
+    joins(:corte).where('cortes.dia' => dia) if dia
   }
   scope :cerradas, -> {
     where.not(closed_at: nil)
   }
   scope :abiertas, -> {
     where(closed_at: nil)
+  }
+  scope :con_monto_total_tarjeta, ->(monto) {
+    where('pago_con_tarjeta + propina_con_tarjeta = ?', monto) if monto
   }
 
   MESAS = [

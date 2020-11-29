@@ -31,7 +31,7 @@ tr class=row_class(comanda, @id)
         -else
           i.fas.fa-credit-card
           span<="No está reflejada en iZettle"
-          span<=link_to "Sincronizar", izettle_purchases_url
+          span<=link_to "Sincronizar", sync_izettle_purchases_path(start: Date.today.to_s, end: Date.today.to_s), method: :post
     - else
       strong= comanda.venta
   td

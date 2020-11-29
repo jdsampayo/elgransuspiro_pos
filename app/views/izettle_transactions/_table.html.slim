@@ -1,16 +1,15 @@
 table
   thead
     tr
-      th Recibido en
-      th Monto
-      th Tipo
+      th(width=250) Fecha
+      th(width=100) Monto
+      th(width=200) Tipo
       th Compra
-
 
   tbody
     - @izettle_transactions.each do |izettle_transaction|
       tr
-        td = izettle_transaction.transacted_at
+        td = I18n.l(izettle_transaction.transacted_at, format: :short)
         td = izettle_transaction.amount
-        td = izettle_transaction.transaction_type
-        td = izettle_transaction.izettle_purchase&.id
+        td = IzettleTransaction::TYPES[izettle_transaction.transaction_type.to_sym]
+        td = izettle_transaction.izettle_purchase.id if izettle_transaction.izettle_purchase

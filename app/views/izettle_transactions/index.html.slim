@@ -7,5 +7,22 @@ h1.float-left Transacciones de iZettle
 
 .clearfix
 
+= form_tag( { action: 'index' }, { method: :get } ) do
+  .form-row
+    .form-group.col-2
+      .input-daterange.input-group#datepicker
+        = text_field_tag :start, @from_date, class: 'form-control'
+        span.input-group-addon< a
+        = text_field_tag :end, @to_date, class: 'form-control'
+    .form-group.col-2
+      = select_tag :type, options_for_select(IzettleTransaction::TYPES.invert, selected: params[:type]), include_blank: 'Tipo', class: 'form-control'
+    .form-group.col-3
+      = text_field_tag :izettle_purchase, params[:izettle_purchase], placeholder: 'Compra', class: 'form-control'
+    .form-group.col-1
+      = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), include_blank: 'Orden', class: 'form-control'
+    .form-group.col-1
+      button.btn.btn-primary type="submit" Buscar
+
 .table-responsive-sm= render "table"
+
 = paginate @izettle_transactions, theme: 'twitter-bootstrap-4'

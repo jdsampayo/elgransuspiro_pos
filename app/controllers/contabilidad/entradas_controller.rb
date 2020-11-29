@@ -40,8 +40,6 @@ module Contabilidad
       @entrada.credits_attributes = initial[:credits].each_with_index.map do |account, index|
         [ Time.now.to_i.to_s + '1' + index.to_s, { account_id: account } ]
       end.to_h
-
-      puts @entrada.debits_attributes
     end
 
     def create
