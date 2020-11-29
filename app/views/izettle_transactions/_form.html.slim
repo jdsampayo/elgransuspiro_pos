@@ -1,0 +1,13 @@
+= simple_form_for(@izettle_payment) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :payed_at
+    = f.input :amount
+    = f.input :type
+    = f.input :transaction_id
+    = f.association :comanda
+
+  .form-actions
+    = f.button :submit

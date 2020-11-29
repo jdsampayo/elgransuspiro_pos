@@ -51,6 +51,16 @@ Rails.application.routes.draw do
   resources :extras
   resources :gastos
   resources :insumos
+  resources :izettle_transactions, only: %i[index show] do
+    collection do
+      post :sync
+    end
+  end
+  resources :izettle_purchases, only: %i[index show] do
+    collection do
+      post :sync
+    end
+  end
   resources :meseros
   resources :ordenes
   resources :sesiones

@@ -1,0 +1,14 @@
+= simple_form_for(@izettle_purchase) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :amount
+    = f.input :purchased_at
+    = f.input :id
+    = f.input :cc_masked_number
+    = f.input :cc_brand
+    = f.association :comanda_id
+
+  .form-actions
+    = f.button :submit

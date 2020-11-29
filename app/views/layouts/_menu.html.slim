@@ -69,6 +69,15 @@
 
       =menu_link "#{icon('fas', 'coffee')} Articulos".html_safe, articulos_path
 
+    li.nav-item.dropdown
+      a#dropdown_contabilidad.nav-link.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#'
+        =icon('fas', 'credit-card')
+        |  iZettle
+      .dropdown-menu aria-labelledby='dropdown_contabilidad'
+        =submenu_link "#{icon('fas', 'shopping-basket')} Compras".html_safe, izettle_purchases_path
+        - if current_user.admin?
+          =submenu_link "#{icon('fas', 'envelope-open-dollar')} Transacciones".html_safe, izettle_transactions_path
+
   - if current_user.waitress?
     = link_to icon('fas', 'plus') + " Comanda", new_comanda_path, class: 'btn btn-outline-success mr-3'
 

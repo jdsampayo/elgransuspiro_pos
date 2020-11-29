@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Amount:
+  = @izettle_purchase.amount
+p
+  strong Purchased at:
+  = @izettle_purchase.purchased_at
+p
+  strong Id:
+  = @izettle_purchase.id
+p
+  strong Cc masked number:
+  = @izettle_purchase.cc_masked_number
+p
+  strong Cc brand:
+  = @izettle_purchase.cc_brand
+p
+  strong Comanda:
+  = @izettle_purchase.comanda_id
+
+=> link_to 'Edit', edit_izettle_purchase_path(@izettle_purchase)
+'|
+=< link_to 'Back', izettle_purchases_path

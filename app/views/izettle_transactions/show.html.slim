@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Payed at:
+  = @izettle_payment.payed_at
+p
+  strong Amount:
+  = @izettle_payment.amount
+p
+  strong Type:
+  = @izettle_payment.type
+p
+  strong Transaction:
+  = @izettle_payment.transaction_id
+p
+  strong Comanda:
+  = @izettle_payment.comanda
+
+=> link_to 'Edit', edit_izettle_payment_path(@izettle_payment)
+'|
+=< link_to 'Back', izettle_payments_path

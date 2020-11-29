@@ -1,0 +1,24 @@
+h1.float-left Compras de iZettle
+
+.float-right
+  = link_to sync_izettle_purchases_path, class: 'btn btn-primary', method: :post do
+    =icon('fas', 'sync')
+    |  Sincronizar
+
+.clearfix
+
+= form_tag( { action: 'index' }, { method: :get } ) do
+  .form-row
+    .form-group.col-2
+      .input-daterange.input-group#datepicker
+        = text_field_tag :start, @from_date, class: 'form-control', disabled: current_user.waitress?
+        span.input-group-addon< a
+        = text_field_tag :end, @to_date, class: 'form-control', disabled: current_user.waitress?
+    .form-group.col-1
+      = select_tag :order, options_for_select(['descendente', 'ascendente'], selected: params[:order]), include_blank: 'Orden', class: 'form-control'
+    .form-group.col-1
+      button.btn.btn-primary type="submit" Buscar
+
+.table-responsive-sm= render "table"
+
+= paginate @izettle_purchases, theme: 'twitter-bootstrap-4'

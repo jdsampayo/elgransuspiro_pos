@@ -83,3 +83,5 @@ config/master.key
 ## Environment normalization:
 # these should all be checked in to normalize the environment:
 *.sql
+
+/config/master.key
