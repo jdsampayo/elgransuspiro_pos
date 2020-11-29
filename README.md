@@ -7,8 +7,6 @@
 
 Calculates the amount owed by the customer, indicates that amount, prepare an invoice for the customer (which may be printed), and indicates the options to make payment.
 
-https://osm.org/note/2431044
-
 ## TODO
 history
 income per day
