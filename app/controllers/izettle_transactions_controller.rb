@@ -29,10 +29,10 @@ class IzettleTransactionsController < ApplicationController
   # POST /izettle_transactions/sync
   # POST /izettle_transactions.json
   def sync
-    @from_date = from_date(params).to_time.beginning_of_day
-    @to_date = to_date(params).to_time.end_of_day
+    start_at = Time.now.beginning_of_month
+    end_at = Time.now.end_of_month
 
-    IzettleTransaction.sync(@from_date, @to_date)
+    IzettleTransaction.sync(start_at, end_at)
 
     redirect_to izettle_transactions_url, notice: 'Sincronizado correctamente.'
   end
