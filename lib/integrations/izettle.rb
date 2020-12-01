@@ -25,6 +25,8 @@ class Izettle
       grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer'
     )
 
+    Rails.logger.info "Authenticating iZettle"
+
     call(request, uri)
   end
 
@@ -43,6 +45,8 @@ class Izettle
     request = Net::HTTP::Get.new(uri)
     request['Authorization'] = "Bearer #{token}"
 
+    Rails.logger.info "Transactions iZettle #{uri}"
+
     call(request, uri)['data']
   end
 
@@ -51,6 +55,8 @@ class Izettle
 
     request = Net::HTTP::Get.new(uri)
     request['Authorization'] = "Bearer #{token}"
+
+    Rails.logger.info "Purchases iZettle #{uri}"
 
     call(request, uri)['purchases']
   end
