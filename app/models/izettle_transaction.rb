@@ -5,7 +5,7 @@ require 'integrations/izettle'
 class IzettleTransaction < ApplicationRecord
   belongs_to :izettle_purchase, optional: true
 
-  enum transaction_type: %i[payout card_payment card_payment_fee card_refund card_payment_fee_refund failed_payout]
+  enum transaction_type: %i[payout card_payment card_payment_fee card_refund card_payment_fee_refund failed_payout payment_fee]
 
   validates_uniqueness_of :transacted_at, scope: [:transaction_type, :amount]
 
@@ -15,7 +15,8 @@ class IzettleTransaction < ApplicationRecord
     card_payment_fee: 'Comisión',
     card_refund: 'Reembolso de pago',
     card_payment_fee_refund: 'Reembolso de comisión',
-    failed_payout: 'Pago fallido'
+    failed_payout: 'Pago fallido',
+    payment_fee: 'Comisión de pago'
   }.freeze
 
   scope :del_dia, ->(dia) {
