@@ -35,11 +35,24 @@ class IzettleTransaction < ApplicationRecord
     izettle_client.transactions(start_at, end_at).each do |transaction|
       payment_id = transaction['originatingTransactionUuid']
 
-      izettle_transaction = IzettleTransaction.new
-      izettle_transaction.transacted_at = Time.parse(transaction['timestamp'])
-      izettle_transaction.amount = transaction['amount'].to_f / 100
-      izettle_transaction.transaction_type = transaction['originatorTransactionType'].downcase.to_sym
-      izettle_transaction.payment_id = payment_id
+      amount = transaction['amount'].to_f / 100
+      transacted_at = Time.parse(transaction['timestamp'])
+      transaction_type = transaction['originatorTransactionType'].downcase.to_sym
+
+      izettle_transaction = IzettleTransaction.where(
+        amount: amount,
+        transacted_at: transacted_at,
+        transaction_type: transaction_type
+      ).take
+
+      if izettle_transaction.blank?
+        izettle_transaction = IzettleTransaction.new
+        izettle_transaction.transacted_at = transacted_at
+        izettle_transaction.amount = amount
+        izettle_transaction.transaction_type = transaction_type
+        izettle_transaction.payment_id = payment_id
+      end
+
       izettle_transaction.izettle_purchase = IzettlePurchase.where(payment_id: payment_id).take
 
       errored << izettle_transaction unless izettle_transaction.save
