@@ -20,8 +20,8 @@ class IzettlePurchasesController < ApplicationController
   # POST /izettle_purchases/sync
   # POST /izettle_purchases.json
   def sync
-    start_at = Time.now.beginning_of_month
-    end_at = Time.now.end_of_month
+    start_at = Time.now.beginning_of_day
+    end_at = Time.now.end_of_day
 
     IzettlePurchase.sync(start_at, end_at)
 

@@ -1,15 +1,17 @@
 table
   thead
     tr
+      th(width=400) Folio
       th(width=250) Fecha
       th(width=100) Monto
       th(width=200) Número de Tarjeta
       th(width=200) Marca
-      th Comanda
-      th Compra
+      th(width=100) Comanda
+      th(width=100) Transacciones
   tbody
     - @izettle_purchases.each do |izettle_purchase|
       tr
+        td = izettle_purchase.id
         td = I18n.l(izettle_purchase.purchased_at, format: :short)
         td = izettle_purchase.amount
         td = izettle_purchase.cc_masked_number
@@ -19,4 +21,4 @@ table
             = izettle_purchase.comanda&.folio
           - else
             = izettle_purchase.comanda ? link_to(izettle_purchase.comanda.folio, corte_comandas_path(izettle_purchase.comanda&.corte)) : nil
-        td = link_to izettle_purchase.id, izettle_transactions_path(izettle_purchase: izettle_purchase.id)
+        td = link_to izettle_purchase.izettle_transactions.count, izettle_transactions_path(izettle_purchase: izettle_purchase.id)
