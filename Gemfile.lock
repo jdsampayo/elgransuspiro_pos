@@ -64,10 +64,10 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    authlogic (6.2.0)
-      activemodel (>= 5.2, < 6.1)
-      activerecord (>= 5.2, < 6.1)
-      activesupport (>= 5.2, < 6.1)
+    authlogic (6.4.0)
+      activemodel (>= 5.2, < 6.2)
+      activerecord (>= 5.2, < 6.2)
+      activesupport (>= 5.2, < 6.2)
       request_store (~> 1.0)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
@@ -292,7 +292,7 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.8)
+    tzinfo (1.2.9)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -322,7 +322,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   annotate
-  authlogic (~> 6.2.0)
+  authlogic (~> 6.4.0)
   auto_strip_attributes (~> 2.6)
   bcrypt (~> 3.1.16)
   bootstrap (~> 4.5.3)
