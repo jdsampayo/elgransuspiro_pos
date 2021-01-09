@@ -59,7 +59,7 @@ gem 'jquery-ui-rails'
 # Auth
 gem 'authlogic', '~> 6.2.0'
 gem 'bcrypt', '~> 3.1.16'
-gem 'cancancan', '~> 3.1'
+gem 'cancancan', '~> 3.2'
 gem 'scrypt', '3.0.7'
 
 # Deployment
