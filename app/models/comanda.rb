@@ -52,6 +52,7 @@ class Comanda < ApplicationRecord
   accepts_nested_attributes_for :ordenes, reject_if: :all_blank, allow_destroy: true
 
   self.discard_column = :deleted_at
+  self.implicit_order_column = :created_at
 
   attr_accessor :closing
 
