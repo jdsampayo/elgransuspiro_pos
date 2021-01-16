@@ -16,9 +16,8 @@
 class Insumo < ApplicationRecord
   include Discard::Model
 
-  default_scope { order('LOWER(nombre)') }
-
   self.discard_column = :deleted_at
+	self.implicit_order_column = 'LOWER(nombre)'
 
   enum unidad: {gramo: "gramo", mililitro: "mililitro", pieza: "pieza"}, _prefix: true
   enum paquete: {caja: "caja", pieza: "pieza", kilo: "kilo", litro: "litro"}, _prefix: true

@@ -41,10 +41,10 @@ class Corte < ApplicationRecord
   validates :siguiente_dia, numericality: { greater_than_or_equal_to: 0 }, on: :update
   validates :sobre, numericality: { greater_than_or_equal_to: 0 }, on: :update
 
-  default_scope { order(dia: :desc) }
   scope :de_la_sucursal, ->(sucursal) { where(sucursal: sucursal) if sucursal }
 
   self.discard_column = :deleted_at
+  self.implicit_order_column = :dia
 
   attr_accessor :propinas_con_efectivo, :propinas_con_tarjeta
 

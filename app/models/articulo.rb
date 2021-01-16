@@ -22,9 +22,8 @@ class Articulo < ApplicationRecord
   has_and_belongs_to_many :desechables
   belongs_to :categoria
 
-  default_scope { order(Arel.sql('LOWER(nombre)')) }
-
   self.discard_column = :deleted_at
+  self.implicit_order_column = Arel.sql('LOWER(nombre)')
 
   validates :nombre, presence: true
 
