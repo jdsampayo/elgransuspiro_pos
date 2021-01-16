@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/mcls/simple_form.git
+  revision: 168c249b7165fb8c298476de8c54ce51fc5a94ec
+  ref: 168c249b7165fb8c298476de8c54ce51fc5a94ec
+  specs:
+    simple_form (5.0.3)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -273,9 +282,6 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    simple_form (5.0.3)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -362,7 +368,7 @@ DEPENDENCIES
   scrypt (= 3.0.7)
   selenium-webdriver
   sidekiq
-  simple_form (~> 5.0.3)
+  simple_form!
   slim-rails
   timecop
   turbolinks (~> 5)
@@ -372,4 +378,4 @@ DEPENDENCIES
   webdack-uuid_migration
 
 BUNDLED WITH
-   2.1.4
+   2.2.4
