@@ -20,7 +20,7 @@ class TablerosController < ApplicationController
     @comandas = Comanda.kept
 
     @estancia_promedia = @comandas.unscoped.pluck(
-      'extract(epoch from (closed_at - created_at)) as estancia_promedio'
+      Arel.sql('extract(epoch from (closed_at - created_at)) as estancia_promedio')
     ).compact
 
     @estancia_promedia = @estancia_promedia.sum / @estancia_promedia.count
