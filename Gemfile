@@ -45,7 +45,7 @@ end
 # Frontend
 gem 'active_link_to'
 gem 'auto_strip_attributes', '~> 2.6'
-gem 'bootstrap', '~> 4.5.3'
+gem 'bootstrap', '~> 4.6.0'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap4-kaminari-views'
 gem 'chartkick'
