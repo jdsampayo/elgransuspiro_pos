@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     end
 
     if @corte.blank?
-      corte_sucursal = Corte.de_la_sucursal(current_sucursal).first
+      corte_sucursal = Corte.de_la_sucursal(current_sucursal).last
       if corte_sucursal&.abierto?
         redirect_to edit_corte_path(corte_sucursal)
       else

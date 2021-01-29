@@ -42,3 +42,6 @@ Sidekiq.redis { |conn| conn.flushdb }
 
 # Cards
 https://mdbootstrap.com/docs/jquery/components/cards/
+
+#Icons
+https://www.flaticon.com/packs/barista-2?word=coffee
