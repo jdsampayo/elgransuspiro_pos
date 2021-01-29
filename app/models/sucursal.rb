@@ -20,6 +20,6 @@ class Sucursal < ApplicationRecord
   end
 
   def last_corte
-    cortes.first
+    cortes.last
   end
 end

@@ -291,7 +291,7 @@ class Corte < ApplicationRecord
   def self.create_next(sucursal)
     Corte.create!(
       dia: Time.now,
-      inicial: Corte.de_la_sucursal(sucursal).first&.siguiente_dia,
+      inicial: Corte.de_la_sucursal(sucursal).last&.siguiente_dia,
       sucursal: sucursal
     )
   end

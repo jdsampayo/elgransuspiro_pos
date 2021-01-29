@@ -47,8 +47,8 @@ class ArticulosController < ApplicationController
 
     orders = Orden.joins(:comanda).where(articulo_id: @articulo.id).order(created_at: :desc)
 
-    @first_sale = orders.last
-    @last_sale = orders.first
+    @first_sale = orders.first
+    @last_sale = orders.last
     @total = orders.sum(:cantidad)
   end
 

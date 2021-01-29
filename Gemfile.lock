@@ -1,11 +1,11 @@
 GIT
-  remote: https://github.com/mcls/simple_form.git
-  revision: 168c249b7165fb8c298476de8c54ce51fc5a94ec
-  ref: 168c249b7165fb8c298476de8c54ce51fc5a94ec
+  remote: https://github.com/heartcombo/simple_form.git
+  revision: cbcfe2e972fc25a53474d72b256a7f6c389de545
+  ref: cbcfe2e972fc25a53474d72b256a7f6c389de545
   specs:
     simple_form (5.0.3)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
 
 GEM
   remote: https://rubygems.org/
