@@ -320,7 +320,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdack-uuid_migration (1.3.0)
+    webdack-uuid_migration (1.4.0)
       activerecord (>= 4.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
