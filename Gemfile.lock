@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/heartcombo/simple_form.git
-  revision: cbcfe2e972fc25a53474d72b256a7f6c389de545
-  ref: cbcfe2e972fc25a53474d72b256a7f6c389de545
-  specs:
-    simple_form (5.0.3)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -284,6 +275,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    simple_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -370,7 +364,7 @@ DEPENDENCIES
   scrypt (= 3.0.7)
   selenium-webdriver
   sidekiq
-  simple_form!
+  simple_form
   slim-rails
   timecop
   turbolinks (~> 5)
