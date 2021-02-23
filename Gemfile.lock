@@ -68,7 +68,7 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    authlogic (6.4.0)
+    authlogic (6.4.1)
       activemodel (>= 5.2, < 6.2)
       activerecord (>= 5.2, < 6.2)
       activesupport (>= 5.2, < 6.2)
@@ -329,7 +329,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   annotate
-  authlogic (~> 6.4.0)
+  authlogic (~> 6.4.1)
   auto_strip_attributes (~> 2.6)
   bcrypt (~> 3.1.16)
   bootstrap (~> 4.6.0)
